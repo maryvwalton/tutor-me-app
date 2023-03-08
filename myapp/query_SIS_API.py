@@ -19,8 +19,8 @@ def validate_input(year, semester):
 
 def return_all_department_mnemonics(year, semester):
     # Input handling
-    validate_input(year, semester)
     semester = semester.lower()  # ensures "Spring" is treated the same as "SPRING" and "spring"
+    validate_input(year, semester)
 
     # URL building
     semester_to_url_mapping = {"fall": "8", "spring": "12"}
