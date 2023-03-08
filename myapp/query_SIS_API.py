@@ -33,11 +33,11 @@ def return_all_department_mnemonics(year, semester):
     json_data = r.json()
 
     # JSON parsing
-    list_of_search_fields = json_data["class_search_fields"]
+    list_of_search_fields = json_data["subjects"]
 
     mnemonics_list = []
     for entry in list_of_search_fields:
-        mnemonics_list.append(entry["FIELDNAME"])
+        mnemonics_list.append(entry["subject"])
 
     return mnemonics_list
 
