@@ -1,0 +1,55 @@
+{% load socialaccount %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body>
+  <h1>My Google OAuth Project </h1>
+{% if user.is_authenticated %}
+  <div class="container">
+    <ul class="nav bg-info">
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/">HOME PAGE</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/tutor_courses">VIEW CURRENT TUTOR COURSES</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/submit_listing">SUBMIT LISTING</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/profile">MY PROFILE</a>
+      </li>
+    </ul>
+    <p>Add Tutor values</p>
+
+    
+<!-- 
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    first_name = models.CharField(max_length=200)  
+    last_name = models.CharField(max_length=200) 
+
+    course = models.ManyToManyField(Course, blank=True)
+
+    headline = models.CharField(max_length=300)
+
+    qualifications = models.CharField(max_length=750)
+
+    hourly_rate = models.FloatField(default=0)
+
+    rating = models.FloatField(default=0) -->
+
+    
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
+
+</div>
+</body>
+</html>
