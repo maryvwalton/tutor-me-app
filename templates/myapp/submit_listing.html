@@ -25,25 +25,20 @@
       <li class="nav-item">
         <a class="nav-link link-light" href="/profile">MY PROFILE</a>
       </li>
-    </ul>
-    <p>Add Tutor values</p>
+    </ul> 
 
-    
-<!-- 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+<!-- TUTOR FORM -->
 
-    first_name = models.CharField(max_length=200)  
-    last_name = models.CharField(max_length=200) 
+{% block content %}
+<h1>Tutor Form</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
 
-    course = models.ManyToManyField(Course, blank=True)
 
-    headline = models.CharField(max_length=300)
-
-    qualifications = models.CharField(max_length=750)
-
-    hourly_rate = models.FloatField(default=0)
-
-    rating = models.FloatField(default=0) -->
 
     
 {% else %}
