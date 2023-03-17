@@ -1,0 +1,50 @@
+{% load socialaccount %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body>
+  <h1>My Google OAuth Project </h1>
+{% if user.is_authenticated %}
+  <div class="container">
+    <ul class="nav bg-info">
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/">HOME PAGE</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/tutor_courses">VIEW CURRENT TUTOR COURSES</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/submit_listing">SUBMIT LISTING</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/profile">MY PROFILE</a>
+      </li>
+    </ul> 
+
+<!-- Display every listing -->
+<br/>
+<h1>All Tutor Listings</h1>
+<ul class="list-group">
+{% for listing in listings %}
+    <li class="list-group-item">Date: {{ listing.date }} || Course: {{ listing.course }} || Service: {{ listing.service }} || Tutor: {{ listing.tutor }}
+
+    </li>
+{% endfor %}
+</ul>
+
+
+
+    
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
+
+</div>
+</body>
+</html>

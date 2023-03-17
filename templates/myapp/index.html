@@ -1,0 +1,39 @@
+{% load socialaccount %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body>
+  <h1>My Google OAuth Project </h1>
+{% if user.is_authenticated %}
+  <div class="container">
+    <ul class="nav bg-info">
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/">HOME PAGE</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/tutor_courses">VIEW CURRENT TUTOR COURSES</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/submit_listing">SUBMIT LISTING</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/profile">MY PROFILE</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/profile">LOG OUT</a>
+      </li>
+    </ul>
+    <p>Welcome, You are logged in as {{ user.username }}</p>
+{% else %}
+  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+{% endif %}
+
+</div>
+</body>
+</html>

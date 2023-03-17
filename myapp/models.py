@@ -59,7 +59,7 @@ class SessionRequest(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True )
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     service = models.CharField(max_length=150)
 
