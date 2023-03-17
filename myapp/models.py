@@ -24,7 +24,7 @@ class Course(models.Model):
     coursenum = models.IntegerField(max_length=10)
 
     def __str__(self):
-        return self.title
+        return self.pnemonic + " " + str(self.coursenum)+ " " + self.title + " " + self.professor
 
 class Tutor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
