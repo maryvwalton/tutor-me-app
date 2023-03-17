@@ -34,8 +34,6 @@ def update_listing(request, pk):
 #view that tutors use to make a listing
 def submit_listing(request):
 
-    return_all_courses_from_department(23, "spring", "CS")
-
     form = TutorForm(request.POST or None, 
                      initial={
         'date': '3/17/23',
