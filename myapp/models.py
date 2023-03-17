@@ -8,15 +8,14 @@ from django.contrib import admin
 
 
 class User(models.Model):
-    username = models.CharField(max_length=200)  
+    username = models.CharField(max_length=200)
     email = models.EmailField(max_length=200, unique=True)
     password = models.CharField(max_length=200)
 
-    #get requests 
+    #get requests
 
     def __str__(self):
         return self.username
-    
 
 class Course(models.Model):
     title = models.CharField(max_length=200)

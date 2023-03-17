@@ -1,6 +1,12 @@
 import requests
 import json
 
+# from: https://stackoverflow.com/a/73802708
+import os, django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "buildexample.settings")
+django.setup()
+
+from myapp.models import Course
 
 def check_if_year_valid(year):
     if (len(str(year)) != 2) or (type(year) is not int):
@@ -77,9 +83,16 @@ def return_all_courses_from_department(year, semester, department):
 
         # json parsing
         for entry in json_data:
-            catalog_num = entry["catalog_nbr"]
-            description = entry["descr"]
-            course_list.append([catalog_num, description])
+
+            coursenum = int(entry["catalog_nbr"])
+            title = entry["descr"]
+            pnemonic = entry["subject"]
+            professor = entry["instructors"][0]["name"]
+
+            course = Course(title = title, pnemonic = pnemonic, professor = professor, coursenum = coursenum)
+            course.save()
+
+            course_list.append([coursenum, title])
 
         # incrementation
         current_page += 1
