@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import TutorForm, UpdateForm
-from .models import SessionRequest
+from .models import SessionRequest, Tutor
 
 
 from myapp.query_SIS_API import *
@@ -11,9 +11,10 @@ from myapp.query_SIS_API import *
 def index(request):
     return HttpResponse("This is our tutor me project")
 
+
 #View that shows the listings on tutor_courses.html
 def listing_view(request):
-    listings = SessionRequest.objects.all()
+    listings = Tutor.objects.all()
 
     args = {'listings': listings}
 
