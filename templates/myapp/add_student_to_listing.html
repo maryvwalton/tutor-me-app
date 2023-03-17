@@ -27,16 +27,16 @@
       </li>
     </ul> 
 
-<!-- Display every listing -->
-<br/>
-<h1>All Tutor Listings</h1>
-<ul class="list-group">
-{% for listing in listings %}
-    <li class="list-group-item">Date: {{ listing.date }} || Course: {{ listing.course }} || Service: {{ listing.service }} || Tutor: {{ listing.tutor }}
+<!-- STUDENT FORM -->
 
-    </li>
-{% endfor %}
-</ul>
+{% block content %}
+<h1>Apply to Listing as a Student</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
 
 
 
