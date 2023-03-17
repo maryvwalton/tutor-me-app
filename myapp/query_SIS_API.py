@@ -110,4 +110,4 @@ def return_courses_by_instructor(year, semester, instructor_name):
 
 ######### Testing code by printing output of functions ###############
 # print(return_all_department_mnemonics(23, "fall"))
-print(return_all_courses_from_department(23, "spring", "CS"))
+# print(return_all_courses_from_department(23, "spring", "CS"))
