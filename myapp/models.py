@@ -6,18 +6,6 @@ from django.contrib import admin
 
 # Create your models here.
 
-
-class User(models.Model):
-    username = models.CharField(max_length=200)  
-    email = models.EmailField(max_length=200, unique=True)
-    password = models.CharField(max_length=200)
-
-    #get requests 
-
-    def __str__(self):
-        return self.username
-    
-
 class Course(models.Model):
     title = models.CharField(max_length=200)
     pnemonic = models.CharField(max_length=100)
@@ -28,7 +16,6 @@ class Course(models.Model):
         return self.title
 
 class Tutor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200)  
     last_name = models.CharField(max_length=200)  
     course = models.ManyToManyField(Course, blank=True)
@@ -40,11 +27,10 @@ class Tutor(models.Model):
     #sign up form to become a tutor 
 
     def __str__(self):
-        return self.user.username 
+        return self.first_name + self.last_name
 
 
 class Student(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200)  
     last_name = models.CharField(max_length=200)  
 
@@ -52,7 +38,7 @@ class Student(models.Model):
     #submit request function
 
     def __str__(self):
-        return self.user.username 
+        return self.first_name + self.last_name
 
 
 class SessionRequest(models.Model):
@@ -65,7 +51,7 @@ class SessionRequest(models.Model):
     service = models.CharField(max_length=150)
 
     def __str__(self):
-        return str(self.id) + self.student.user.username + self.tutor.user.username
+        return str(self.id)
     
 
 class Review(models.Model):

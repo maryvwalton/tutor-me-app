@@ -32,8 +32,8 @@
 <h1>All Tutor Listings</h1>
 <ul class="list-group">
 {% for listing in listings %}
-    <li class="list-group-item">Date: {{ listing.date }} || Course: {{ listing.course }} || Service: {{ listing.service }} || Tutor: {{ listing.tutor }}
-
+    <li class="list-group-item"> Course: {{ listing.course }} || Tutor: {{ listing.first_name }} || Hourly Rate: {{ listing.hourly_rate }} || Rating: {{ listing.rating }}
+   
     </li>
 {% endfor %}
 </ul>
