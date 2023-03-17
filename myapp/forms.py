@@ -1,15 +1,19 @@
 from django.forms import ModelForm
-from .models import Tutor
+from .models import SessionRequest
 
 class TutorForm(ModelForm):
     class Meta:
-        model = Tutor
+        model = SessionRequest
+
         fields = [
-            'first_name',
-            'last_name',
+            'date',
+            'start_time',
+            'end_time',
+            'tutor',
+            'student',
             'course',
-            'hourly_rate',
-            # 'user',
+            'service',
+ 
         ]
         
 
