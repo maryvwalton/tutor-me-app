@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import TutorForm, UpdateForm
-from .models import SessionRequest, Tutor
+from .models import Tutor
 
 # SHERRIFF: very basic index page created
 

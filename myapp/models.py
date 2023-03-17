@@ -18,7 +18,7 @@ class Course(models.Model):
 class Tutor(models.Model):
     first_name = models.CharField(max_length=200)  
     last_name = models.CharField(max_length=200)  
-    course = models.ManyToManyField(Course, blank=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     headline = models.CharField(max_length=300)
     qualifications = models.CharField(max_length=750)
     hourly_rate = models.FloatField(default=0)
