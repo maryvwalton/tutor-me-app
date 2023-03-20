@@ -1,3 +1,4 @@
+from email.policy import default
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .forms import TutorForm, UpdateForm
@@ -56,6 +57,6 @@ def submit_listing(request):
 
 def search_classes(request):
     if request.method == "POST":
-        searched = request.POST.get('searched')
+        searched = request.POST.get('searched', default="")
         courses = Tutor.objects.filter(course__title__contains=searched)
-    return render(request, 'myapp/search_classes.html', {'searched': searched})
+    return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses})
