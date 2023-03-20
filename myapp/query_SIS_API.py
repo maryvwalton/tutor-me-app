@@ -10,12 +10,12 @@ from myapp.models import Course
 
 def check_if_year_valid(year):
     if (len(str(year)) != 2) or (type(year) is not int):
-        raise Exception("The entered year must be a two digit integer, like 22 or 23")
+        raise ValueError("The entered year must be a two digit integer, like 22 or 23")
 
 
 def check_if_semester_valid(semester):
     if semester not in ["fall", "spring"]:
-        raise Exception("The entered semester must either be 'fall' or 'spring'")
+        raise ValueError("The entered semester must either be 'fall' or 'spring'")
 
 
 def validate_input(year, semester):
