@@ -10,12 +10,12 @@ from myapp.models import Course
 
 def check_if_year_valid(year):
     if (len(str(year)) != 2) or (type(year) is not int):
-        raise Exception("The entered year must be a two digit integer, like 22 or 23")
+        raise ValueError("The entered year must be a two digit integer, like 22 or 23")
 
 
 def check_if_semester_valid(semester):
     if semester not in ["fall", "spring"]:
-        raise Exception("The entered semester must either be 'fall' or 'spring'")
+        raise ValueError("The entered semester must either be 'fall' or 'spring'")
 
 
 def validate_input(year, semester):
@@ -25,7 +25,7 @@ def validate_input(year, semester):
 
 def get_semester_to_URL_number(semester):
     check_if_semester_valid(semester)
-    semester_to_url_mapping = {"fall": "8", "spring": "2"} # TODO: still unsure if mapping for spring is 2 or 12
+    semester_to_url_mapping = {"fall": "8", "spring": "2"}
     return semester_to_url_mapping[semester]
 
 
@@ -110,4 +110,8 @@ def return_courses_by_instructor(year, semester, instructor_name):
 
 ######### Testing code by printing output of functions ###############
 # print(return_all_department_mnemonics(23, "fall"))
+<<<<<<< HEAD
 #print(return_all_courses_from_department(23, "spring", "CS"))
+=======
+# print(return_all_courses_from_department(23, "spring", "CS"))
+>>>>>>> 7ab9528061cec6f723bc23a6e6e61080d8991fb7

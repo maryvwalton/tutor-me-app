@@ -1,5 +1,5 @@
+{% load i18n %}
 {% load socialaccount %}
-
 
 <!DOCTYPE html>
 <html>
@@ -9,9 +9,9 @@
   {% bootstrap_javascript %}
 </head>
 <body>
-  <h1>My Google OAuth Project </h1>
 {% if user.is_authenticated %}
   <div class="container">
+    <h1>Tutor Me </h1>
     <ul class="nav bg-info">
       <li class="nav-item">
         <a class="nav-link link-light" href="/">HOME PAGE</a>
@@ -30,11 +30,11 @@
 <!-- TUTOR FORM -->
 
 {% block content %}
-<h1>Submit Listing</h1>
+<h2>Submit Listing</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Submit</button>
+    <a href="/tutor_courses" class="btn btn-primary">Submit</a>
 </form>
 {% endblock %}
 
