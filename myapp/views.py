@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .forms import TutorForm, UpdateForm
 from .models import Tutor
@@ -19,11 +19,13 @@ def listing_view(request):
 
 #view that students use to add themselves to the SessionRequest model
 def update_listing(request, pk):
-    form = UpdateForm(request.POST or None)
-    
+    listing = Tutor.objects.get(id = pk)
+
+    form = TutorForm(request.POST or None, instance = listing)
+
     if form.is_valid():
         form.save()
-    
+        return redirect('/myapp/tutor_courses/')
     context = {
         'form': form
     }
@@ -41,6 +43,7 @@ def submit_listing(request):
 
     if form.is_valid():
         form.save()
+        return redirect('/myapp/tutor_courses/')
     
     context = {
         'form': form
