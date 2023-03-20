@@ -117,5 +117,5 @@ def populate_database_with_all_courses(year, semester):
 
 
 ######### Testing code by printing output of functions ###############
-# print(return_all_department_mnemonics(23, "fall"))
+#print(return_all_department_mnemonics(23, "fall"))
 # print(return_all_courses_from_department(23, "spring", "CS"))
