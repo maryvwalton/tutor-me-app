@@ -45,7 +45,14 @@
     </form>
 
     {%if searched %}
-        <h1>You Searched For{{searched}}</h1>
+        <h1>You Searched For {{searched}}</h1>
+        <ul class="list-group">
+            {% for listing in listings %}
+                <li class="list-group-item">Date: {{ listing.date }} || Course: {{ listing.course }} || Service: {{ listing.service }} || Tutor: {{ listing.tutor }}
+        
+                </li>
+            {% endfor %}
+        </ul>
     {%else%}
         <h1>Hey! You forgot to search for a class...</h1>
     {%endif%}

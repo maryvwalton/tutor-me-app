@@ -25,15 +25,20 @@
       <li class="nav-item">
         <a class="nav-link link-light" href="/profile">MY PROFILE</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/profile">LOGOUT</a>
+      </li>
     </ul> 
 
 <!-- Display every listing -->
 <br/>
-<h2>All Tutor Listings</h2>
+
+<h1>All Tutor Listings</h1>
+
 <ul class="list-group">
 {% for listing in listings %}
     <li class="list-group-item"> Course: {{ listing.course }} || Tutor: {{ listing.first_name }} || Hourly Rate: {{ listing.hourly_rate }} || Rating: {{ listing.rating }}
-   
+      <a href = "{% url 'update_listing' listing.id %}">BOOK</a>
     </li>
 {% endfor %}
 </ul>

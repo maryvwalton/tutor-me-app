@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .forms import TutorForm, UpdateForm
-from .models import SessionRequest, Tutor
+from .models import Tutor
 
 
 from myapp.query_SIS_API import *
@@ -22,11 +22,13 @@ def listing_view(request):
 
 #view that students use to add themselves to the SessionRequest model
 def update_listing(request, pk):
-    form = UpdateForm(request.POST or None)
-    
+    listing = Tutor.objects.get(id = pk)
+
+    form = TutorForm(request.POST or None, instance = listing)
+
     if form.is_valid():
         form.save()
-    
+        return redirect('/myapp/tutor_courses/')
     context = {
         'form': form
     }
@@ -45,6 +47,7 @@ def submit_listing(request):
 
     if form.is_valid():
         form.save()
+        return redirect('/myapp/tutor_courses/')
     
     context = {
         'form': form
@@ -54,5 +57,5 @@ def submit_listing(request):
 def search_classes(request):
     if request.method == "POST":
         searched = request.POST.get('searched')
-        courses = Course.objects.filter(title__contains=searched)
+        courses = Tutor.objects.filter(course__title__contains=searched)
     return render(request, 'myapp/search_classes.html', {'searched': searched})

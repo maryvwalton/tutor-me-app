@@ -102,16 +102,28 @@ def return_all_courses_from_department(year, semester, department):
 
     return course_list
 
+# WARNING: THIS WILL TAKE AN EXTREMELY LONG TIME TO RUN AND YOU PROBABLY SHOULD NOT RUN IT
+# Better to instead use return_all_courses_from_department() and fill database with courses from a single department
+# one by one
+def populate_database_with_all_courses(year, semester):
+    # Input handling
+    semester = semester.lower()  # ensures "Spring" is treated the same as "SPRING" and "spring"
+    validate_input(year, semester)
 
-def return_courses_by_instructor(year, semester, instructor_name):
-    # TODO: to implement
-    pass
+    mnemonics_list = return_all_department_mnemonics(23, "spring")
+
+    for mnemonic in mnemonics_list:
+        return_all_department_mnemonics(year,semester,mnemonic)
 
 
 ######### Testing code by printing output of functions ###############
+#<<<<<<< HEAD
 # print(return_all_department_mnemonics(23, "fall"))
-<<<<<<< HEAD
+#<<<<<<< HEAD
 #print(return_all_courses_from_department(23, "spring", "CS"))
-=======
+#=======
+#=======
+#print(return_all_department_mnemonics(23, "fall"))
+#>>>>>>> cf84f50368fdcb90a2ea96b3e8e812803a272485
 # print(return_all_courses_from_department(23, "spring", "CS"))
->>>>>>> 7ab9528061cec6f723bc23a6e6e61080d8991fb7
+#>>>>>>> 7ab9528061cec6f723bc23a6e6e61080d8991fb7
