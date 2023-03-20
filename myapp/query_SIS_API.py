@@ -25,7 +25,7 @@ def validate_input(year, semester):
 
 def get_semester_to_URL_number(semester):
     check_if_semester_valid(semester)
-    semester_to_url_mapping = {"fall": "8", "spring": "2"} # TODO: still unsure if mapping for spring is 2 or 12
+    semester_to_url_mapping = {"fall": "8", "spring": "2"}
     return semester_to_url_mapping[semester]
 
 
