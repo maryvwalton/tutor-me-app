@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from .forms import TutorForm, UpdateForm
 from .models import Tutor
 
+
+from myapp.query_SIS_API import *
+
 # SHERRIFF: very basic index page created
 
 def index(request):
@@ -33,6 +36,7 @@ def update_listing(request, pk):
 
 #view that tutors use to make a listing
 def submit_listing(request):
+
     form = TutorForm(request.POST or None, 
                      initial={
         'date': '3/17/23',
