@@ -14,4 +14,5 @@ urlpatterns = [
     path('add_student_to_listing', views.update_listing, name = "update_listing"),
     path('accounts/', include('allauth.urls')),
     path('logout', LogoutView.as_view()),
+    path('search_classes', views.search_classes, name = 'search-classes')
 ]

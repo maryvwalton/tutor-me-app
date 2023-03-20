@@ -49,3 +49,9 @@ def submit_listing(request):
         'form': form
     }
     return render(request, 'myapp/submit_listing.html', context)
+
+def search_classes(request):
+    if request.method == "POST":
+        searched = request.POST.get('searched')
+        courses = Course.objects.filter(title__contains=searched)
+    return render(request, 'myapp/search_classes.html', {'searched': searched})
