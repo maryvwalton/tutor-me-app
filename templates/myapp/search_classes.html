@@ -47,9 +47,9 @@
     {%if searched %}
         <h1>You Searched For {{searched}}</h1>
         <ul class="list-group">
-            {% for listing in listings %}
-                <li class="list-group-item">Date: {{ listing.date }} || Course: {{ listing.course }} || Service: {{ listing.service }} || Tutor: {{ listing.tutor }}
-        
+            {% for course in courses %}
+                <li class="list-group-item">Date: {{ course.date }} || Course: {{ course.course }} || Service: {{ course.service }} || Tutor: {{ course.first_name }}
+                <button>Book</button> 
                 </li>
             {% endfor %}
         </ul>
