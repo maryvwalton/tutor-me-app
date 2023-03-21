@@ -35,11 +35,13 @@
 
 <h1>All Tutor Listings</h1>
 
-<form class = "d-flex" method = POST action="{% url 'search-classes' %}">
-  {%csrf_token%}
-  <input class = "Form control" type = "search" placeholder = "Search...">
-  <button class = "btn-btn-outline-secondary" type = "Submit">Submit</button>
-</form>
+<ul class="list-group">
+  {% for listing in listings %}
+      <li class="list-group-item"> Course: {{ listing.course }} || Tutor: {{ listing.first_name }} || Hourly Rate: {{ listing.hourly_rate }} || Rating: {{ listing.rating }}
+        <a href = "{% url 'update_listing' listing.id %}">BOOK</a>
+      </li>
+  {% endfor %}
+  </ul>
     
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
