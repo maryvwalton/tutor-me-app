@@ -87,9 +87,8 @@ def return_all_courses_from_department(year, semester, department):
             coursenum = int(entry["catalog_nbr"])
             title = entry["descr"]
             pnemonic = entry["subject"]
-            professor = entry["instructors"][0]["name"]
 
-            course = Course(title = title, pnemonic = pnemonic, professor = professor, coursenum = coursenum)
+            course = Course(title = title, pnemonic = pnemonic, coursenum = coursenum)
             course.save()
 
             course_list.append([coursenum, title])
