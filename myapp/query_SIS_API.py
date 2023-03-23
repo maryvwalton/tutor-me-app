@@ -78,7 +78,6 @@ def return_all_courses_from_department(year, semester, department):
     r = requests.get(base_url + page_parameter)
     json_data = r.json()
 
-    course_list = []
     while json_data:  # check whether the json response data is an empty or not
 
         # json parsing
@@ -88,18 +87,19 @@ def return_all_courses_from_department(year, semester, department):
             title = entry["descr"]
             pnemonic = entry["subject"]
 
+            if Course.objects.filter(title = title):
+                continue
+            elif coursenum > 4999:
+                break
+
             course = Course(title = title, pnemonic = pnemonic, coursenum = coursenum)
             course.save()
-
-            course_list.append([coursenum, title])
 
         # incrementation
         current_page += 1
         page_parameter = "&page=" + str(current_page)
         r = requests.get(base_url + page_parameter)
         json_data = r.json()
-
-    return course_list
 
 # WARNING: THIS WILL TAKE AN EXTREMELY LONG TIME TO RUN AND YOU PROBABLY SHOULD NOT RUN IT
 # Better to instead use return_all_courses_from_department() and fill database with courses from a single department
@@ -109,7 +109,12 @@ def populate_database_with_all_courses(year, semester):
     semester = semester.lower()  # ensures "Spring" is treated the same as "SPRING" and "spring"
     validate_input(year, semester)
 
-    mnemonics_list = return_all_department_mnemonics(23, "spring")
+    mnemonics_list = return_all_department_mnemonics(year, semester)
 
     for mnemonic in mnemonics_list:
-        return_all_department_mnemonics(year,semester,mnemonic)
+        return_all_courses_from_department(year, semester, mnemonic)
+
+
+def delete_courses():
+    for course in Course.objects.all().iterator():
+        course.delete()
