@@ -11,30 +11,58 @@
 </head>
 <body>
 {% if user.is_authenticated %}
-  <div class="container">
-    <h1>Tutor Me</h1>
-    <ul class="nav bg-info">
+<div class="cover-container  mx-auto flex-column">
+    <ul class="nav bg-info mx-auto">
+      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/">HOME PAGE</a>
+        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/tutor_courses">VIEW CURRENT TUTOR COURSES</a>
+        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/submit_listing">SUBMIT LISTING</a>
+        <a class="nav-link link-light" href="/profile">Profile</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/profile">MY PROFILE</a>
+        <a class="nav-link link-light" href="logout">Log Out</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="logout">LOG OUT</a>
+        <a class="nav-link disabled" >{{ user.username }}</a>
       </li>
     </ul>
-    <p>Welcome, You are logged in as {{ user.username }}</p>
+
+    
+
+    <div class="position-relative overflow-hidden text-center bg-light">
+      <div class="col-md-5 p-lg-5 mx-auto">
+        <img src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" class="img-fluid" width="200" height="200">
+        <h1 class="display-4 font-weight-normal">Join TutorMe, UVA's first peer-to-peer tutoring network</h1>
+        <p class="lead font-weight-normal">Find a tutor for all UVA courses and get the help you need.
+          Or, become a tutor and guide people to their academic goals.
+        </p>
+        <a class="btn btn-lg btn-secondary" href="#">Get Started</a>
+      </div>
+      <div class="product-device box-shadow d-none d-md-block"></div>
+      <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+    </div>
+    
+
+  </html>
+
+
+
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
 {% endif %}
 
 </div>
 </body>
+
+<footer class="bg-light text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+    © 2023 Copyright: Team A-30
+  </div>
+</footer>
+
+
 </html>
