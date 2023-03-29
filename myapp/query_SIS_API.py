@@ -115,20 +115,6 @@ def populate_database_with_all_courses(year, semester):
         return_all_courses_from_department(year, semester, mnemonic)
 
 
-<<<<<<< HEAD
-######### Testing code by printing output of functions ###############
-#<<<<<<< HEAD
-# print(return_all_department_mnemonics(23, "fall"))
-#<<<<<<< HEAD
-#print(return_all_courses_from_department(23, "spring", "CS"))
-#=======
-#=======
-#print(return_all_department_mnemonics(23, "fall"))
-#>>>>>>> cf84f50368fdcb90a2ea96b3e8e812803a272485
-print(return_all_courses_from_department(23, "spring", "CS"))
-#>>>>>>> 7ab9528061cec6f723bc23a6e6e61080d8991fb7
-=======
 def delete_courses():
     for course in Course.objects.all().iterator():
         course.delete()
->>>>>>> aced67298c3ff9eb95bb69c2918b0365d837e815

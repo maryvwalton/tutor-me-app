@@ -58,7 +58,7 @@ def submit_listing(request):
 def search_classes(request):
     if request.method == "POST":
         searched = request.POST.get('searched', default="")
-        courses = Tutor.objects.filter(course__title__iexact=searched)
-        courses2 = Tutor.objects.filter(course__pnemonic__iexact=searched)
-        courses3 = Tutor.objects.filter(course__coursenum__iexact=searched)
+        courses = Tutor.objects.filter(course__title__contains=searched)
+        courses2 = Tutor.objects.filter(course__pnemonic__contains=searched)
+        courses3 = Tutor.objects.filter(course__coursenum__contains=searched)
     return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses, 'courses2':courses2, 'courses3':courses3})

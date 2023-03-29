@@ -67,14 +67,34 @@
 
             {% endfor %}
             {% for course in course2 %}
-                <li class="list-group-item">Date: {{ course.date }} || Course: {{ course.course }} || Service: {{ course.service }} || Tutor: {{ course.first_name }}
-                <button>Book</button> 
-                </li>
+            <li class="list-group-item">
+              <h5 class = "list-group-text" >{{  course.first_name }} {{course.last_name }} : {{ course.headline }}  </h5>
+              <p class = "list-group-item-text lead">{{ course.qualifications }} </p>
+              <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ course.course }}</span></button>
+              <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ course.hourly_rate}}</span></button>
+
+              <br>
+              <br>
+
+               <!-- Button trigger modal -->
+               <button type="button" class="btn btn-outline-success">Book</button>
+
+              </li>
             {% endfor %}
             {% for course in course3 %}
-                <li class="list-group-item">Date: {{ course.date }} || Course: {{ course.course }} || Service: {{ course.service }} || Tutor: {{ course.first_name }}
-                <button>Book</button> 
-                </li>
+            <li class="list-group-item">
+              <h5 class = "list-group-text" >{{  course.first_name }} {{course.last_name }} : {{ course.headline }}  </h5>
+              <p class = "list-group-item-text lead">{{ course.qualifications }} </p>
+              <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ course.course }}</span></button>
+              <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ course.hourly_rate}}</span></button>
+
+              <br>
+              <br>
+
+               <!-- Button trigger modal -->
+               <button type="button" class="btn btn-outline-success">Book</button>
+
+              </li>
             {% endfor %}
         </ul>
     {%else%}
