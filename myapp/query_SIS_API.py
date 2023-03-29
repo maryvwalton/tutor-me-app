@@ -78,7 +78,6 @@ def return_all_courses_from_department(year, semester, department):
     r = requests.get(base_url + page_parameter)
     json_data = r.json()
 
-    course_list = []
     while json_data:  # check whether the json response data is an empty or not
 
         # json parsing
@@ -87,20 +86,20 @@ def return_all_courses_from_department(year, semester, department):
             coursenum = int(entry["catalog_nbr"])
             title = entry["descr"]
             pnemonic = entry["subject"]
-            professor = entry["instructors"][0]["name"]
 
-            course = Course(title = title, pnemonic = pnemonic, professor = professor, coursenum = coursenum)
+            if Course.objects.filter(title = title):
+                continue
+            elif coursenum > 4999:
+                break
+
+            course = Course(title = title, pnemonic = pnemonic, coursenum = coursenum)
             course.save()
-
-            course_list.append([coursenum, title])
 
         # incrementation
         current_page += 1
         page_parameter = "&page=" + str(current_page)
         r = requests.get(base_url + page_parameter)
         json_data = r.json()
-
-    return course_list
 
 # WARNING: THIS WILL TAKE AN EXTREMELY LONG TIME TO RUN AND YOU PROBABLY SHOULD NOT RUN IT
 # Better to instead use return_all_courses_from_department() and fill database with courses from a single department
@@ -110,12 +109,13 @@ def populate_database_with_all_courses(year, semester):
     semester = semester.lower()  # ensures "Spring" is treated the same as "SPRING" and "spring"
     validate_input(year, semester)
 
-    mnemonics_list = return_all_department_mnemonics(23, "spring")
+    mnemonics_list = return_all_department_mnemonics(year, semester)
 
     for mnemonic in mnemonics_list:
-        return_all_department_mnemonics(year,semester,mnemonic)
+        return_all_courses_from_department(year, semester, mnemonic)
 
 
+<<<<<<< HEAD
 ######### Testing code by printing output of functions ###############
 #<<<<<<< HEAD
 # print(return_all_department_mnemonics(23, "fall"))
@@ -127,3 +127,8 @@ def populate_database_with_all_courses(year, semester):
 #>>>>>>> cf84f50368fdcb90a2ea96b3e8e812803a272485
 print(return_all_courses_from_department(23, "spring", "CS"))
 #>>>>>>> 7ab9528061cec6f723bc23a6e6e61080d8991fb7
+=======
+def delete_courses():
+    for course in Course.objects.all().iterator():
+        course.delete()
+>>>>>>> aced67298c3ff9eb95bb69c2918b0365d837e815
