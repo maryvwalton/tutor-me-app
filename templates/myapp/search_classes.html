@@ -8,45 +8,75 @@
   {% bootstrap_css %}
   {% bootstrap_javascript %}  
 </head>
+
+<div class="cover-container  mx-auto flex-column">
+
 <body>
-  <h1>My Google Oauth Project</h1>
     {% if user.is_authenticated %}
-  <div class="container">
-    <ul class="nav bg-info">
+    <div class="cover-container  mx-auto flex-column">
+    <ul class="nav bg-info mx-auto">
+      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/">HOME PAGE</a>
+        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/tutor_courses">VIEW CURRENT TUTOR COURSES</a>
+        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/submit_listing">SUBMIT LISTING</a>
+        <a class="nav-link link-light" href="/profile">Profile</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/profile">MY PROFILE</a>
+        <a class="nav-link link-light" href="logout">Log Out</a>
       </li>
-    </ul> 
+      <li class="nav-item">
+        <a class="nav-link disabled" >{{ user.username }}</a>
+      </li>
+    </ul>
     {% endif %}
+
+    <br>
+      <h4 class="text-dark text-center"> You Searched For "{{searched}}"</h4>
+    <br>
 
     <form class = "d-flex" method = POST action="{% url 'search-classes' %}">
         {%csrf_token%}
-        <input class = "Form control" type = "search" placeholder = "Search..." name ="searched">
-        <button class = "btn-btn-outline-secondary" type = "Submit">Submit</button>
+        <input class = "form-control form-control-lg" type = "search" placeholder = "Search..." name ="searched">
+        <button class = "btn btn-primary" type = "Submit">Submit</button>
     </form>
 
+    <br>
+    <br>
+
     {%if searched %}
-        <h1>You Searched For {{searched}}</h1>
+       
         <ul class="list-group">
             {% for course in courses %}
-                <li class="list-group-item">Date: {{ course.date }} || Course: {{ course.course }} || Service: {{ course.service }} || Tutor: {{ course.first_name }}
-                <button>Book</button> 
-                </li>
+                <li class="list-group-item">
+                  <h5 class = "list-group-text" >{{  course.first_name }} {{course.last_name }} : {{ course.headline }}  </h5>
+                  <p class = "list-group-item-text lead">{{ course.qualifications }} </p>
+                  <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ course.course }}</span></button>
+                  <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ course.hourly_rate}}</span></button>
+
+                  <br>
+                  <br>
+
+                   <!-- Button trigger modal -->
+                   <button type="button" class="btn btn-outline-success">Book</button>
+
+                  </li>
+
             {% endfor %}
         </ul>
     {%else%}
         <h1>Hey! You forgot to search for a class...</h1>
     {%endif%}
 
-    
 
+    <footer class="bg-light text-center text-lg-start mt-auto">
+      <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+        © 2023 Copyright: Team A-30
+      </div>
+    </footer>
+    
+  </div>
     
