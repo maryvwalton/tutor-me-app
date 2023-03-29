@@ -4,8 +4,8 @@ from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
 
-# Create your models here.
 
+# Create your models here.
 
 class Course(models.Model):
     title = models.CharField(max_length=200)
@@ -13,7 +13,9 @@ class Course(models.Model):
     coursenum = models.IntegerField()
 
     def __str__(self):
-        return self.pnemonic + " " + str(self.coursenum)+ " " + self.title
+
+        return self.title
+
 
 class Tutor(models.Model):
     first_name = models.CharField(max_length=200)  
@@ -31,14 +33,13 @@ class Tutor(models.Model):
 
 
 class Student(models.Model):
-    first_name = models.CharField(max_length=200)  
-    last_name = models.CharField(max_length=200)  
-
-
+    first_name = models.CharField(max_length=200, default = "Bobby")  
+    last_name = models.CharField(max_length=200, default = "Brown")  
     #submit request function
 
     def __str__(self):
         return self.first_name + self.last_name
+
 
 
 class SessionRequest(models.Model):
@@ -48,11 +49,26 @@ class SessionRequest(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True )
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    service = models.CharField(max_length=150)
+
+    service_choices = (
+    ("1", "General subject review"),
+    ("2", "Homework/Practice problem help"),
+    ("3", "Exam Prep"),
+    ("4", "Other")
+)
+    service = models.CharField(max_length=150, choices = service_choices)
 
     def __str__(self):
         return str(self.id)
     
+
+# class Profile(models.Model):
+#     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+#     tutorSubmissions = models.ForeignKey(Tutor, on_delete=models.CASCADE, default=1)
+#     sessionRequests = models.ForeignKey(SessionRequest, on_delete=models.CASCADE, default = 1)
+
+#     def __str__(self):
+#         return str(self.user)
 
 class Review(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)

@@ -1,11 +1,14 @@
-from email.policy import default
+
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .forms import TutorForm, UpdateForm
-from .models import Tutor
+from .forms import TutorForm, UpdateForm, RequestForm
+from .models import Tutor, SessionRequest
+
+from email.policy import default
 
 
 from myapp.query_SIS_API import *
+
 
 # SHERRIFF: very basic index page created
 
@@ -21,23 +24,30 @@ def listing_view(request):
 
     return render(request, 'myapp/tutor_courses.html', args)
 
+def request_view(request):
+    sessions = SessionRequest.objects.all()
+
+    args = {'sessions': sessions}
+
+    return render(request, 'myapp/tutor_courses.html', args)
+
 #view that students use to add themselves to the SessionRequest model
-def update_listing(request, pk):
-    listing = Tutor.objects.get(id = pk)
 
-    form = TutorForm(request.POST or None, instance = listing)
+# def update_listing(request, pk):
+#     listing = Tutor.objects.get(id = pk)
 
-    if form.is_valid():
-        form.save()
-        return redirect('/myapp/tutor_courses/')
-    context = {
-        'form': form
-    }
-    return render(request, 'myapp/add_student_to_listing.html', context)
+#     form = TutorForm(request.POST or None, instance = listing)
+
+#     if form.is_valid():
+#         form.save()
+#         return redirect('/myapp/tutor_courses/')
+#     context = {
+#         'form': form
+#     }
+#     return render(request, 'myapp/add_student_to_listing.html', context)
 
 #view that tutors use to make a listing
 def submit_listing(request):
-
     form = TutorForm(request.POST or None, 
                      initial={
         'date': '3/17/23',
@@ -55,10 +65,25 @@ def submit_listing(request):
     }
     return render(request, 'myapp/submit_listing.html', context)
 
+
+def update_listing(request):
+
+    form = RequestForm(request.POST or None)
+
+    if form.is_valid():
+        form.save()
+        return redirect('/myapp/tutor_courses/')
+    context = {
+        'form': form
+    }
+    return render(request, 'myapp/add_student_to_listing.html', context)
+
 def search_classes(request):
     if request.method == "POST":
         searched = request.POST.get('searched', default="")
         courses = Tutor.objects.filter(course__title__contains=searched)
         courses2 = Tutor.objects.filter(course__pnemonic__contains=searched)
         courses3 = Tutor.objects.filter(course__coursenum__contains=searched)
-    return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses, 'courses2':courses2, 'courses3':courses3})
+    return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses, 'courses2': courses2, 'courses3': courses3})
+
+
