@@ -10,12 +10,12 @@ from myapp.models import Course
 
 def check_if_year_valid(year):
     if (len(str(year)) != 2) or (type(year) is not int):
-        raise Exception("The entered year must be a two digit integer, like 22 or 23")
+        raise ValueError("The entered year must be a two digit integer, like 22 or 23")
 
 
 def check_if_semester_valid(semester):
     if semester not in ["fall", "spring"]:
-        raise Exception("The entered semester must either be 'fall' or 'spring'")
+        raise ValueError("The entered semester must either be 'fall' or 'spring'")
 
 
 def validate_input(year, semester):
@@ -25,7 +25,7 @@ def validate_input(year, semester):
 
 def get_semester_to_URL_number(semester):
     check_if_semester_valid(semester)
-    semester_to_url_mapping = {"fall": "8", "spring": "2"} # TODO: still unsure if mapping for spring is 2 or 12
+    semester_to_url_mapping = {"fall": "8", "spring": "2"}
     return semester_to_url_mapping[semester]
 
 
@@ -78,7 +78,6 @@ def return_all_courses_from_department(year, semester, department):
     r = requests.get(base_url + page_parameter)
     json_data = r.json()
 
-    course_list = []
     while json_data:  # check whether the json response data is an empty or not
 
         # json parsing
@@ -87,12 +86,14 @@ def return_all_courses_from_department(year, semester, department):
             coursenum = int(entry["catalog_nbr"])
             title = entry["descr"]
             pnemonic = entry["subject"]
-            professor = entry["instructors"][0]["name"]
 
-            course = Course(title = title, pnemonic = pnemonic, professor = professor, coursenum = coursenum)
+            if Course.objects.filter(title = title):
+                continue
+            elif coursenum > 4999:
+                break
+
+            course = Course(title = title, pnemonic = pnemonic, coursenum = coursenum)
             course.save()
-
-            course_list.append([coursenum, title])
 
         # incrementation
         current_page += 1
@@ -100,14 +101,20 @@ def return_all_courses_from_department(year, semester, department):
         r = requests.get(base_url + page_parameter)
         json_data = r.json()
 
-    return course_list
+# WARNING: THIS WILL TAKE AN EXTREMELY LONG TIME TO RUN AND YOU PROBABLY SHOULD NOT RUN IT
+# Better to instead use return_all_courses_from_department() and fill database with courses from a single department
+# one by one
+def populate_database_with_all_courses(year, semester):
+    # Input handling
+    semester = semester.lower()  # ensures "Spring" is treated the same as "SPRING" and "spring"
+    validate_input(year, semester)
+
+    mnemonics_list = return_all_department_mnemonics(year, semester)
+
+    for mnemonic in mnemonics_list:
+        return_all_courses_from_department(year, semester, mnemonic)
 
 
-def return_courses_by_instructor(year, semester, instructor_name):
-    # TODO: to implement
-    pass
-
-
-######### Testing code by printing output of functions ###############
-# print(return_all_department_mnemonics(23, "fall"))
-# print(return_all_courses_from_department(23, "spring", "CS"))
+def delete_courses():
+    for course in Course.objects.all().iterator():
+        course.delete()

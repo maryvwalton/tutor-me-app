@@ -38,11 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'myapp',
+    'bootstrap5',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'bootstrap5',
+    
 ]
 
 MIDDLEWARE = [
@@ -128,8 +129,11 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SITE_ID = 3
 
+
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 
 # Internationalization

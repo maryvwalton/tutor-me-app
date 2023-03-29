@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load socialaccount %}
 
 
@@ -7,33 +8,98 @@
   {% load bootstrap5 %}
   {% bootstrap_css %}
   {% bootstrap_javascript %}
+  <!-- Add icon library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+  <style>
+    .logincontainer {
+      background-image: url("https://wallpapercave.com/wp/wp5794418.jpg");
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: auto;
+      width: auto;
+      height: 100vh;
+    }
+    .logintext {
+      position: absolute;
+      text-align: center;
+      padding-left: 70vh;
+      padding-right: 70vh;
+      padding-top: 15vh;
+      padding-bottom: 50vh;
+    }
+  </style>
+  <title>Welcome to Tutor Me</title>
 </head>
 <body>
-  <h1>My Google OAuth Project </h1>
 {% if user.is_authenticated %}
-  <div class="container">
-    <ul class="nav bg-info">
+<div class="cover-container  mx-auto flex-column">
+    <ul class="nav bg-info mx-auto">
+      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/">HOME PAGE</a>
+        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/tutor_courses">VIEW CURRENT TUTOR COURSES</a>
+        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/submit_listing">SUBMIT LISTING</a>
+        <a class="nav-link link-light" href="/profile">Profile</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/profile">MY PROFILE</a>
+        <a class="nav-link link-light" href="/logout">Log Out</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="logout">LOG OUT</a>
+        <a class="nav-link disabled" >{{ user.username }}</a>
       </li>
     </ul>
-    <p>Welcome, You are logged in as {{ user.username }}</p>
+    
+    <div class="position-relative overflow-hidden text-center bg-light">
+      <div class="col-md-5 p-lg-5 mx-auto">
+        <img src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" class="img-fluid" width="200" height="200">
+        <h1 class="display-4 font-weight-normal">Join TutorMe, UVA's first peer-to-peer tutoring network</h1>
+        <p class="lead font-weight-normal">Find a tutor for all UVA courses and get the help you need.
+          Or, become a tutor and guide people to their academic goals.
+        </p>
+        <a class="btn btn-lg btn-secondary" href="#">Get Started</a>
+      </div>
+      <div class="product-device box-shadow d-none d-md-block"></div>
+      <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+    </div>
+    
+
+  </html>
+
+
+
 {% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+      <div class="logincontainer">
+      <div class="logintext">
+        <h1 class="text-center">Welcome to Tutor Me! </h1>
+        <p class="text-center">An UVA Undergraduate resource for matching Students with Tutors</p>
+        <div class="row justify-content-evenly">
+          <div class="col-4 text-start">
+            <p>Not a member? <a href="accounts/signup" class="btn btn-success btn-lg">Sign Up</a> </p>
+          </div>
+          <div class="col-4 text-end">
+            <p>Have an Account? <a href="accounts/login" class="btn btn-primary btn-lg">Sign In</a></p>
+          </div>
+       </div>
+      </div>
+      <div class="fixed-bottom">
+        <a class="btn btn-secondary" href="admin" role="button"><i class="bi-people-fill"></i></a>
+      </div>
+    </div>
 {% endif %}
 
 </div>
 </body>
+
+<footer class="bg-light text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+    © 2023 Copyright: Team A-30
+  </div>
+</footer>
+
+
 </html>
