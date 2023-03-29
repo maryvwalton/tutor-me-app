@@ -42,6 +42,16 @@
                 <button>Book</button> 
                 </li>
             {% endfor %}
+            {% for course in course2 %}
+                <li class="list-group-item">Date: {{ course.date }} || Course: {{ course.course }} || Service: {{ course.service }} || Tutor: {{ course.first_name }}
+                <button>Book</button> 
+                </li>
+            {% endfor %}
+            {% for course in course3 %}
+                <li class="list-group-item">Date: {{ course.date }} || Course: {{ course.course }} || Service: {{ course.service }} || Tutor: {{ course.first_name }}
+                <button>Book</button> 
+                </li>
+            {% endfor %}
         </ul>
     {%else%}
         <h1>Hey! You forgot to search for a class...</h1>

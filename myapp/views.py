@@ -59,4 +59,6 @@ def search_classes(request):
     if request.method == "POST":
         searched = request.POST.get('searched', default="")
         courses = Tutor.objects.filter(course__title__iexact=searched)
-    return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses})
+        courses2 = Tutor.objects.filter(course__pnemonic__iexact=searched)
+        courses3 = Tutor.objects.filter(course__coursenum__iexact=searched)
+    return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses, 'courses2':courses2, 'courses3':courses3})
