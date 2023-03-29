@@ -1,10 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .forms import TutorForm, UpdateForm
-from .models import SessionRequest, Tutor
-
-
-from myapp.query_SIS_API import *
+from .forms import TutorForm, UpdateForm, RequestForm
+from .models import Tutor, SessionRequest
 
 # SHERRIFF: very basic index page created
 
@@ -20,21 +17,29 @@ def listing_view(request):
 
     return render(request, 'myapp/tutor_courses.html', args)
 
+def request_view(request):
+    sessions = SessionRequest.objects.all()
+
+    args = {'sessions': sessions}
+
+    return render(request, 'myapp/tutor_courses.html', args)
+
 #view that students use to add themselves to the SessionRequest model
-def update_listing(request, pk):
-    form = UpdateForm(request.POST or None)
-    
-    if form.is_valid():
-        form.save()
-    
-    context = {
-        'form': form
-    }
-    return render(request, 'myapp/add_student_to_listing.html', context)
+# def update_listing(request, pk):
+#     listing = Tutor.objects.get(id = pk)
+
+#     form = TutorForm(request.POST or None, instance = listing)
+
+#     if form.is_valid():
+#         form.save()
+#         return redirect('/myapp/tutor_courses/')
+#     context = {
+#         'form': form
+#     }
+#     return render(request, 'myapp/add_student_to_listing.html', context)
 
 #view that tutors use to make a listing
 def submit_listing(request):
-
     form = TutorForm(request.POST or None, 
                      initial={
         'date': '3/17/23',
@@ -45,8 +50,22 @@ def submit_listing(request):
 
     if form.is_valid():
         form.save()
+        return redirect('/myapp/tutor_courses/')
     
     context = {
         'form': form
     }
     return render(request, 'myapp/submit_listing.html', context)
+
+
+def update_listing(request):
+
+    form = RequestForm(request.POST or None)
+
+    if form.is_valid():
+        form.save()
+        return redirect('/myapp/tutor_courses/')
+    context = {
+        'form': form
+    }
+    return render(request, 'myapp/add_student_to_listing.html', context)
