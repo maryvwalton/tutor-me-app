@@ -10,41 +10,63 @@
 </head>
 <body>
 {% if user.is_authenticated %}
-  <div class="container">
-    <h1>Tutor Me </h1>
-    <ul class="nav bg-info">
+<div class="cover-container  mx-auto flex-column">
+    <ul class="nav bg-info mx-auto">
+      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/">HOME PAGE</a>
+        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/tutor_courses">VIEW CURRENT TUTOR COURSES</a>
+        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/submit_listing">SUBMIT LISTING</a>
+        <a class="nav-link link-light" href="/profile">Profile</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/profile">MY PROFILE</a>
+        <a class="nav-link link-light" href="logout">Log Out</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link link-light" href="/profile">LOGOUT</a>
+        <a class="nav-link disabled" >{{ user.username }}</a>
       </li>
-    </ul> 
+    </ul>
 
 <!-- Display every listing -->
 <br/>
 
-<h1>All Tutor Listings</h1>
 
-<form class = "d-flex" method = POST action="{% url 'search-classes' %}">
-  {%csrf_token%}
-  <input class = "Form control" type = "search" placeholder = "Search..." name ="searched">
-  <button class = "btn-btn-outline-secondary" type = "Submit">Submit</button>
-</form>
+<body class="text-center">
+
+    <main role="main" class="inner cover">
+      <h3 class=" font-weight-normal">Browse Current UVA Tutor Listings</h3>
+      <p class="lead"> Search for your tutor by course mnemonic or name.</p>
+       
+      <form class = "d-flex" method = POST action="{% url 'search-classes' %}">
+        {%csrf_token%}
+        <input class = "form-control form-control-lg" type = "search" placeholder = "Search..." name ="searched">
+        <button class = "btn btn-primary" type = "Submit">Submit</button>
+      </form>
+  
+    </main>
     
+
+</body>
+
+
+    
+
 {% else %}
   <a href="{% provider_login_url 'google' %}">Login With Google</a>
 {% endif %}
 
 </div>
 </body>
+
+
+<footer class="bg-light text-center text-lg-start mt-auto">
+  <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+    © 2023 Copyright: Team A-30
+  </div>
+</footer>
+
+
 </html>
