@@ -7,6 +7,26 @@
   {% load bootstrap5 %}
   {% bootstrap_css %}
   {% bootstrap_javascript %}
+
+  <style>
+    .logincontainer {
+      background-image: url("https://wallpapercave.com/wp/wp5794418.jpg");
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: auto;
+      width: auto;
+      height: 100vh;
+    }
+    .logintext {
+      position: absolute;
+      text-align: center;
+      padding-left: 70vh;
+      padding-right: 70vh;
+      padding-top: 15vh;
+      padding-bottom: 50vh;
+    }
+  </style>
+
 </head>
 <body>
 {% if user.is_authenticated %}
@@ -55,7 +75,20 @@
     
 
 {% else %}
-  <a href="{% provider_login_url 'google' %}">Login With Google</a>
+<div class="logincontainer">
+  <div class="logintext">
+    <h1 class="text-center">Welcome to Tutor Me! </h1>
+    <p class="text-center">An UVA Undergraduate resource for matching Students with Tutors</p>
+    <div class="row justify-content-evenly">
+      <div class="col-4 text-start">
+        <p>Not a member? <a href="accounts/signup" class="btn btn-success btn-lg">Sign Up</a> </p>
+      </div>
+      <div class="col-4 text-end">
+        <p>Have an Account? <a href="accounts/login" class="btn btn-primary btn-lg">Sign In</a></p>
+      </div>
+   </div>
+  </div>
+</div>
 {% endif %}
 
 </div>

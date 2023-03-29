@@ -1,0 +1,62 @@
+{% load socialaccount %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        .fa {
+            padding: 6px 0;
+            font-size: 30px;
+            width: 40px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 50%;
+        }
+
+        .fa-google {
+            background: #ee5555;
+            color: white;
+        }
+    </style>
+    <title>Sign Up</title>
+</head>
+<body>
+    <div class="container text-dark mt-5">
+        <div class="row justify-content-md-center">
+          <div class="col-md-5 bg-grey p-3">
+            <form class="signup" id="signup-form" method="POST" action="{% url 'account_signup' %}">
+                {% csrf_token %}
+
+                <h1 class="text-center mb-4">Tutor Me Sign Up</h1>
+                
+                <div class="text-center">
+                    {{form.as_p}}   
+                </div>
+                            
+                <div class="form-check text-center mb-5">
+                    <button class="btn btn-primary btn-block" type="submit">Sign Up &raquo;</button>
+                </div>
+                
+                <!-- Login with Google -->
+                <div class="text-center">
+                    <h4 class="text-center mb-4">Sign Up with Google:</h4>
+                    <a href="{% provider_login_url 'google' %}" class="fa fa-google"></a>
+                </div>
+                
+            </form>
+
+          </div>
+        </div>
+      </div>
+</body>
+</html>
