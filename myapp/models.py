@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 
@@ -63,3 +64,21 @@ class Review(models.Model):
 
     def __str__(self):
          return self.comment
+
+class discussionThread(models.Model):
+    username = models.CharField(max_length=200)  
+    title_text = models.CharField(max_length=200, null = True)
+    question_text = models.CharField(max_length=500)
+    pub_date = models.DateTimeField(timezone.now(), null = True)
+
+    def __str__(self):
+         return self.question_text
+
+class discussionReplies(models.Model):
+    username = models.CharField(max_length=200) 
+    reply_text = models.CharField(max_length=500)
+    question = models.ForeignKey(discussionThread, on_delete=models.CASCADE)
+    reply_date = models.DateTimeField(timezone.now(), null = True)
+
+
+
