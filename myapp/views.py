@@ -3,6 +3,8 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .forms import TutorForm, UpdateForm
 from .models import Tutor, discussionThread, discussionReplies
+from django.utils import timezone
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 
 
 from myapp.query_SIS_API import *
@@ -69,9 +71,16 @@ def createThread(request):
         user = request.POST["username"]
         title = request.POST["title_text"]
         question = request.POST["question_text"]
-        new_thread = discussionThread(username = user, title_text = title, question_text = question)
+        new_thread = discussionThread(username = user, title_text = title, question_text = question, pub_date = timezone.now())
         new_thread.save()
-        #return HttpResponseRedirect('/polls/comments/list')
+        return HttpResponseRedirect('/discussion')
     else:
         d = discussionThread()
-        return render(request, 'myapp/discussionhome.html', {'discussionThread': discussionThread})
+        return render(request, 'myapp/submitthread.html', {'discussionThread': discussionThread})
+
+
+
+#display active threads 
+def threadList(request):
+    all_threads = discussionThread.objects.all()
+    return render(request, 'myapp/discussionthreadlist.html', {'all_threads': all_threads})
