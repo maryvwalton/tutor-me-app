@@ -14,5 +14,9 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('logout', LogoutView.as_view()),
     path('search_classes', views.search_classes, name = 'search-classes'),
+
     path('profile/', views.filter, name = 'filter'),
+
+    path('submit_thread/', views.createThread, name = 'submitthread'),
+    path('discussion', views.threadList, name='threadslist'),
 ]
