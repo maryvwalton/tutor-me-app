@@ -18,21 +18,21 @@ class TutorForm(ModelForm):
  
         ]
 
+#form that students use to request a tutor
+class RequestForm(ModelForm):
+    class Meta:
+        model = SessionRequest
 
-# class TutorForm(ModelForm):
-#     class Meta:
-#         model = SessionRequest
-
-#         fields = [
-#             'date',
-#             'start_time',
-#             'end_time',
-#             'tutor',
-#             # 'student',
-#             'course',
-#             'service',
+        fields = [
+            'date',
+            'start_time',
+            'end_time',
+            'tutor',
+            # 'student',
+            'course',
+            'service',
  
-#         ]
+        ]
 
 #form that students use to add themselves to listing
 class UpdateForm(ModelForm):

@@ -1,13 +1,17 @@
 from email.policy import default
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .forms import TutorForm, UpdateForm
+from .forms import TutorForm, RequestForm
 from .models import Tutor
+from django.views.generic import DetailView
 
 
 from myapp.query_SIS_API import *
 
 # SHERRIFF: very basic index page created
+
+# class ShowProfilePageView(DetailView):
+#     model = 
 
 def index(request):
     return HttpResponse("This is our tutor me project")
@@ -60,3 +64,16 @@ def search_classes(request):
         searched = request.POST.get('searched', default="")
         courses = Tutor.objects.filter(course__title__contains=searched)
     return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses})
+
+# View that students use to make a request on a listing
+def update_listing(request):
+
+    form = RequestForm(request.POST or None)
+
+    if form.is_valid():
+        form.save()
+        return redirect('/myapp/profile/')
+    context = {
+        'form': form
+    }
+    return render(request, 'myapp/add_student_to_listing.html', context)

@@ -54,6 +54,17 @@
 <br/>
 
 
+<h1>All Tutor Listings</h1>
+<ul class="list-group">
+{% for listing in listings %}
+    <li class="list-group-item"> Course: {{ listing.course }} || Tutor: {{ listing.first_name }} || Hourly Rate: {{ listing.hourly_rate }} || Rating: {{ listing.rating }}
+      <a href = "/add_student_to_listing">BOOK</a>
+    </li>
+{% endfor %}
+</ul>
+
+
+
 <body class="text-center">
 
     <main role="main" class="inner cover">
