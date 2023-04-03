@@ -2,7 +2,9 @@ from email.policy import default
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .forms import TutorForm, UpdateForm
-from .models import Tutor
+from .models import Tutor, discussionThread, discussionReplies
+from django.utils import timezone
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 
 
 from myapp.query_SIS_API import *
@@ -60,3 +62,25 @@ def search_classes(request):
         searched = request.POST.get('searched', default="")
         courses = Tutor.objects.filter(course__title__contains=searched)
     return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses})
+
+
+
+#create discussion thread 
+def createThread(request):
+    if request.method == 'POST':
+        user = request.POST["username"]
+        title = request.POST["title_text"]
+        question = request.POST["question_text"]
+        new_thread = discussionThread(username = user, title_text = title, question_text = question, pub_date = timezone.now())
+        new_thread.save()
+        return HttpResponseRedirect('/discussion')
+    else:
+        d = discussionThread()
+        return render(request, 'myapp/submitthread.html', {'discussionThread': discussionThread})
+
+
+
+#display active threads 
+def threadList(request):
+    all_threads = discussionThread.objects.all()
+    return render(request, 'myapp/discussionthreadlist.html', {'all_threads': all_threads})
