@@ -2,11 +2,13 @@
 {% load socialaccount %}
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
   {% load bootstrap5 %}
   {% bootstrap_css %}
+
   {% bootstrap_javascript %}
   <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -38,6 +40,7 @@
 <body>
 {% if user.is_authenticated %}
 <div class="cover-container  mx-auto flex-column">
+
     <ul class="nav bg-info mx-auto">
       <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
       <li class="nav-item">
@@ -56,6 +59,32 @@
         <a class="nav-link disabled" >{{ user.username }}</a>
       </li>
     </ul>
+
+    {% endif %}
+
+    <body class="text-center">
+   
+    <h1>Enter your Name</h1>
+    <form method="get">
+        {{ form.as_p }}
+        <button type="submit">Filter</button>
+    </form>
+
+    <tbody>
+      {% for tutor in tutor %}
+          <tr>
+              <td>{{ tutor.first_name }}</td>
+              <td>{{ tutor.course }}</td>
+              <td>{{ tutor.headline }}</td>
+              <td>{{ tutor.qualifications }}</td>
+              <td>{{ tutor.hourly_rate }}</td>
+              <td>{{ tutor.rating }}</td>
+          </tr>
+      {% endfor %}
+    </tbody
+    </body>
+
+
     
     <div class="position-relative overflow-hidden bg-light">
         <div class="profileheader">
@@ -95,3 +124,4 @@
 
 
 </html>
+
