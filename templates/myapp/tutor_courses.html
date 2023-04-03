@@ -63,6 +63,19 @@
     <li class="list-group-item"> Course: {{ listing.course }} || Tutor: {{ listing.first_name }} || Hourly Rate: {{ listing.hourly_rate }} || Rating: {{ listing.rating }}
       <a href = "/add_student_to_listing">BOOK</a>
     </li>
+<li class="list-group-item">
+  <h5 class = "list-group-text" >{{  listing.first_name }} {{listing.last_name }} : {{ listing.headline }}  </h5>
+  <p class = "list-group-item-text lead">{{ listing.qualifications }} </p>
+  <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ listing.course }}</span></button>
+  <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ listing.hourly_rate}}</span></button>
+
+  <br>
+  <br>
+
+   <!-- Button trigger modal -->
+   <button type="button" class="btn btn-outline-success">Book</button>
+
+  </li>
 {% endfor %}
 </ul>
 
