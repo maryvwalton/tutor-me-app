@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import ModelForm
 from .models import SessionRequest,Tutor
 
@@ -42,5 +43,9 @@ class UpdateForm(ModelForm):
         fields = [
             'student',
         ]
+
+class FilterForm(forms.Form):
+    name = forms.CharField(max_length=100, required=False)
+
         
 

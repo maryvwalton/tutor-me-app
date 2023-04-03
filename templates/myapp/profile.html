@@ -39,16 +39,26 @@
     {% endif %}
 
     <body class="text-center">
-    <h1>All Student Requests</h1>
-        <ul class="list-group">
-        {% for session in sessions %}
-        <li class="list-group-item"> Tutor: {{ session.tutor }} || course: {{ session.course }} || Start Time: {{ session.start_time }} || End Time: {{ session.end_time }}
-    </li>
+   
+    <h1>Enter your Name</h1>
+    <form method="get">
+        {{ form.as_p }}
+        <button type="submit">Filter</button>
+    </form>
 
-
-{% endfor %}
-</ul>
-</body>
+    <tbody>
+      {% for tutor in tutor %}
+          <tr>
+              <td>{{ tutor.first_name }}</td>
+              <td>{{ tutor.course }}</td>
+              <td>{{ tutor.headline }}</td>
+              <td>{{ tutor.qualifications }}</td>
+              <td>{{ tutor.hourly_rate }}</td>
+              <td>{{ tutor.rating }}</td>
+          </tr>
+      {% endfor %}
+    </tbody
+    </body>
 
 
     <footer class="bg-light text-center text-lg-start mt-auto">
