@@ -91,7 +91,9 @@ def search_classes(request):
     if request.method == "POST":
         searched = request.POST.get('searched', default="")
         courses = Tutor.objects.filter(course__title__contains=searched)
-    return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses})
+        courses2 = Tutor.objects.filter(course__pnemonic__contains=searched)
+        courses3 = Tutor.objects.filter(course__coursenum__contains=searched)
+    return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses, 'courses2': courses2, 'courses3': courses3})
 
 # View that students use to make a request on a listing
 def update_listing(request):
@@ -142,10 +144,7 @@ def createThread(request):
 #display active threads 
 def threadList(request):
     all_threads = discussionThread.objects.all()
-    #return render(request, 'myapp/discussionthreadlist.html', {'all_threads': all_threads})
-    courses2 = Tutor.objects.filter(course__pnemonic__contains=searched)
-    courses3 = Tutor.objects.filter(course__coursenum__contains=searched)
-    return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses, 'courses2': courses2, 'courses3': courses3})
+    return render(request, 'myapp/discussionthreadlist.html', {'all_threads': all_threads})
 
 
 
