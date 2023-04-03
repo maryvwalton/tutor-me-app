@@ -103,5 +103,6 @@ class discussionReplies(models.Model):
     question = models.ForeignKey(discussionThread, on_delete=models.CASCADE)
     reply_date = models.DateTimeField(timezone.now(), null = True)
 
+    def __str__(self):
          return self.comment
 
