@@ -25,10 +25,6 @@ class TutorForm(ModelForm):
 class RequestForm(ModelForm):
     class Meta:
         model = SessionRequest
-
-class RequestForm(ModelForm):
-    class Meta:
-        model = SessionRequest
         fields = [
             'date',
             'start_time',
