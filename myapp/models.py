@@ -15,7 +15,7 @@ class Course(models.Model):
 
     def __str__(self):
 
-        return self.title 
+        return self.pnemonic + " " + str(self.coursenum) + " " + self.title
 
 
 class Tutor(models.Model):
