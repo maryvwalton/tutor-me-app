@@ -127,7 +127,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 4
+SITE_ID = 5
 
 
 LOGIN_REDIRECT_URL = '/'
@@ -135,6 +135,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

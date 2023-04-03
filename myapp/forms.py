@@ -1,5 +1,8 @@
+
+from django import forms
 from django.forms import HiddenInput, ModelChoiceField, ModelForm
 from .models import *
+
 
 #form that tutors use to create a listing
 class TutorForm(ModelForm):
@@ -18,11 +21,14 @@ class TutorForm(ModelForm):
  
         ]
 
-
+#form that students use to request a tutor
 class RequestForm(ModelForm):
     class Meta:
         model = SessionRequest
 
+class RequestForm(ModelForm):
+    class Meta:
+        model = SessionRequest
         fields = [
             'date',
             'start_time',
@@ -34,33 +40,6 @@ class RequestForm(ModelForm):
  
         ]
 
-# class RequestForm(ModelForm):
-#     request_form = RequestForm1()
-
-#     class Meta:
-#         model = Profile
-#         fields = ['user']
-
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         if self.instance.pk:
-#             self.request_form = RequestForm(instance=self.instance.request)
-
-#         self.fields['sessionRequests'] = ModelChoiceField(queryset=SessionRequest.objects.all(),
-#                                                         widget=HiddenInput())
-
-#     def save(self, commit=True):
-#         request = self.request_form.save(commit=False)
-#         request.save()
-
-#         profile = super().save(commit=False)
-#         profile.request = request
-
-#         if commit:
-#             profile.save()
-#             self.request_form.save_m2m()
-
-#         return profile
 
 #form that students use to add themselves to listing
 class UpdateForm(ModelForm):
@@ -70,6 +49,10 @@ class UpdateForm(ModelForm):
         fields = [
             'student',
         ]
+
+class FilterForm(forms.Form):
+    name = forms.CharField(max_length=100, required=False)
+
         
 
         
