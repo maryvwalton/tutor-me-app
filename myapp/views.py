@@ -1,11 +1,12 @@
 
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, reverse
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 
 from .forms import TutorForm, RequestForm, FilterForm
 from .models import Tutor, SessionRequest
 from django.views.generic import DetailView
-
+from django.views.generic.edit import FormMixin
 from .forms import TutorForm, UpdateForm, RequestForm
 from .models import Tutor, discussionThread, discussionReplies, SessionRequest
 from django.utils import timezone
@@ -27,6 +28,7 @@ def index(request):
 
 #View that shows the listings on tutor_courses.html
 def listing_view(request):
+    
     listings = Tutor.objects.all()
 
     args = {'listings': listings}
@@ -65,9 +67,13 @@ def submit_listing(request):
         'end_time': '11:00',
 
         })
-
+#making the form save the data and also create the slug value by calling save() on it
     if form.is_valid():
-        form.save()
+        # text = form.cleaned_data['text']
+        new_listing = form.save()
+        new_listing.save()
+    
+        # form.save()
         return redirect('/myapp/tutor_courses/')
     
     context = {
@@ -86,18 +92,66 @@ def search_classes(request):
     return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses, 'courses2': courses2, 'courses3': courses3})
 
 # View that students use to make a request on a listing
-def update_listing(request):
+def update_listing(request, pk):
+
+    tutor = Tutor.objects.get(pk = pk)
 
     form = RequestForm(request.POST or None)
+
+    form.initial['tutor'] = tutor.id
+    form.initial['course'] = tutor.course
+
+    field = form.fields['tutor']
+    field.widget = field.hidden_widget()
+    field = form.fields['course']
+    field.widget = field.hidden_widget()
 
     if form.is_valid():
         form.save()
 
         return redirect('/myapp/profile/')
     context = {
-        'form': form
+        'form': form,
+        'tutor':tutor
+
     }
     return render(request, 'myapp/add_student_to_listing.html', context)
+
+
+
+
+# class SessionRequestView(FormMixin, DetailView):
+#     model = Tutor
+#     form_class = RequestForm
+
+#     def get_success_url(self):
+#         return reverse('update_listing', kwargs={'tutor_id': self.object.tutor_id})
+
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['form'] = self.get_form()
+    #     context['comments'] = BookComment.objects.filter(
+    #         book=self.object).order_by('-id')
+    #     return context
+
+    # def post(self, request, *args, **kwargs):
+    #     if not request.user.is_authenticated:
+    #         return HttpResponseForbidden()
+    #     self.object = self.get_object()
+    #     form = self.get_form()
+    #     if form.is_valid():
+    #         return self.form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
+
+    # def form_valid(self, form):
+    #     b = self.get_object()
+    #     text = form.cleaned_data['text']
+    #     new_comment = BookComment(text=text, book=b, user=self.request.user)
+    #     new_comment.save()
+    #     messages.success(self.request, "Your comment is added, thank you")
+    #     return super().form_valid(form)
 
 
 

@@ -61,7 +61,7 @@
 <ul class="list-group">
 {% for listing in listings %}
     <li class="list-group-item"> Course: {{ listing.course }} || Tutor: {{ listing.first_name }} || Hourly Rate: {{ listing.hourly_rate }} || Rating: {{ listing.rating }}
-      <a href = "/add_student_to_listing">BOOK</a>
+      <a href = "{% url 'update_listing' listing.pk %}">BOOK ff{{listing.pk }}fff</a>
     </li>
 {% endfor %}
 </ul>

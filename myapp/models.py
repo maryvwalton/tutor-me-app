@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -19,16 +20,22 @@ class Course(models.Model):
 class Tutor(models.Model):
     first_name = models.CharField(max_length=200)  
     last_name = models.CharField(max_length=200)  
+    slug = models.SlugField(unique=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     headline = models.CharField(max_length=300)
     qualifications = models.CharField(max_length=750)
     hourly_rate = models.FloatField(default=0)
     rating = models.FloatField(default=0)
 
-    #sign up form to become a tutor 
-
     def __str__(self):
         return self.first_name + self.last_name
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.first_name)
+        super(Tutor, self).save(*args, **kwargs)
+
+    #sign up form to become a tutor 
+
 
 
 class Student(models.Model):
