@@ -1,10 +1,10 @@
 
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse
 
 from .forms import TutorForm, RequestForm, FilterForm
 from .models import Tutor, SessionRequest
-from django.views.generic import DetailView
+from django.views import generic 
 
 from .forms import TutorForm, UpdateForm, RequestForm
 from .models import Tutor, discussionThread, discussionReplies, SessionRequest
@@ -126,15 +126,30 @@ def filter(request):
 
 
 
+#detail view for discussion thread 
+class discussionView(generic.DetailView):
+    model = discussionThread
+    template_name = 'myapp/discussiondetail.html'
+    context_object_name = 'thread'
+
+
+#class based function -- ignore 
+# def discussionDetail(request, id):
+#     disc = get_object_or_404(discussionThread, pk = id)
+#     context = {'disc': disc}
+#     return render(request, 'myapp/discussiondetail.html', context)
+
+
 #create discussion thread 
 def createThread(request):
     if request.method == 'POST':
         user = request.POST["username"]
         title = request.POST["title_text"]
         question = request.POST["question_text"]
-        new_thread = discussionThread(username = user, title_text = title, question_text = question, pub_date = timezone.now())
+        new_thread = discussionThread(username = user, title_text = title, question_text = question)
         new_thread.save()
-        return HttpResponseRedirect('/discussion')
+        id = new_thread.pk
+        return redirect('thread-detail', pk = new_thread.pk)
     else:
         d = discussionThread()
         return render(request, 'myapp/submitthread.html', {'discussionThread': discussionThread})
@@ -148,3 +163,6 @@ def threadList(request):
 
 
 
+#reply to thread 
+def replyThread(request, discussionThread_id):
+    discussion = get_object_or_404(discussionThread, pk = discussionThread_id)

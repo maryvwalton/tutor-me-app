@@ -19,7 +19,8 @@ urlpatterns = [
     path('search_classes', views.search_classes, name = 'search-classes'),
 
     path('profile/', views.filter, name = 'filter'),
-
-    path('submit_thread/', views.createThread, name = 'submitthread'),
     path('discussion', views.threadList, name='threadslist'),
+    path('discussion/<int:pk>', views.discussionView.as_view(), name='discussionThread'),
+    path('submit_thread/', views.createThread, name = 'submitthread'),
+
 ]
