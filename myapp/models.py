@@ -20,7 +20,7 @@ class Course(models.Model):
 class Tutor(models.Model):
     first_name = models.CharField(max_length=200)  
     last_name = models.CharField(max_length=200)  
-    slug = models.SlugField(unique=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True )
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     headline = models.CharField(max_length=300)
     qualifications = models.CharField(max_length=750)
@@ -31,7 +31,7 @@ class Tutor(models.Model):
         return self.first_name + self.last_name
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.first_name)
+        # self.slug = slugify(self.first_name)
         super(Tutor, self).save(*args, **kwargs)
 
     #sign up form to become a tutor 
@@ -54,9 +54,15 @@ class SessionRequest(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True )
+    student = models.ForeignKey(User, on_delete=models.CASCADE, null=True )
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     service = models.CharField(max_length=150)
+
+    pending_choices = (
+        (1, 'Confirm'),
+        (2, 'Decline'),
+    )
+    pending = models.IntegerField(choices= pending_choices, null= True)
 
     def __str__(self):
         return str(self.id)

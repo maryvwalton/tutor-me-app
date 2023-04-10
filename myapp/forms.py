@@ -8,7 +8,7 @@ class TutorForm(ModelForm):
         model = Tutor
 
         fields = [
-            # 'user', 
+    'user', 
     'first_name',
     'last_name',
     'course',
@@ -29,10 +29,18 @@ class RequestForm(ModelForm):
             'start_time',
             'end_time',
             'tutor',
-            # 'student',
+            'student',
             'course',
             'service',
  
+        ]
+
+#form that tutors use to confirm/regect session requests
+class PendingForm(ModelForm):
+    class Meta:
+        model = SessionRequest
+        fields = [
+            'pending',
         ]
 
 #form that students use to add themselves to listing

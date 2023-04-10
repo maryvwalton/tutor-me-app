@@ -23,4 +23,8 @@ urlpatterns = [
 
     path('submit_thread/', views.createThread, name = 'submitthread'),
     path('discussion', views.threadList, name='threadslist'),
+
+    path('delete/<int:pk>/', views.delete_model, name='delete_model'),
+    path('confirm/<int:pk>/', views.confirm_model, name='confirm_model'),
+    path('decline/<int:pk>/', views.decline_model, name='decline_model'),
 ]
