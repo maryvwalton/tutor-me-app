@@ -50,6 +50,14 @@ class FilterForm(forms.Form):
     name = forms.CharField(max_length=100, required=False)
 
         
-
+#discussion response form 
+class ReplyForm(ModelForm):
+    class Meta:
+        model = discussionReplies
+        fields = [
+            'username',
+            'reply_text',
+            #'question',
+        ]
         
 

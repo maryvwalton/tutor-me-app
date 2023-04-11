@@ -6,7 +6,7 @@ from .forms import TutorForm, RequestForm, FilterForm
 from .models import Tutor, SessionRequest
 from django.views import generic 
 
-from .forms import TutorForm, UpdateForm, RequestForm
+from .forms import TutorForm, UpdateForm, RequestForm, ReplyForm
 from .models import Tutor, discussionThread, discussionReplies, SessionRequest
 from django.utils import timezone
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -149,7 +149,7 @@ def createThread(request):
         new_thread = discussionThread(username = user, title_text = title, question_text = question)
         new_thread.save()
         id = new_thread.pk
-        return redirect('thread-detail', pk = new_thread.pk)
+        return redirect('discussionThread', pk = new_thread.pk)
     else:
         d = discussionThread()
         return render(request, 'myapp/submitthread.html', {'discussionThread': discussionThread})
@@ -162,7 +162,18 @@ def threadList(request):
     return render(request, 'myapp/discussionthreadlist.html', {'all_threads': all_threads})
 
 
-
 #reply to thread 
 def replyThread(request, discussionThread_id):
     discussion = get_object_or_404(discussionThread, pk = discussionThread_id)
+
+    if request.method == 'POST':
+        form = ReplyForm(request.POST)
+
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.question = discussion
+            obj.save()
+        else:
+            form = ReplyForm(request.POST)
+    
+    return render(request, 'myapp/discussiondetail.html', {'discussion':discussion, 'replyForm':form})
