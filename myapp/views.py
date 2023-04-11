@@ -11,6 +11,7 @@ from .models import Tutor, discussionThread, discussionReplies, SessionRequest
 from django.utils import timezone
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 
+from django.db.models import Count
 
 from email.policy import default
 
@@ -132,7 +133,6 @@ class discussionView(generic.DetailView):
     template_name = 'myapp/discussiondetail.html'
     context_object_name = 'thread'
 
-
 #class based function -- ignore 
 # def discussionDetail(request, id):
 #     disc = get_object_or_404(discussionThread, pk = id)
@@ -158,7 +158,7 @@ def createThread(request):
 
 #display active threads 
 def threadList(request):
-    all_threads = discussionThread.objects.all()
+    all_threads = discussionThread.objects.annotate(num_replies = Count('replies'))
     return render(request, 'myapp/discussionthreadlist.html', {'all_threads': all_threads})
 
 
@@ -167,13 +167,14 @@ def replyThread(request, discussionThread_id):
     discussion = get_object_or_404(discussionThread, pk = discussionThread_id)
 
     if request.method == 'POST':
-        form = ReplyForm(request.POST)
+       user = request.POST["username"]
+       text = request.POST["response"]
+       thread_question = discussion
+       new_reply = discussionReplies(username = user, reply_text = text, question = thread_question)
+       new_reply.save()
+       return redirect('discussionThread', pk = discussion.pk)
 
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.question = discussion
-            obj.save()
-        else:
-            form = ReplyForm(request.POST)
-    
-    return render(request, 'myapp/discussiondetail.html', {'discussion':discussion, 'replyForm':form})
+    else:
+        r = discussionReplies()
+        return render(request, 'myapp/reply_to_thread.html', {'discussionReplies': discussionReplies})
+      

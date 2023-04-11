@@ -2,45 +2,72 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
+
+<div class="cover-container  mx-auto flex-column">
+  <ul class="nav bg-info mx-auto">
+    <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/discussion">View Discussion</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/profile">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/logout">Log Out</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" >{{ user.username }}</a>
+    </li>
+  </ul>
+
+
+
 <div class = "container mx-auto">
+
+    <br>
+    <p class="lead"> Thread: </p>
+
 
         <div class="card">
                 <h5 class="card-header">{{thread.username}}</h5>
                 <div class="card-body">
                         <h5 class="card-title">{{ thread.title_text }}</h5>
                         <p class="card-text">{{ thread.question_text }}</p>
-                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Reply
-                        </button>
+                         
+                         <a class="btn btn-primary btn" href="/discussion/{{thread.id}}/reply" role="button">Reply</a>
+
                 </div>
         </div>
 
-  
-      
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Respond to Thread Below</h5>
-              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+        <br>
+        <p class="lead"> Replies: </p>
+
+        <ul class = "list-group">
+          {% for r in thread.replies.all%}
+          <li class="list-group-item  flex-column"> 
+            <div>  
+                <strong> {{ r.reply_text }} </strong>
             </div>
-            <div class="modal-body">
-                <label for="username">Username:</label><br>
-                <input style="height:50px;" type="text" name="username" id="username" ><br>
-                <label for="username">Response Text:</label><br>
-                <input style="height:200px;" type="text" name="resposne" id="username" ><br>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Submit</button>
-            </div>
-          </div>
+            <small>Posted by {{r.username}} </small>
+          {% endfor %}
+           </li>
+
         </div>
-      </div>
+  
+    
 
 </div>
 
+<br>
 
+<footer class="bg-light text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+    © 2023 Copyright: Team A-30
+  </div>
+</footer>

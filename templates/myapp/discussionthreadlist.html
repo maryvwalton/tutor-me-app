@@ -34,7 +34,8 @@
 
     <h3 class=" font-weight-normal text-center">Discuss with peers in your community</h3>
     <p class="lead  text-center"> Browse conversations about classes, assignments, professors and more</p>
-    <a class="btn btn-primary text-center" href="/submit_thread" role="button">Start a Discussion Thread</a>
+
+    <a class="btn btn-success text-center" href="/submit_thread" role="button">Start a Discussion Thread</a>
     
     <br>
     <br>
@@ -46,7 +47,7 @@
             </div>
             <small>Posted by {{thread.username}} </small>
             <div>
-                <button class="btn btn-warning btn-sm btn-round" type="submit">#replies</button>
+                <button class="btn btn-warning btn-sm btn-round" type="submit"> {{thread.num_replies}} replies</button>
                 <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{thread.id}}" role="button">View</a>
             </div>
             
@@ -58,3 +59,8 @@
 
 </div>
 
+<footer class="bg-light text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+    © 2023 Copyright: Team A-30
+  </div>
+</footer>

@@ -100,9 +100,12 @@ class discussionThread(models.Model):
 class discussionReplies(models.Model):
     username = models.CharField(max_length=200) 
     reply_text = models.CharField(max_length=500)
-    question = models.ForeignKey(discussionThread, on_delete=models.CASCADE)
+    question = models.ForeignKey(discussionThread, on_delete=models.CASCADE, related_name="replies")
     #reply_date = models.DateTimeField(timezone.now(), null = True)
 
     def __str__(self):
-         return self.comment
+         return self.objects.count()
+
+    def count_replies(self): 
+        return self.objects.count()
 

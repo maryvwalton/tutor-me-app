@@ -21,6 +21,7 @@ urlpatterns = [
     path('profile/', views.filter, name = 'filter'),
     path('discussion', views.threadList, name='threadslist'),
     path('discussion/<int:pk>', views.discussionView.as_view(), name='discussionThread'),
+    path('discussion/<int:discussionThread_id>/reply', views.replyThread, name='replyThread'),
     path('submit_thread/', views.createThread, name = 'submitthread'),
 
 ]

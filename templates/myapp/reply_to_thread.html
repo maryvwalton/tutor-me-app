@@ -2,3 +2,61 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
+<div class="cover-container  mx-auto flex-column">
+    <ul class="nav bg-info mx-auto">
+      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/discussion">View Discussion</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/profile">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/logout">Log Out</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" >{{ user.username }}</a>
+      </li>
+    </ul>
+
+
+<div class = "container mx-auto">
+
+    <br>
+
+    <h3 class=" font-weight-normal text-center">Respond to the thread below  </h3>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">@</span>
+                </div>
+                <input type="text"  name="username" id="username" class="form-control" placeholder="Username" aria-label="username" aria-describedby="basic-addon1">
+            </div>
+
+
+            <div class="input-group mb-3">
+                <input type="text" name="response" id="response" class="form-control" placeholder="Response text" aria-label="Title text" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                </div>
+            </div>
+
+            <br>
+            <input type="submit"  class="btn btn-primary " value="Submit">
+
+</div>
+
+<footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+      © 2023 Copyright: Team A-30
+    </div>
+</footer>
