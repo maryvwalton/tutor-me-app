@@ -3,18 +3,55 @@
 {% bootstrap_javascript %}
 
 
+<div class="cover-container  mx-auto flex-column">
+    <ul class="nav bg-info mx-auto">
+      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/discussion">View Discussion</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/profile">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/logout">Log Out</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" >{{ user.username }}</a>
+      </li>
+    </ul>
+
+
+
 <div class = container>
 
-    <a class="btn btn-primary" href="/submit_thread" role="button">Submit Thread</a>
+    <br>
 
-    <h4 class="text-info">Submitted Threads:</h4>
-
-    <ul class = "list-group list-group-numbered">
+    <h3 class=" font-weight-normal text-center">Discuss with peers in your community</h3>
+    <p class="lead  text-center"> Browse conversations about classes, assignments, professors and more</p>
+    <a class="btn btn-primary text-center" href="/submit_thread" role="button">Start a Discussion Thread</a>
+    
+    <br>
+    <br>
+    <div class = "list-group">
         {% for thread in all_threads%}
-        <li class="list-group-item "> 
-            <strong> {{ thread.title_text }}</strong> : {{ thread.question_text }}
-           <a class="btn btn-secondary btn-sm" href="/discussion/{{thread.id}}" role="button">View</a>
+        <li class="list-group-item  flex-column"> 
+            <div>  
+                <strong> {{ thread.title_text }} </strong>  :   {{ thread.question_text }}
+            </div>
+            <small>Posted by {{thread.username}} </small>
+            <div>
+                <button class="btn btn-warning btn-sm btn-round" type="submit">#replies</button>
+                <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{thread.id}}" role="button">View</a>
+            </div>
+            
         </li>
+        <br>
         {% endfor %}
    </ul>
 
