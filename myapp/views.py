@@ -125,7 +125,13 @@ def filter(request):
     return render(request, 'myapp/profile.html', {'tutor': tutor, 
                                                   'sess_request': sess_request_pending, 
                                                   'sess_request_student_side': sess_request_student_side,
-                                                  'sess_request_confirmed': sess_request_confirmed,})
+                                                  'sess_request_confirmed': sess_request_confirmed,
+                                                  'is_tutor': tutor.exists(),
+                                                  'has_sess_request': sess_request_pending.exists(),
+                                                  'has_sess_request_student_side': sess_request_student_side.exists(),
+                                                  'has_sess_request_confirmed': sess_request_confirmed.exists(),
+                                                  })
+
 
 #view that is used to delete session requests in profile page
 def delete_model(request, pk):
@@ -165,7 +171,6 @@ def decline_model(request, pk):
 
     return render(request, "myapp/profile.html", context)
     
-
 
 
 # def filter(request):
