@@ -256,7 +256,7 @@
       <tbody>
           {% for sess_request in sess_request_student_side %}
         {% if sess_request.pending == 1 %}
-          <div style="background-color: green;">
+          <div style="background-color: rgb(166, 232, 166);">
             <tr>
               <td>{{ sess_request.date }}</td>
                 <td>{{ sess_request.start_time }}</td>
@@ -269,7 +269,7 @@
             <p>Your session is approved! Contact {{sess_request.tutor.user.email}} to get started!</p>
           </div>
         {% elif sess_request.pending == 2 %}
-        <div style="background-color: red;">
+        <div style="background-color: rgb(227, 177, 177);">
           <tr>
             <td>{{ sess_request.date }}</td>
                 <td>{{ sess_request.start_time }}</td>
@@ -282,7 +282,7 @@
             <p>Your session was Declined :( You can apply for another listing <a href="{% url 'listing_view' %}">here!<a></p>
         </div>
         {% else %}
-          <tr style="background-color: yellow;">
+          <tr style="background-color:rgb(216, 216, 157);">
             <td>{{ sess_request.date }}</td>
                 <td>{{ sess_request.start_time }}</td>
                 <td>{{ sess_request.end_time }}</td>
