@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+# from .views import (SessionRequestView) 
 
 from django.urls import path, include
 from django.views.generic import TemplateView
@@ -10,9 +11,8 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="myapp/index.html")),
     path('submit_listing/', views.submit_listing, name = "submit_listing"),
     path('tutor_courses/', views.listing_view, name = "listing_view"),
+    path('add_student_to_listing/<int:pk>', views.update_listing, name = "update_listing"),
 
-    path('add_student_to_listing/', views.update_listing, name = "update_listing"),
-    #path('update_listing', views.update_listing, name = "update_listing"),
 
     path('accounts/', include('allauth.urls')),
     path('logout', LogoutView.as_view()),
@@ -20,8 +20,14 @@ urlpatterns = [
 
     path('profile/', views.filter, name = 'filter'),
     path('discussion', views.threadList, name='threadslist'),
+
+    path('delete/<int:pk>/', views.delete_model, name='delete_model'),
+    path('confirm/<int:pk>/', views.confirm_model, name='confirm_model'),
+    path('decline/<int:pk>/', views.decline_model, name='decline_model'),
+
     path('discussion/<int:pk>', views.discussionView.as_view(), name='discussionThread'),
     path('discussion/<int:discussionThread_id>/reply', views.replyThread, name='replyThread'),
     path('submit_thread/', views.createThread, name = 'submitthread'),
 
 ]
+

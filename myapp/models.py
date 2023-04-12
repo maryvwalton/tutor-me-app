@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.utils.text import slugify
 
 
 # Create your models here.
@@ -21,16 +22,22 @@ class Course(models.Model):
 class Tutor(models.Model):
     first_name = models.CharField(max_length=200)  
     last_name = models.CharField(max_length=200)  
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True )
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     headline = models.CharField(max_length=300)
     qualifications = models.CharField(max_length=750)
     hourly_rate = models.FloatField(default=0)
     rating = models.FloatField(default=0)
 
-    #sign up form to become a tutor 
-
     def __str__(self):
         return self.first_name + self.last_name
+    
+    def save(self, *args, **kwargs):
+        # self.slug = slugify(self.first_name)
+        super(Tutor, self).save(*args, **kwargs)
+
+    #sign up form to become a tutor 
+
 
 
 class Student(models.Model):
@@ -48,7 +55,7 @@ class SessionRequest(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True )
+    student = models.ForeignKey(User, on_delete=models.CASCADE, null=True )
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     service_choices = (
@@ -58,6 +65,12 @@ class SessionRequest(models.Model):
     ("4", "Other")
 )
     service = models.CharField(max_length=150, choices = service_choices)
+
+    pending_choices = (
+        (1, 'Confirm'),
+        (2, 'Decline'),
+    )
+    pending = models.IntegerField(choices= pending_choices, null= True)
 
     def __str__(self):
         return str(self.id)

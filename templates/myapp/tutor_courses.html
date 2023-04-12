@@ -57,6 +57,7 @@
 <h1>All Tutor Listings</h1>
 <ul class="list-group">
 {% for listing in listings %}
+
 <li class="list-group-item">
   <h5 class = "list-group-text" >{{  listing.first_name }} {{listing.last_name }} : {{ listing.headline }}  </h5>
   <p class = "list-group-item-text lead">{{ listing.qualifications }} </p>
@@ -72,6 +73,7 @@
    </a>
 
   </li>
+
 {% endfor %}
 </ul>
 
