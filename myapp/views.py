@@ -5,11 +5,15 @@ from django.urls import reverse_lazy
 from .forms import TutorForm, RequestForm, FilterForm
 from .models import Tutor, SessionRequest
 
-from .forms import TutorForm, UpdateForm, RequestForm
+from django.views import generic 
+from .forms import TutorForm, UpdateForm, RequestForm, ReplyForm
 from .models import Tutor, discussionThread, discussionReplies, SessionRequest
 from django.utils import timezone
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 
+from django.db.models import Count
+
+from email.policy import default
 
 from email.policy import default
 
@@ -40,6 +44,7 @@ def request_view(request):
     args = {'sessions': sessions}
 
     return render(request, 'myapp/tutor_courses.html', args)
+
 
 
 #view that tutors use to make a listing
@@ -188,15 +193,29 @@ def decline_model(request, pk):
 
 
 
+#detail view for discussion thread 
+class discussionView(generic.DetailView):
+    model = discussionThread
+    template_name = 'myapp/discussiondetail.html'
+    context_object_name = 'thread'
+
+#class based function -- ignore 
+# def discussionDetail(request, id):
+#     disc = get_object_or_404(discussionThread, pk = id)
+#     context = {'disc': disc}
+#     return render(request, 'myapp/discussiondetail.html', context)
+
+
 #create discussion thread 
 def createThread(request):
     if request.method == 'POST':
         user = request.POST["username"]
         title = request.POST["title_text"]
         question = request.POST["question_text"]
-        new_thread = discussionThread(username = user, title_text = title, question_text = question, pub_date = timezone.now())
+        new_thread = discussionThread(username = user, title_text = title, question_text = question)
         new_thread.save()
-        return HttpResponseRedirect('/discussion')
+        id = new_thread.pk
+        return redirect('discussionThread', pk = new_thread.pk)
     else:
         d = discussionThread()
         return render(request, 'myapp/submitthread.html', {'discussionThread': discussionThread})
@@ -205,8 +224,23 @@ def createThread(request):
 
 #display active threads 
 def threadList(request):
-    all_threads = discussionThread.objects.all()
+    all_threads = discussionThread.objects.annotate(num_replies = Count('replies'))
     return render(request, 'myapp/discussionthreadlist.html', {'all_threads': all_threads})
 
 
+#reply to thread 
+def replyThread(request, discussionThread_id):
+    discussion = get_object_or_404(discussionThread, pk = discussionThread_id)
+
+    if request.method == 'POST':
+       user = request.POST["username"]
+       text = request.POST["response"]
+       thread_question = discussion
+       new_reply = discussionReplies(username = user, reply_text = text, question = thread_question)
+       new_reply.save()
+       return redirect('discussionThread', pk = discussion.pk)
+
+    else:
+        r = discussionReplies()
+        return render(request, 'myapp/reply_to_thread.html', {'discussionReplies': discussionReplies})
 

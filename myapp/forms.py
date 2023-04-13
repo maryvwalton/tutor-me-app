@@ -1,6 +1,8 @@
+
 from django import forms
-from django.forms import ModelForm
-from .models import SessionRequest,Tutor
+from django.forms import HiddenInput, ModelChoiceField, ModelForm
+from .models import *
+
 
 #form that tutors use to create a listing
 class TutorForm(ModelForm):
@@ -23,7 +25,6 @@ class TutorForm(ModelForm):
 class RequestForm(ModelForm):
     class Meta:
         model = SessionRequest
-
         fields = [
             'date',
             'start_time',
@@ -55,5 +56,15 @@ class UpdateForm(ModelForm):
 class FilterForm(forms.Form):
     name = forms.CharField(max_length=100, required=False)
 
+        
+#discussion response form 
+class ReplyForm(ModelForm):
+    class Meta:
+        model = discussionReplies
+        fields = [
+            'username',
+            'reply_text',
+            #'question',
+        ]
         
 

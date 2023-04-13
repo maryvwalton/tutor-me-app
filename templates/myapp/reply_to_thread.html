@@ -2,7 +2,6 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-
 <div class="cover-container  mx-auto flex-column">
     <ul class="nav bg-info mx-auto">
       <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
@@ -27,40 +26,37 @@
     </ul>
 
 
-
-<div class = container>
+<div class = "container mx-auto">
 
     <br>
 
-    <h3 class=" font-weight-normal text-center">Discuss with peers in your community</h3>
-    <p class="lead  text-center"> Browse conversations about classes, assignments, professors and more</p>
+    <h3 class=" font-weight-normal text-center">Respond to the thread below  </h3>
 
-    <a class="btn btn-success text-center" href="/submit_thread" role="button">Start a Discussion Thread</a>
-    
-    <br>
-    <br>
-    <div class = "list-group">
-        {% for thread in all_threads%}
-        <li class="list-group-item  flex-column"> 
-            <div>  
-                <strong> {{ thread.title_text }} </strong>  :   {{ thread.question_text }}
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">@</span>
+                </div>
+                <input type="text"  name="username" id="username" class="form-control" placeholder="Username" aria-label="username" aria-describedby="basic-addon1">
             </div>
-            <small>Posted by {{thread.username}} </small>
-            <div>
-                <button class="btn btn-warning btn-sm btn-round" type="submit"> {{thread.num_replies}} replies</button>
-                <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{thread.id}}" role="button">View</a>
-            </div>
-            
-        </li>
-        <br>
-        {% endfor %}
-   </ul>
 
+
+            <div class="input-group mb-3">
+                <input type="text" name="response" id="response" class="form-control" placeholder="Response text" aria-label="Title text" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                </div>
+            </div>
+
+            <br>
+            <input type="submit"  class="btn btn-primary " value="Submit">
 
 </div>
 
 <footer class="bg-light text-center text-lg-start">
-  <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
-    © 2023 Copyright: Team A-30
-  </div>
+    <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+      © 2023 Copyright: Team A-30
+    </div>
 </footer>
