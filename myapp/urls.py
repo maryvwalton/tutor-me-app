@@ -10,6 +10,9 @@ from django.contrib.auth.views import LogoutView
 urlpatterns = [
     path('', TemplateView.as_view(template_name="myapp/index.html")),
     path('submit_listing/', views.submit_listing, name = "submit_listing"),
+
+    path('submit_listing/add_more_availability/<int:pk>', views.add_more_availability, name="add_more_availability"),
+
     path('tutor_courses/', views.listing_view, name = "listing_view"),
     path('add_student_to_listing/<int:pk>', views.update_listing, name = "update_listing"),
 

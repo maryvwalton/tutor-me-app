@@ -13,7 +13,6 @@ class AppointmentForm(ModelForm):
             'date',
             'start_time',
             'end_time',
-            'student',
             'course',
         ]
 

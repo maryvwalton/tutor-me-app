@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from .forms import TutorForm, RequestForm, FilterForm
+from .forms import TutorForm, RequestForm, FilterForm, AppointmentForm
 from .models import Tutor, SessionRequest, Appointment
 
 from django.views import generic
@@ -13,11 +13,6 @@ from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.db.models import Count
 
 from email.policy import default
-
-from email.policy import default
-
-from myapp.query_SIS_API import *
-
 
 # SHERRIFF: very basic index page created
 
@@ -42,6 +37,27 @@ def request_view(request):
     args = {'sessions': sessions}
 
     return render(request, 'myapp/tutor_courses.html', args)
+
+
+def add_more_availability(request, pk):
+    form = AppointmentForm(request.POST or None)
+
+    if request.method == 'POST':
+
+        tutor = Tutor.objects.get(pk=pk)
+
+        if form.is_valid():
+            appointment = form.save(commit=False)
+
+            appointment.tutor = tutor
+            appointment.save()
+
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'myapp/add_more_availability.html', context)
 
 
 # view that tutors use to make a listing
@@ -73,8 +89,13 @@ def submit_listing(request):
         appointment.save()
         new_listing.save()
 
+        # context = {
+        #     'this_tutor': new_listing,
+        #     'this_course': new_listing.course
+        # }
+
         # form.save()
-        return redirect('/myapp/tutor_courses/')
+        return redirect('add_more_availability', pk=new_listing.pk)
 
     context = {
         'form': form
