@@ -4,6 +4,23 @@ from .models import *
 
 
 # form that tutors use to create a listing
+
+class AppointmentForm(ModelForm):
+    class Meta:
+        model = Appointment
+
+        fields = [
+            'date',
+            'start_time',
+            'end_time',
+            'student',
+            'course',
+        ]
+
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    start_time = forms.TimeField(widget=forms.TimeInput)
+    end_time = forms.TimeField(widget=forms.TimeInput)
+
 class TutorForm(ModelForm):
     class Meta:
         model = Tutor
