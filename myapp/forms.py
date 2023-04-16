@@ -16,9 +16,11 @@ class AppointmentForm(ModelForm):
             'course',
         ]
 
+
     date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
-    start_time = forms.TimeField(widget=forms.TimeInput)
-    end_time = forms.TimeField(widget=forms.TimeInput)
+    start_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
+    end_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
+
 
 class TutorForm(ModelForm):
     class Meta:
@@ -41,8 +43,6 @@ class TutorForm(ModelForm):
     end_time = forms.TimeField(widget=forms.TimeInput)
 
 
-
-
 # form that students use to request a tutor
 class RequestForm(ModelForm):
     class Meta:
@@ -57,11 +57,8 @@ class RequestForm(ModelForm):
             'service',
 
         ]
-        widgets = {
-            # 'date': SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"))
-            'date': forms.DateInput(attrs=dict(type='date'))
 
-        }
+        date = forms.ModelChoiceField(queryset=SessionRequest)
 
 
 # form that tutors use to confirm/regect session requests

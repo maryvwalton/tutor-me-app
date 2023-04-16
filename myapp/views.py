@@ -14,6 +14,7 @@ from django.db.models import Count
 
 from email.policy import default
 
+
 # SHERRIFF: very basic index page created
 
 
@@ -41,17 +42,17 @@ def request_view(request):
 
 def add_more_availability(request, pk):
     form = AppointmentForm(request.POST or None)
+    tutor = Tutor.objects.get(pk=pk)
+
+    form.initial['course'] = tutor.course
 
     if request.method == 'POST':
-
-        tutor = Tutor.objects.get(pk=pk)
 
         if form.is_valid():
             appointment = form.save(commit=False)
 
             appointment.tutor = tutor
             appointment.save()
-
 
     context = {
         'form': form
@@ -114,6 +115,36 @@ def search_classes(request):
 
 
 # View that students use to make a request on a listing
+# def update_listing(request, pk):
+#     user = request.user
+#     tutor = Tutor.objects.get(pk=pk)
+#
+#     form = RequestForm(request.POST or None)
+#
+#     form.initial['tutor'] = tutor.id
+#     form.initial['course'] = tutor.course
+#     form.initial['student'] = user
+#
+#     field = form.fields['tutor']
+#     field.widget = field.hidden_widget()
+#     field = form.fields['course']
+#     field.widget = field.hidden_widget()
+#     field = form.fields['student']
+#     field.widget = field.hidden_widget()
+#
+#     if form.is_valid():
+#         form.save()
+#
+#         return redirect('/myapp/profile/')
+#
+#     context = {
+#         'form': form,
+#         'tutor': tutor
+#
+#     }
+#     return render(request, 'myapp/add_student_to_listing.html', context)
+
+
 def update_listing(request, pk):
     user = request.user
     tutor = Tutor.objects.get(pk=pk)
@@ -135,12 +166,14 @@ def update_listing(request, pk):
         form.save()
 
         return redirect('/myapp/profile/')
+
     context = {
         'form': form,
         'tutor': tutor
-
     }
     return render(request, 'myapp/add_student_to_listing.html', context)
+
+
 
 
 # view that shows the listings associated with a user on the profile page
