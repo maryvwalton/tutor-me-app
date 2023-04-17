@@ -4,6 +4,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
   {% load bootstrap5 %}
   {% bootstrap_css %}
@@ -21,6 +22,7 @@
       width: auto;
       height: 100vh;
     }
+
     .logintext {
       position: absolute;
       text-align: center;
@@ -29,73 +31,94 @@
       padding-top: 15vh;
       padding-bottom: 50vh;
     }
+
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: #11caf0;
+      overflow: hidden;
+    }
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #c3c3c3;
+      color: rgb(0, 0, 0);
+    }
+
+    /* Right-aligned section inside the top navigation */
+    .topnav-right {
+      float: right;
+    }
   </style>
   <title>Welcome to Tutor Me</title>
 </head>
+
 <body>
-{% if user.is_authenticated %}
-<div class="cover-container  mx-auto flex-column">
-    <ul class="nav bg-info mx-auto">
-      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/discussion">View Discussion</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/profile">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/logout">Log Out</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" >{{ user.username }}</a>
-      </li>
-    </ul>
-    
-    <div class="position-relative overflow-hidden text-center bg-light">
-      <div class="col-md-5 p-lg-5 mx-auto">
-        <img src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" class="img-fluid" width="200" height="200">
-        <h1 class="display-4 font-weight-normal">Join TutorMe, UVA's first peer-to-peer tutoring network</h1>
-        <p class="lead font-weight-normal">Find a tutor for all UVA courses and get the help you need.
-          Or, become a tutor and guide people to their academic goals.
-        </p>
-        <a class="btn btn-lg btn-secondary" href="#">Get Started</a>
-      </div>
-      <div class="product-device box-shadow d-none d-md-block"></div>
-      <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+  {% if user.is_authenticated %}
+
+  <!-- nav bar -->
+  <div class="topnav">
+    <a class="active" href="/"><img
+        src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400"
+        alt="" width="35" height="35"></a>
+    <a href="/tutor_courses">Find a Tutor</a>
+    <a href="/submit_listing">Start Tutoring</a>
+    <a href="/discussion">View Discussion</a>
+    <div class="topnav-right">
+      <a href="/profile">{{ user.username }}</a>
+      <a href="/logout">Log Out</a>
     </div>
-    
+  </div>
+  <!-- end nav bar -->
 
-  </html>
+  <div class="position-relative overflow-hidden text-center bg-light">
+    <div class="col-md-5 p-lg-5 mx-auto">
+      <img
+        src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400"
+        class="img-fluid" width="200" height="200">
+      <h1 class="display-4 font-weight-normal">Join TutorMe, UVA's first peer-to-peer tutoring network</h1>
+      <p class="lead font-weight-normal">Find a tutor for all UVA courses and get the help you need.
+        Or, become a tutor and guide people to their academic goals.
+      </p>
+      <a class="btn btn-lg btn-secondary" href="/profile">Get Started</a>
+    </div>
+    <div class="product-device box-shadow d-none d-md-block"></div>
+    <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+  </div>
 
 
 
-{% else %}
-      <div class="logincontainer">
-      <div class="logintext">
-        <h1 class="text-center display-4">Welcome to Tutor Me! </h1>
-        <p class="text-center lead">An UVA Undergraduate resource for matching Students with Tutors</p>
-        <div class="row justify-content-evenly">
-          <div class="col-4 text-start">
-            <p>Not a member? <a href="accounts/signup" class="btn btn-success btn-lg">Sign Up</a> </p>
-          </div>
-          <div class="col-4 text-end">
-            <p>Have an Account? <a href="accounts/login" class="btn btn-primary btn-lg">Sign In</a></p>
-          </div>
-       </div>
-      </div>
-      <div class="fixed-bottom">
-        <a class="btn btn-secondary" href="admin" role="button"><i class="bi-people-fill"></i></a>
+
+  {% else %}
+  <div class="logincontainer">
+    <div class="logintext">
+      <h1 class="text-center display-4">Welcome to Tutor Me! </h1>
+      <p class="text-center lead">An UVA Undergraduate resource for matching Students with Tutors</p>
+      <div class="row justify-content-evenly">
+        <div class="col-4 text-start">
+          <p>Not a member? <a href="accounts/signup" class="btn btn-success btn-lg">Sign Up</a> </p>
+        </div>
+        <div class="col-4 text-end">
+          <p>Have an Account? <a href="accounts/login" class="btn btn-primary btn-lg">Sign In</a></p>
+        </div>
       </div>
     </div>
-{% endif %}
+    <div class="fixed-bottom">
+      <a class="btn btn-secondary" href="admin" role="button"><i class="bi-people-fill"></i></a>
+    </div>
+  </div>
+  {% endif %}
 
-</div>
+  </div>
 </body>
 
 <footer class="bg-light text-center text-lg-start">

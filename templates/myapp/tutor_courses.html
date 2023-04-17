@@ -3,10 +3,13 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
   {% load bootstrap5 %}
   {% bootstrap_css %}
   {% bootstrap_javascript %}
+
+  <title>Tutor Listings</title>
 
   <style>
     .logincontainer {
@@ -17,6 +20,7 @@
       width: auto;
       height: 100vh;
     }
+
     .logintext {
       position: absolute;
       text-align: center;
@@ -25,107 +29,115 @@
       padding-top: 15vh;
       padding-bottom: 50vh;
     }
+
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: #11caf0;
+      overflow: hidden;
+    }
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #c3c3c3;
+      color: rgb(0, 0, 0);
+    }
+
+    /* Right-aligned section inside the top navigation */
+    .topnav-right {
+      float: right;
+    }
   </style>
 
 </head>
+
 <body>
-{% if user.is_authenticated %}
-<div class="cover-container  mx-auto flex-column">
-
-    <ul class="nav bg-info mx-auto">
-      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/discussion">View Discussion</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/profile">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/logout">Log Out</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" >{{ user.username }}</a>
-      </li>
-    </ul>
-
-
-<!-- Display every listing -->
-<br/>
-
-
-<h1>All Tutor Listings</h1>
-<ul class="list-group">
-{% for listing in listings %}
-
-<li class="list-group-item">
-  <h5 class = "list-group-text" >{{  listing.first_name }} {{listing.last_name }} : {{ listing.headline }}  </h5>
-  <p class = "list-group-item-text lead">{{ listing.qualifications }} </p>
-  <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ listing.course }}</span></button>
-  <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ listing.hourly_rate}}</span></button>
-
-  <br>
-  <br>
-
-   <!-- Button trigger modal -->
-   <a href = "{% url 'update_listing' listing.pk %}">
-    <button type="button" class="btn btn-outline-success">See Availability</button>
-   </a>
-
-  </li>
-
-{% endfor %}
-</ul>
-
-
-
-<body class="text-center">
-
-    <main role="main" class="inner cover">
-      <h3 class=" font-weight-normal">Browse Current UVA Tutor Listings</h3>
-      <p class="lead"> Search for your tutor by course mnemonic or name.</p>
-       
-      <form class = "d-flex" method = POST action="{% url 'search-classes' %}">
-        {%csrf_token%}
-        <input class = "form-control form-control-lg" type = "search" placeholder = "Search..." name ="searched">
-        <button class = "btn btn-primary" type = "Submit">Submit</button>
-      </form>
-  
-    </main>
-    
-
-</body>
-
-
-    
-
-{% else %}
-<div class="logincontainer">
-  <div class="logintext">
-    <h1 class="text-center">Welcome to Tutor Me! </h1>
-    <p class="text-center">An UVA Undergraduate resource for matching Students with Tutors</p>
-    <div class="row justify-content-evenly">
-      <div class="col-4 text-start">
-        <p>Not a member? <a href="accounts/signup" class="btn btn-success btn-lg">Sign Up</a> </p>
-      </div>
-      <div class="col-4 text-end">
-        <p>Have an Account? <a href="accounts/login" class="btn btn-primary btn-lg">Sign In</a></p>
-      </div>
-   </div>
+  {% if user.is_authenticated %}
+  <!-- nav bar -->
+  <div class="topnav">
+    <a class="active" href="/"><img
+        src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400"
+        alt="" width="35" height="35"></a>
+    <a href="/tutor_courses">Find a Tutor</a>
+    <a href="/submit_listing">Start Tutoring</a>
+    <a href="/discussion">View Discussion</a>
+    <div class="topnav-right">
+      <a href="/profile">{{ user.username }}</a>
+      <a href="/logout">Log Out</a>
+    </div>
   </div>
-</div>
-{% endif %}
+  <!-- end nav bar -->
 
-</div>
+
+  <!-- search bar -->
+  <body>
+    <main role="main" class="inner cover">
+      <div class="container mt-3 text-center">
+        <h3 class="font-weight-normal">Browse Current UVA Tutor Listings</h3>
+        <p class="lead"> Search for your tutor by course mnemonic or name.</p>
+      </div>
+      
+      <div class="container">
+        <form class="d-flex" method=POST action="{% url 'search-classes' %}">
+          {%csrf_token%}
+          <input class="form-control form-control-lg" type="search" placeholder="Search..." name="searched">
+          <button class="btn btn-primary" type="Submit">Submit</button>
+        </form>
+      </div>
+    </main>
+  </body>
+
+
+  <!-- Display every listing -->
+  <div class="container text-center mt-5">
+    <h3>All Tutor Listings</h3>
+  </div>
+  {% for listing in listings %}
+    <div class="container p-3 my-3 border" style="background-color: beige">
+      <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ listing.course }}</span></button>
+      <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $ {{listing.hourly_rate}}0</span></button>
+      <h4 class="mt-2">Tutor: {{ listing.first_name }} {{listing.last_name }} ( {{ listing.headline }} )</h4>
+      <h5> Qualifications: {{ listing.qualifications }}</h5>
+      <!-- Button trigger modal -->
+      <a href="{% url 'update_listing' listing.pk %}">
+        <button type="button" class="btn btn-primary">Book</button>
+      </a>
+    </div>
+    {% endfor %}
+
+
+  <!-- if user is not logged in -->
+  {% else %}
+  <div class="logincontainer">
+    <div class="logintext">
+      <h1 class="text-center">Welcome to Tutor Me! </h1>
+      <p class="text-center">An UVA Undergraduate resource for matching Students with Tutors</p>
+      <div class="row justify-content-evenly">
+        <div class="col-4 text-start">
+          <p>Not a member? <a href="accounts/signup" class="btn btn-success btn-lg">Sign Up</a> </p>
+        </div>
+        <div class="col-4 text-end">
+          <p>Have an Account? <a href="accounts/login" class="btn btn-primary btn-lg">Sign In</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  </div>
 </body>
 
 
-<footer class="bg-light text-center text-lg-start mt-auto">
+<footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
     © 2023 Copyright: Team A-30
   </div>
