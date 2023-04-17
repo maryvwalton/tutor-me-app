@@ -317,7 +317,8 @@ class discussionView(generic.DetailView):
 # create discussion thread
 def createThread(request):
     if request.method == 'POST':
-        user = request.POST["username"]
+        user = request.user
+        # user = request.POST["username"]
         title = request.POST["title_text"]
         question = request.POST["question_text"]
         new_thread = discussionThread(username=user, title_text=title, question_text=question)
@@ -340,12 +341,13 @@ def replyThread(request, discussionThread_id):
     discussion = get_object_or_404(discussionThread, pk=discussionThread_id)
 
     if request.method == 'POST':
-        user = request.POST["username"]
-        text = request.POST["response"]
-        thread_question = discussion
-        new_reply = discussionReplies(username=user, reply_text=text, question=thread_question)
-        new_reply.save()
-        return redirect('discussionThread', pk=discussion.pk)
+       user = request.user
+    #    user = request.POST["username"]
+       text = request.POST["response"]
+       thread_question = discussion
+       new_reply = discussionReplies(username = user, reply_text = text, question = thread_question)
+       new_reply.save()
+       return redirect('discussionThread', pk = discussion.pk)
 
     else:
         r = discussionReplies()
