@@ -166,7 +166,7 @@ def remove_appointment_when_booked(request, pk, command):
     if command == 'delete':
         appointment_to_delete = Appointment.objects.get(pk=pk)
 
-        new_session = SessionRequest.objects.create(date=appointment_to_delete.date,
+        new_session = SessionRequest(date=appointment_to_delete.date,
                                                     start_time=appointment_to_delete.start_time,
                                                     end_time=appointment_to_delete.end_time,
                                                     tutor=appointment_to_delete.tutor,
@@ -222,12 +222,25 @@ def filter(request):
 def delete_model(request, pk):
     obj = get_object_or_404(SessionRequest, pk=pk)
     if request.method == "POST":
-        add_the_appointment_back = Appointment.objects.create(date=obj.date,
+
+        # only add back if the student deletes first, NOT if tutor deletes THEN student deletes
+
+        add_the_appointment_back = Appointment(date=obj.date,
                                                               start_time=obj.start_time,
                                                               end_time=obj.end_time,
                                                               tutor=obj.tutor,
                                                               course=obj.course)
-        add_the_appointment_back.save()
+
+        check_if_appointment_in_db = Appointment.objects.filter(date=obj.date,
+                                                              start_time=obj.start_time,
+                                                              end_time=obj.end_time,
+                                                              tutor=obj.tutor,
+                                                              course=obj.course)
+
+        if not check_if_appointment_in_db: # needs work
+            print(check_if_appointment_in_db)
+            add_the_appointment_back.save()
+
 
         obj.delete()
         return redirect("/myapp/profile/")
@@ -258,6 +271,13 @@ def decline_model(request, pk):
     if request.method == "POST":
         obj.pending = 2
         obj.save()
+
+        add_the_appointment_back = Appointment(date=obj.date,
+                                                              start_time=obj.start_time,
+                                                              end_time=obj.end_time,
+                                                              tutor=obj.tutor,
+                                                              course=obj.course)
+        add_the_appointment_back.save()
         return redirect("/myapp/profile/")
     context = {
         "object": obj
