@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  {% load bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
-  <style>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
     .logincontainer {
       background-image: url("https://wallpapercave.com/wp/wp5794418.jpg");
       margin-left: auto;
@@ -24,77 +24,101 @@
       padding-top: 15vh;
       padding-bottom: 50vh;
     }
-  </style>
+    .card{
+      transition: border-color 1s, box-shadow 0.35s;
+    }
+    .card:hover {
+      border-color: rgb(13, 110, 253);
+      box-shadow: 0px 0px 10px 2px rgb(13, 110, 253);
+    }
+
+
+    </style>
 
 </head>
 <body>
 {% if user.is_authenticated %}
 <div class="cover-container  mx-auto flex-column">
-  <ul class="nav bg-info mx-auto">
-    <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/profile">Profile</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/logout">Log Out</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" >{{ user.username }}</a>
-    </li>
-  </ul>
+    <ul class="nav bg-info mx-auto">
+        <a class="navbar-brand" href="/"><img
+                src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400"
+                alt="" width="35" height="35"></a>
+        <li class="nav-item">
+            <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link link-light" href="/profile">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link link-light" href="/logout">Log Out</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled">{{ user.username }}</a>
+        </li>
+    </ul>
 
 
-  <br>
+    <br>
+    <div class="text-center">
 
-<!-- TUTOR FORM -->
-  <body class="text-center">
-
-    <main role="main" class="inner cover">
-      <h3 class=" font-weight-normal">Request a Tutor</h3>
-      <p class="lead"> <small>You are currently booking a service with</small> <b>{{tutor.first_name}} {{tutor.last_name}}</b>
-        <br><small>to get help with</small> <b>{{tutor.course}}</b> </p>
-      {% block content %}
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button  class="btn btn-primary" type = "Submit"> Submit</button>
-    </form>
-      {% endblock %}
-
-      <br>
-
-  </main>
-  
-
-</body>
+        <main role="main" class="inner cover">
+            <h3 class=" font-weight-normal">Request a Tutor</h3>
+            <p class="lead"><small>You are currently booking a service with</small> <b>{{tutor.first_name}}
+                {{tutor.last_name}}</b>
+                <br><small>to get help with</small> <b>{{tutor.course}}</b></p>
+        </main>
+    </div>
 
 
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap">
+
+        {% for appointment in appointments %}
+        {# Single Card Template:#}
+        <div class="card" style="width: 18rem; margin: 10px">
+            <div class="card-body">
+                <div style="display: flex; flex-direction: row">
+                    <h5 class="card-title">{{ appointment.course.pnemonic }} {{ appointment.course.coursenum }}:
+                        {{ appointment.course.title }}</h5>
 
 
+                </div>
+                <p class="card-text"> Tutor: {{ appointment.tutor.first_name }} {{ appointment.tutor.last_name }}</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Date: {{ appointment.date }}</li>
+                    <li class="list-group-item">Start Time: {{ appointment.start_time }}</li>
+                    <li class="list-group-item">End Time: {{ appointment.end_time }}</li>
+                    <!-- Add more list items for each attribute -->
+                </ul>
+                <div class="text-center">
+                    <a href="/remove_availability/{{appointment.pk}}/delete" class="btn btn-success">Book</a>
+                </div>
 
-    
-{% else %}
-<div class="logincontainer">
-  <div class="logintext">
-    <h1 class="text-center">Welcome to Tutor Me! </h1>
-    <p class="text-center">An UVA Undergraduate resource for matching Students with Tutors</p>
-    <div class="row justify-content-evenly">
-      <div class="col-4 text-start">
-        <p>Not a member? <a href="accounts/signup" class="btn btn-success btn-lg">Sign Up</a> </p>
-      </div>
-      <div class="col-4 text-end">
-        <p>Have an Account? <a href="accounts/login" class="btn btn-primary btn-lg">Sign In</a></p>
-      </div>
-   </div>
-  </div>
-</div>
-{% endif %}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+    <div class="logincontainer">
+        <div class="logintext">
+            <h1 class="text-center">Welcome to Tutor Me! </h1>
+            <p class="text-center">An UVA Undergraduate resource for matching Students with Tutors</p>
+            <div class="row justify-content-evenly">
+                <div class="col-4 text-start">
+                    <p>Not a member? <a href="accounts/signup" class="btn btn-success btn-lg">Sign Up</a></p>
+                </div>
+                <div class="col-4 text-end">
+                    <p>Have an Account? <a href="accounts/login" class="btn btn-primary btn-lg">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
 </div>
 </body>

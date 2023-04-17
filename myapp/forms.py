@@ -39,8 +39,8 @@ class TutorForm(ModelForm):
         ]
 
     date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
-    start_time = forms.TimeField(widget=forms.TimeInput)
-    end_time = forms.TimeField(widget=forms.TimeInput)
+    start_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
+    end_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
 
 
 # form that students use to request a tutor
@@ -57,9 +57,6 @@ class RequestForm(ModelForm):
             'service',
 
         ]
-
-        date = forms.ModelChoiceField(queryset=SessionRequest)
-
 
 # form that tutors use to confirm/regect session requests
 class PendingForm(ModelForm):

@@ -76,27 +76,43 @@ def submit_listing(request):
     field = form.fields['user']
     field.widget = field.hidden_widget()
 
+    current_user_linked_to_tutors = Tutor.objects.filter(user=user).last()
+    if current_user_linked_to_tutors:
+        form.initial['first_name'] = current_user_linked_to_tutors.first_name
+        form.initial['last_name'] = current_user_linked_to_tutors.last_name
+        form.initial['course'] = current_user_linked_to_tutors.course
+        form.initial['headline'] = current_user_linked_to_tutors.headline
+        form.initial['qualifications'] = current_user_linked_to_tutors.qualifications
+        form.initial['hourly_rate'] = current_user_linked_to_tutors.rating
+
     # making the form save the data and also create the slug value by calling save() on it
     if form.is_valid():
         # text = form.cleaned_data['text']
-        new_listing = form.save()
+        new_listing = form.save(commit=False)
+
+        # trying to eliminate repeats
+        check_if_tutor_in_database_query = Tutor.objects.filter(first_name=new_listing.first_name,
+                                                                last_name=new_listing.last_name,
+                                                                user=new_listing.user,
+                                                                course=new_listing.course,
+                                                                headline=new_listing.headline,
+                                                                qualifications=new_listing.qualifications,
+                                                                hourly_rate=new_listing.hourly_rate,
+                                                                rating=new_listing.rating).first()
+
+        if not check_if_tutor_in_database_query:
+            new_listing.save()
 
         appointment = Appointment(date=form.cleaned_data["date"],
                                   start_time=form.cleaned_data["start_time"],
                                   end_time=form.cleaned_data["end_time"],
-                                  tutor=new_listing,
+                                  tutor=(check_if_tutor_in_database_query or Tutor.objects.get(pk=new_listing.pk)),
                                   course=new_listing.course)
 
         appointment.save()
-        new_listing.save()
-
-        # context = {
-        #     'this_tutor': new_listing,
-        #     'this_course': new_listing.course
-        # }
 
         # form.save()
-        return redirect('add_more_availability', pk=new_listing.pk)
+        return redirect('add_more_availability', pk=(new_listing.pk or check_if_tutor_in_database_query.pk))
 
     context = {
         'form': form
@@ -144,36 +160,42 @@ def search_classes(request):
 #     }
 #     return render(request, 'myapp/add_student_to_listing.html', context)
 
+def remove_appointment_when_booked(request, pk, command):
+    tutor_id = Appointment.objects.get(pk=pk).tutor.id
+
+    if command == 'delete':
+
+        appointment_to_delete = Appointment.objects.get(pk=pk)
+
+        new_session = SessionRequest.objects.create(date=appointment_to_delete.date,
+                                                    start_time=appointment_to_delete.start_time,
+                                                    end_time=appointment_to_delete.end_time,
+                                                    tutor=appointment_to_delete.tutor,
+                                                    student=request.user,
+                                                    course=appointment_to_delete.course)
+
+        new_session.save()
+
+        appointment_to_delete.delete()
+
+    return redirect("update_listing", pk=tutor_id)
+
 
 def update_listing(request, pk):
     user = request.user
     tutor = Tutor.objects.get(pk=pk)
 
-    form = RequestForm(request.POST or None)
+    sessions_with_matching_appointments = SessionRequest.objects.filter()
+    all_appointments = Appointment.objects.filter(tutor=tutor, course=tutor.course)
 
-    form.initial['tutor'] = tutor.id
-    form.initial['course'] = tutor.course
-    form.initial['student'] = user
-
-    field = form.fields['tutor']
-    field.widget = field.hidden_widget()
-    field = form.fields['course']
-    field.widget = field.hidden_widget()
-    field = form.fields['student']
-    field.widget = field.hidden_widget()
-
-    if form.is_valid():
-        form.save()
-
-        return redirect('/myapp/profile/')
+    appointments = Appointment.objects.filter(tutor=tutor, course=tutor.course)
 
     context = {
-        'form': form,
-        'tutor': tutor
+        'tutor': tutor,
+        'appointments': appointments,
+
     }
     return render(request, 'myapp/add_student_to_listing.html', context)
-
-
 
 
 # view that shows the listings associated with a user on the profile page
