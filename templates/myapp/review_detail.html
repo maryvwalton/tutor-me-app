@@ -1,0 +1,59 @@
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+<div class="cover-container  mx-auto flex-column">
+  <ul class="nav bg-info mx-auto">
+    <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/discussion">View Discussion</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/profile">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link link-light" href="/logout">Log Out</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link disabled" >{{ user.username }}</a>
+    </li>
+  </ul>
+
+
+
+<div class = "container mx-auto">
+
+        <br>
+        <h3 class=" font-weight-normal text-center">Thank you for your submission!</h3>
+        <p class="lead"> Review for {{ review.tutor }} </p>
+
+        <div class="card">
+            <h5 class="card-header"> {{review.session}}</h5>
+            <div class="card-body">
+                    <h5 class="card-title">{{ review.rating }}</h5>
+                    <p class="card-text">{{ review.comment }}</p>
+                 
+            </div>
+        </div>
+    
+        <br>
+
+    <a class="btn btn-primary btn" href="/reviews" role="button">View all Reviews for Tutors </a>
+    
+
+</div>
+
+<br>
+
+<footer class="bg-light text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+    © 2023 Copyright: Team A-30
+  </div>
+</footer>

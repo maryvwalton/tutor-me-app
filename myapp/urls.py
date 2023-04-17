@@ -30,6 +30,7 @@ urlpatterns = [
     path('submit_thread/', views.createThread, name = 'submitthread'),
     path('submit_review/', views.submitReview, name = 'submitreview'),
     path('submit_review/<int:pk>', views.reviewView.as_view(), name = 'viewReview'),
+    path('reviews', views.reviewList, name = 'allreviews'),
 
 ]
 

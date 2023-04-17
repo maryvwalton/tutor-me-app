@@ -276,5 +276,11 @@ def submitReview(request):
 #detail view for review submission
 class reviewView(generic.DetailView):
     model = Review
-    template_name = 'myapp/reviewdetail.html'
+    template_name = 'myapp/review_detail.html'
     context_object_name = 'review'
+
+
+#display all reviews
+def reviewList(request):
+    all_reviews = Review.objects.all()
+    return render(request, 'myapp/all_reviews.html', {'all_reviews': all_reviews})
