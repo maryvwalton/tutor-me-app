@@ -164,7 +164,6 @@ def remove_appointment_when_booked(request, pk, command):
     tutor_id = Appointment.objects.get(pk=pk).tutor.id
 
     if command == 'delete':
-
         appointment_to_delete = Appointment.objects.get(pk=pk)
 
         new_session = SessionRequest.objects.create(date=appointment_to_delete.date,
@@ -223,6 +222,13 @@ def filter(request):
 def delete_model(request, pk):
     obj = get_object_or_404(SessionRequest, pk=pk)
     if request.method == "POST":
+        add_the_appointment_back = Appointment.objects.create(date=obj.date,
+                                                              start_time=obj.start_time,
+                                                              end_time=obj.end_time,
+                                                              tutor=obj.tutor,
+                                                              course=obj.course)
+        add_the_appointment_back.save()
+
         obj.delete()
         return redirect("/myapp/profile/")
     context = {
