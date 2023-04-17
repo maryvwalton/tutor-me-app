@@ -49,7 +49,7 @@
             <label for="language">Select a Session:</label> 
             <select id="sessionselect" name="session" class="player-dropdown">
                 {% for session in session_list %}
-                    <option value="{{ session.id}}">{{ session.date }} {{ session.start_time }} {{ session.end_time }}</option>
+                    <option value="{{ session.id}}">{{ session.date }} {{ session.start_time }} {{ session.end_time }} {{session.course}}</option>
                 {% endfor %}
 
 
