@@ -38,41 +38,43 @@
             <button class = "btn btn-primary" type = "Submit">Submit</button>
         </form>
 
-        {%if searched %}
+        {%if searched and titles.exists or questions.exists%}
 
-        {% for title in titles%}
-        <li class="list-group-item  flex-column"> 
-            <div>  
-                <strong> {{ title.title_text }} </strong>  :   {{ title.question_text }}
-            </div>
-            <small>Posted by {{title.username}} </small>
-            <div>
-                <button class="btn btn-warning btn-sm btn-round" type="submit"> {{title.num_replies}} replies</button>
-                <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{title.id}}" role="button">View</a>
-            </div>
-        </li>
-        <br>
-        {% endfor %}
+          {% for title in titles%}
+          <li class="list-group-item  flex-column"> 
+              <div>  
+                  <strong> {{ title.title_text }} </strong>  :   {{ title.question_text }}
+              </div>
+              <small>Posted by {{title.username}} </small>
+              <div>
+                  <button class="btn btn-warning btn-sm btn-round" type="submit"> {{title.num_replies}} replies</button>
+                  <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{title.id}}" role="button">View</a>
+              </div>
+          </li>
+          <br>
+          {% endfor %}
 
-        {% for question in questions%}
-        <li class="list-group-item  flex-column"> 
-            <div>  
-                <strong> {{ question.title_text }} </strong>  :   {{ question.question_text }}
-            </div>
-            <small>Posted by {{question.username}} </small>
-            <div>
-                <button class="btn btn-warning btn-sm btn-round" type="submit"> {{question.num_replies}} replies</button>
-                <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{question.id}}" role="button">View</a>
-            </div>
-        </li>
-        <br>
-        {% endfor %}
+          {% for question in questions%}
+          <li class="list-group-item  flex-column"> 
+              <div>  
+                  <strong> {{ question.title_text }} </strong>  :   {{ question.question_text }}
+              </div>
+              <small>Posted by {{question.username}} </small>
+              <div>
+                  <button class="btn btn-warning btn-sm btn-round" type="submit"> {{question.num_replies}} replies</button>
+                  <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{question.id}}" role="button">View</a>
+              </div>
+          </li>
+          <br>
+          {% endfor %}
 
-      {%endif%}
+        {%else%}
+          <br>
+            <h3 class=" font-weight-normal text-center">No results for "{{searched}}"</h3>
+          <br>
+        {%endif%}
 
-      <br>
-        <h3 class=" font-weight-normal text-center">No results for "{{searched}}"</h3>
-      <br>
+      
 
     </ul>
 
