@@ -2,68 +2,99 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-<div class="cover-container  mx-auto flex-column">
-    <ul class="nav bg-info mx-auto">
-      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/discussion">View Discussion</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/profile">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/logout">Log Out</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" >{{ user.username }}</a>
-      </li>
-    </ul>
+<head>
 
-<div class = "container mx-auto">
+  <title>Submit a Discussion Post</title>
+
+  <style>
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: #11caf0;
+      overflow: hidden;
+    }
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #c3c3c3;
+      color: rgb(0, 0, 0);
+    }
+
+    /* Right-aligned section inside the top navigation */
+    .topnav-right {
+      float: right;
+    }
+  </style>
+</head>
+
+<!-- nav bar -->
+<div class="topnav">
+  <a class="active" href="/"><img
+      src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400"
+      alt="" width="35" height="35"></a>
+  <a href="/tutor_courses">Find a Tutor</a>
+  <a href="/submit_listing">Start Tutoring</a>
+  <a href="/discussion">View Discussion</a>
+  <div class="topnav-right">
+    <a href="/profile">{{ user.username }}</a>
+    <a href="/logout">Log Out</a>
+  </div>
+</div>
+<!-- end nav bar -->
+
+
+<body>
+  <div class="container mx-auto">
     <form method="post">
       {% csrf_token %}
-          
-      <br> 
+
+      <br>
 
       <h3 class=" font-weight-normal text-center">Start a conversation thread about a topic below </h3>
       <p class="lead  text-center"> Ask questions, provide reviews, or discuss anything of your choice </p>
 
-          <div class="row">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">@</span>
-                </div>
-                <input type="text"  name="username" id="username" class="form-control" placeholder="Username" aria-label="username" aria-describedby="basic-addon1">
-            </div>
-
-
-            <div class="input-group mb-3">
-                <input type="text"name="title_text" id="title_text" class="form-control" placeholder="Title text" aria-label="Title text" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                </div>
-            </div>
-
-            <div class="input-group input-group-lg">
-                <div class="input-group-prepend">
-                </div>
-                <input type="text"  name="question_text" id="question_text" class="form-control"  placeholder="Thread body" aria-label="Large" aria-describedby="inputGroup-sizing-sm">
-              </div>
+      <div class="row">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">@</span>
           </div>
-          <br>
-          <input type="submit"  class="btn btn-primary " value="Submit">
+          <input type="text" name="username" id="username" class="form-control" placeholder="Username"
+            aria-label="username" aria-describedby="basic-addon1">
+        </div>
+
+
+        <div class="input-group mb-3">
+          <input type="text" name="title_text" id="title_text" class="form-control" placeholder="Title text"
+            aria-label="Title text" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+          </div>
+        </div>
+
+        <div class="input-group input-group-lg">
+          <div class="input-group-prepend">
+          </div>
+          <input type="text" name="question_text" id="question_text" class="form-control" placeholder="Thread body"
+            aria-label="Large" aria-describedby="inputGroup-sizing-sm">
+        </div>
+      </div>
+      <br>
+      <input type="submit" class="btn btn-primary " value="Submit">
   </div>
 
 
+</body>
 
-
-  <footer class="bg-light text-center text-lg-start">
-    <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
-      © 2023 Copyright: Team A-30
-    </div>
-  </footer>
+<footer class="bg-light text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+    © 2023 Copyright: Team A-30
+  </div>
+</footer>
