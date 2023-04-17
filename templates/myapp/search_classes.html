@@ -53,19 +53,19 @@
     {%if searched %}
        
         <ul class="list-group">
-            {% for course in courses %}
+            {% for name in names %}
                 <li class="list-group-item">
-                  <h5 class = "list-group-text" >{{  course.first_name }} {{course.last_name }} : {{ course.headline }}  </h5>
-                  <p class = "list-group-item-text lead">{{ course.qualifications }} </p>
-                  <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ course.course }}</span></button>
-                  <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ course.hourly_rate}}</span></button>
+                  <h5 class = "list-group-text" >{{  name.first_name }} {{name.last_name }} : {{ name.headline }}  </h5>
+                  <p class = "list-group-item-text lead">{{ name.qualifications }} </p>
+                  <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ name.course }}</span></button>
+                  <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ name.hourly_rate}}</span></button>
 
                   <br>
                   <br>
 
                    <!-- Button trigger modal -->
       
-                   <a href = "{% url 'update_listing' course.pk %}">
+                   <a href = "{% url 'update_listing' name.pk %}">
                     <button type="button" class="btn btn-outline-success">Book</button>
                    </a>
                      
@@ -73,35 +73,35 @@
                   </li>
 
             {% endfor %}
-            {% for course in course2 %}
+            {% for pnemonic in pnemonics %}
             <li class="list-group-item">
-              <h5 class = "list-group-text" >{{  course.first_name }} {{course.last_name }} : {{ course.headline }}  </h5>
-              <p class = "list-group-item-text lead">{{ course.qualifications }} </p>
-              <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ course.course }}</span></button>
-              <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ course.hourly_rate}}</span></button>
+              <h5 class = "list-group-text" >{{  pnemonic.first_name }} {{pnemonic.last_name }} : {{ pnemonic.headline }}  </h5>
+              <p class = "list-group-item-text lead">{{ pnemonic.qualifications }} </p>
+              <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ pnemonic.course }}</span></button>
+              <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ pnemonic.hourly_rate}}</span></button>
 
               <br>
               <br>
 
                <!-- Button trigger modal -->
-               <a href = "{% url 'update_listing' course.pk %}">
+               <a href = "{% url 'update_listing' pnemonic.pk %}">
                 <button type="button" class="btn btn-outline-success">Book</button>
                </a>
 
               </li>
             {% endfor %}
-            {% for course in course3 %}
+            {% for coursenum in coursenums %}
             <li class="list-group-item">
-              <h5 class = "list-group-text" >{{  course.first_name }} {{course.last_name }} : {{ course.headline }}  </h5>
-              <p class = "list-group-item-text lead">{{ course.qualifications }} </p>
-              <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ course.course }}</span></button>
-              <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ course.hourly_rate}}</span></button>
+              <h5 class = "list-group-text" >{{  coursenum.first_name }} {{coursenum.last_name }} : {{ coursenum.headline }}  </h5>
+              <p class = "list-group-item-text lead">{{ coursenum.qualifications }} </p>
+              <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ coursenum.course }}</span></button>
+              <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ coursenum.hourly_rate}}</span></button>
 
               <br>
               <br>
 
                <!-- Button trigger modal -->
-               <a href = "{% url 'update_listing' course.pk %}">
+               <a href = "{% url 'update_listing' coursenum.pk %}">
                 <button type="button" class="btn btn-outline-success">Book</button>
                </a>
 

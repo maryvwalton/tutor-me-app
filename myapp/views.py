@@ -81,10 +81,10 @@ def submit_listing(request):
 def search_classes(request):
     if request.method == "POST":
         searched = request.POST.get('searched', default="")
-        courses = Tutor.objects.filter(course__title__contains=searched)
-        courses2 = Tutor.objects.filter(course__pnemonic__contains=searched)
-        courses3 = Tutor.objects.filter(course__coursenum__contains=searched)
-    return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses, 'courses2': courses2, 'courses3': courses3})
+        names = Tutor.objects.filter(course__title__contains=searched)
+        pnemonics = Tutor.objects.filter(course__pnemonic__contains=searched)
+        coursenums = Tutor.objects.filter(course__coursenum__contains=searched)
+    return render(request, 'myapp/search_classes.html', {'searched': searched, 'names': names, 'pnemonics': pnemonics, 'coursenums': coursenums})
 
 #filters discussion listings through discussion and reply attributes
 def search_discussions(request):
