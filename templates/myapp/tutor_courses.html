@@ -31,27 +31,29 @@
 <body>
 {% if user.is_authenticated %}
 <div class="cover-container  mx-auto flex-column">
-  <ul class="nav bg-info mx-auto">
-    <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/discussion">View Discussion</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/profile">Profile</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/logout">Log Out</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" >{{ user.username }}</a>
-    </li>
-  </ul>
+
+    <ul class="nav bg-info mx-auto">
+      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/discussion">View Discussion</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/profile">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/logout">Log Out</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" >{{ user.username }}</a>
+      </li>
+    </ul>
+
 
 <!-- Display every listing -->
 <br/>
