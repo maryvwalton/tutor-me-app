@@ -2,7 +2,6 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-
 <div class="cover-container  mx-auto flex-column">
     <ul class="nav bg-info mx-auto">
       <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
@@ -29,37 +28,53 @@
 <div class = container>
 
     <br>
-
+    
     <h3 class=" font-weight-normal text-center">Discuss with peers in your community</h3>
     <p class="lead  text-center"> Browse conversations about classes, assignments, professors and more</p>
 
-      <form class = "d-flex" method = POST action="{% url 'search_discussions' %}">
-        {%csrf_token%}
-        <input class = "form-control form-control-lg" type = "search" placeholder = "Search for discussion topics..." name ="searched">
-        <button class = "btn btn-primary" type = "Submit">Submit</button>
-      </form>
-      
-    <a class="btn btn-success text-center" href="/submit_thread" role="button">Start a Discussion Thread</a>
-    
-    <br>
-    <br>
-    <div class = "list-group">
-        {% for thread in all_threads%}
+        <form class = "d-flex" method = POST action="{% url 'search_discussions' %}">
+            {%csrf_token%}
+            <input class = "form-control form-control-lg" type = "search" placeholder = "Search for discussion topics..." name ="searched">
+            <button class = "btn btn-primary" type = "Submit">Submit</button>
+        </form>
+
+        {%if searched %}
+
+        {% for title in titles%}
         <li class="list-group-item  flex-column"> 
             <div>  
-                <strong> {{ thread.title_text }} </strong>  :   {{ thread.question_text }}
+                <strong> {{ title.title_text }} </strong>  :   {{ title.question_text }}
             </div>
-            <small>Posted by {{thread.username}} </small>
+            <small>Posted by {{title.username}} </small>
             <div>
-                <button class="btn btn-warning btn-sm btn-round" type="submit"> {{thread.num_replies}} replies</button>
-                <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{thread.id}}" role="button">View</a>
+                <button class="btn btn-warning btn-sm btn-round" type="submit"> {{title.num_replies}} replies</button>
+                <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{title.id}}" role="button">View</a>
             </div>
-            
         </li>
         <br>
         {% endfor %}
-   </ul>
 
+        {% for question in questions%}
+        <li class="list-group-item  flex-column"> 
+            <div>  
+                <strong> {{ question.title_text }} </strong>  :   {{ question.question_text }}
+            </div>
+            <small>Posted by {{question.username}} </small>
+            <div>
+                <button class="btn btn-warning btn-sm btn-round" type="submit"> {{question.num_replies}} replies</button>
+                <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{question.id}}" role="button">View</a>
+            </div>
+        </li>
+        <br>
+        {% endfor %}
+
+      {%endif%}
+
+      <br>
+        <h3 class=" font-weight-normal text-center">No results for "{{searched}}"</h3>
+      <br>
+
+    </ul>
 
 </div>
 

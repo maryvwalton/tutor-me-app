@@ -28,6 +28,7 @@ urlpatterns = [
     path('discussion/<int:pk>', views.discussionView.as_view(), name='discussionThread'),
     path('discussion/<int:discussionThread_id>/reply', views.replyThread, name='replyThread'),
     path('submit_thread/', views.createThread, name = 'submitthread'),
+    path('search_discussions', views.search_discussions, name = 'search_discussions'),  
 
 ]
 

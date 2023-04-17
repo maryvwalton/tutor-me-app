@@ -77,7 +77,7 @@ def submit_listing(request):
     return render(request, 'myapp/submit_listing.html', context)
 
 
-
+#filters tutor listings through class attributes
 def search_classes(request):
     if request.method == "POST":
         searched = request.POST.get('searched', default="")
@@ -86,6 +86,15 @@ def search_classes(request):
         courses3 = Tutor.objects.filter(course__coursenum__contains=searched)
     return render(request, 'myapp/search_classes.html', {'searched': searched, 'courses': courses, 'courses2': courses2, 'courses3': courses3})
 
+#filters discussion listings through discussion and reply attributes
+def search_discussions(request):
+    if request.method == "POST":
+        searched = request.POST.get('searched', default="")
+        reply = discussionReplies.objects.filter(reply_text__contains=searched)
+        titles = discussionThread.objects.filter(title_text__contains=searched)
+        questions = discussionThread.objects.filter(question_text__contains=searched)
+    return render(request, 'myapp/search_discussions.html', {'searched': searched, 'reply': reply, 'titles': titles, 'questions': questions})
+    
 # View that students use to make a request on a listing
 def update_listing(request, pk):
 
