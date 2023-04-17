@@ -17,6 +17,18 @@ class Course(models.Model):
     def __str__(self):
 
         return self.pnemonic + " " + str(self.coursenum) + " " + self.title
+    
+
+class Review(models.Model):
+    tutor = models.ForeignKey('Tutor', on_delete=models.CASCADE, related_name="tutorreviews")
+    #student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="studentreviews")
+    session = models.ForeignKey('SessionRequest', on_delete=models.CASCADE, related_name="sessionsforreview")
+    rating = models.FloatField(default=0)
+    comment = models.CharField(max_length=300)
+
+    def __str__(self):
+         return self.comment
+
 
 
 class Tutor(models.Model):
@@ -73,7 +85,8 @@ class SessionRequest(models.Model):
     pending = models.IntegerField(choices= pending_choices, null= True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.date) + " " + str(self.course) 
+    
     
 
 # class Profile(models.Model):
@@ -84,15 +97,6 @@ class SessionRequest(models.Model):
 #     def __str__(self):
 #         return str(self.user)
 
-class Review(models.Model):
-    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    session = models.OneToOneField(SessionRequest, on_delete=models.CASCADE)
-    rating = models.FloatField(default=0)
-    comment = models.CharField(max_length=300)
-
-    def __str__(self):
-         return self.comment
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null = True, on_delete = models.CASCADE)

@@ -1,0 +1,74 @@
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<div class="cover-container  mx-auto flex-column">
+    <ul class="nav bg-info mx-auto">
+      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/discussion">View Discussion</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/profile">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link link-light" href="/logout">Log Out</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" >{{ user.username }}</a>
+      </li>
+    </ul>
+
+<div class = "container mx-auto">
+    <form method="post">
+      {% csrf_token %}
+          
+      <br> 
+
+      <h3 class=" font-weight-normal text-center">Submit Review about Your Tutoring Experience </h3>
+      <p class="lead  text-center"> Select a tutor and session and leave your input below</p>
+
+            <label for="language">Select a Tutor:</label> 
+            <select id="tutorselect" name="tutor" class="dropdown">
+                        {% for tutor in tutors_list %}
+                            <option value="{{ tutor.id}}">{{ tutor.first_name }}</option>
+                        {% endfor %}
+
+        
+            <select id="studentselect" name="student" class="dropdown">
+                {% for student in student_list %}
+                    <option value="{{ student.id}}">{{ student.first_name }}</option>
+                {% endfor %}
+
+            <label for="language">Select a Session:</label> 
+            <select id="sessionselect" name="session" class="player-dropdown">
+                {% for session in session_list %}
+                    <option value="{{ session.id}}">{{ session.date }} {{ session.start_time }} {{ session.end_time }}</option>
+                {% endfor %}
+
+
+            <input type="number"name="rating" id="rating" class="form-control" placeholder="Rating from 1 to 5">
+
+                <br>
+            
+           <input type="text"  name="review_text" id="review_text" class="form-control"  placeholder="Review body">
+
+
+          <br>
+          <input type="submit"  class="btn btn-primary " value="Submit">
+  </div>
+
+
+
+
+  <footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+      © 2023 Copyright: Team A-30
+    </div>
+  </footer>

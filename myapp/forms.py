@@ -17,7 +17,6 @@ class TutorForm(ModelForm):
     'headline',
     'qualifications',
     'hourly_rate', 
-    'rating'
  
         ]
 

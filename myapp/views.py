@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from .forms import TutorForm, RequestForm, FilterForm
-from .models import Tutor, SessionRequest
+from .models import Tutor, SessionRequest, Review, User
 
 from django.views import generic 
 from .forms import TutorForm, UpdateForm, RequestForm, ReplyForm
@@ -11,7 +11,7 @@ from .models import Tutor, discussionThread, discussionReplies, SessionRequest
 from django.utils import timezone
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 
-from django.db.models import Count
+from django.db.models import Count, Avg, Prefetch, Func
 
 from email.policy import default
 
@@ -28,10 +28,22 @@ def index(request):
     return HttpResponse("This is our tutor me project")
 
 
+class Round(Func):
+    function = 'ROUND'
+    template='%(function)s(%(expressions)s, 2)'
+
+
 #View that shows the listings on tutor_courses.html
 def listing_view(request):
     
-    listings = Tutor.objects.all()
+    listings = Tutor.objects.annotate(avg_rating = Round(Avg('tutorreviews__rating')))
+
+    # reviews = Tutor.objects.all().prefetch_related(
+    #     Prefetch(
+    #         'tutorreviews',
+    #         Review.objects.select_related('tutor'),
+    #         to_attr = 'specific_reviews'),
+    #     )
 
     args = {'listings': listings}
 
@@ -199,11 +211,6 @@ class discussionView(generic.DetailView):
     template_name = 'myapp/discussiondetail.html'
     context_object_name = 'thread'
 
-#class based function -- ignore 
-# def discussionDetail(request, id):
-#     disc = get_object_or_404(discussionThread, pk = id)
-#     context = {'disc': disc}
-#     return render(request, 'myapp/discussiondetail.html', context)
 
 
 #create discussion thread 
@@ -244,3 +251,30 @@ def replyThread(request, discussionThread_id):
         r = discussionReplies()
         return render(request, 'myapp/reply_to_thread.html', {'discussionReplies': discussionReplies})
 
+
+#submit review about tutor  
+def submitReview(request):
+    tutors_list = Tutor.objects.all()
+    student_list = User.objects.all()
+    session_list = SessionRequest.objects.all()
+
+    if request.method == 'POST':
+        select_tutor = request.POST["tutor"]
+        select_session = request.POST.get("session")
+        rating = request.POST["rating"]
+        review = request.POST["review_text"]
+        new_review = Review(tutor_id = select_tutor, session_id = select_session, rating = rating, comment = review)
+        new_review.save()
+        id = new_review.pk
+        return redirect('viewReview', pk = new_review.pk)
+    else:
+        r = Review()
+        return render(request, 'myapp/submit_review.html', {'review': Review, 'tutors_list':tutors_list, 
+                                                            'student_list':student_list, 'session_list':session_list})
+
+
+#detail view for review submission
+class reviewView(generic.DetailView):
+    model = Review
+    template_name = 'myapp/reviewdetail.html'
+    context_object_name = 'review'
