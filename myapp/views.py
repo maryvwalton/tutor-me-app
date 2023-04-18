@@ -113,7 +113,10 @@ def submit_listing(request):
 
         # form.save()
         return redirect('add_more_availability', pk=(new_listing.pk or check_if_tutor_in_database_query.pk))
-
+    field = form.fields['first_name']
+    field.widget = field.hidden_widget()
+    field = form.fields['last_name']
+    field.widget = field.hidden_widget()
     context = {
         'form': form
     }
