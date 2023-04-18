@@ -42,7 +42,7 @@ class Tutor(models.Model):
     rating = models.FloatField(default=0)
 
     def __str__(self):
-        return self.first_name + self.last_name
+        return str(self.user)
     
     def save(self, *args, **kwargs):
         # self.slug = slugify(self.first_name)

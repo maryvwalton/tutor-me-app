@@ -132,6 +132,8 @@ def submit_listing(request):
     # field.widget = field.hidden_widget()
     # field = form.fields['last_name']
     # field.widget = field.hidden_widget()
+    field = form.fields['rating']
+    field.widget = field.hidden_widget()
     context = {
         'form': form
     }
