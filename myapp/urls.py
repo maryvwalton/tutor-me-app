@@ -9,16 +9,20 @@ from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="myapp/index.html")),
-    path('submit_listing/', views.submit_listing, name = "submit_listing"),
-    path('tutor_courses/', views.listing_view, name = "listing_view"),
-    path('add_student_to_listing/<int:pk>', views.update_listing, name = "update_listing"),
+    path('submit_listing/', views.submit_listing, name="submit_listing"),
 
+    path('submit_listing/add_more_availability/<int:pk>', views.add_more_availability, name="add_more_availability"),
+
+    path('tutor_courses/', views.listing_view, name="listing_view"),
+    path('add_student_to_listing/<int:pk>', views.update_listing, name="update_listing"),
+    path('remove_availability/<int:pk>/<command>', views.remove_appointment_when_booked,
+         name="remove_appointment_when_booked"),
 
     path('accounts/', include('allauth.urls')),
     path('logout', LogoutView.as_view()),
-    path('search_classes', views.search_classes, name = 'search-classes'),
+    path('search_classes', views.search_classes, name='search-classes'),
 
-    path('profile/', views.filter, name = 'filter'),
+    path('profile/', views.filter, name='filter'),
     path('discussion', views.threadList, name='threadslist'),
 
     path('delete/<int:pk>/', views.delete_model, name='delete_model'),
@@ -33,4 +37,3 @@ urlpatterns = [
     path('reviews', views.reviewList, name = 'allreviews'),
 
 ]
-

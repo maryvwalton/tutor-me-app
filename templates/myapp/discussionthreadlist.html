@@ -2,61 +2,72 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
+<html>
+<head>
 
-<div class="cover-container  mx-auto flex-column">
-    <ul class="nav bg-info mx-auto">
-      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/discussion">View Discussion</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/profile">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/logout">Log Out</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" >{{ user.username }}</a>
-      </li>
-    </ul>
+  <title>Discussion</title>
 
+  <style>
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: #11caf0;
+      overflow: hidden;
+    }
+    
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #c3c3c3;
+      color: rgb(0, 0, 0);
+    }
+
+    /* Right-aligned section inside the top navigation */
+    .topnav-right {
+      float: right;
+    }
+  </style>
+</head>
 
 <body>
+  <!-- nav bar -->
+  <div class="topnav">
+    <a class="active" href="/"><img
+        src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400"
+        alt="" width="35" height="35"></a>
+    <a href="/tutor_courses">Find a Tutor</a>
+    <a href="/submit_listing">Start Tutoring</a>
+    <a href="/discussion">View Discussion</a>
+    <div class="topnav-right">
+      <a href="/profile">{{ user.username }}</a>
+      <a href="/logout">Log Out</a>
+    </div>
+  </div>
+  <!-- end nav bar -->
 
-<div class = container>
-
-    <br>
-
-    <h3 class=" font-weight-normal text-center">Discuss with peers in your community</h3>
+  <div class=container>
+    <h3 class=" font-weight-normal text-center mt-3">Discuss with peers in your community</h3>
     <p class="lead  text-center"> Browse conversations about classes, assignments, professors and more</p>
 
     <a class="btn btn-success text-center" href="/submit_thread" role="button">Start a Discussion Thread</a>
-    
-    <br>
-    <br>
-    <div class = "list-group">
-        {% for thread in all_threads%}
-        <li class="list-group-item  flex-column"> 
-            <div>  
-                <strong> {{ thread.title_text }} </strong>  :   {{ thread.question_text }}
-            </div>
-            <small>Posted by {{thread.username}} </small>
-            <div>
-                <button class="btn btn-warning btn-sm btn-round" type="submit"> {{thread.num_replies}} replies</button>
-                <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{thread.id}}" role="button">View</a>
-            </div>
-            
-        </li>
-        <br>
-        {% endfor %}
-   </ul>
 
+    <div class="container" style="padding: 2%;">
+      {% for thread in all_threads%}
+        <div class="container p-3 my-2 border" style="background-color: blanchedalmond;">
+          <h5> <strong>{{ thread.title_text }}</strong> : {{ thread.question_text }}</h5>
+          <button class="btn btn-warning btn-sm btn-round" type="submit"> {{thread.num_replies}} replies</button>
+          <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{thread.id}}" role="button">View</a>
+        </div>
+      {% endfor %}
+    </div>
 
 </div>
 </body>
@@ -66,3 +77,4 @@
     © 2023 Copyright: Team A-30
   </div>
 </footer>
+</html>
