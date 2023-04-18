@@ -91,8 +91,8 @@ def submit_listing(request):
 
     current_user_linked_to_tutors = Tutor.objects.filter(user=user).last()
     if current_user_linked_to_tutors:
-        form.initial['first_name'] = current_user_linked_to_tutors.first_name
-        form.initial['last_name'] = current_user_linked_to_tutors.last_name
+        # form.initial['first_name'] = current_user_linked_to_tutors.first_name
+        # form.initial['last_name'] = current_user_linked_to_tutors.last_name
         form.initial['course'] = current_user_linked_to_tutors.course
         form.initial['headline'] = current_user_linked_to_tutors.headline
         form.initial['qualifications'] = current_user_linked_to_tutors.qualifications
@@ -104,8 +104,9 @@ def submit_listing(request):
         new_listing = form.save(commit=False)
 
         # trying to eliminate repeats
-        check_if_tutor_in_database_query = Tutor.objects.filter(first_name=new_listing.first_name,
-                                                                last_name=new_listing.last_name,
+        check_if_tutor_in_database_query = Tutor.objects.filter(
+                                                                # first_name=new_listing.first_name,
+                                                                # last_name=new_listing.last_name,
                                                                 user=new_listing.user,
                                                                 course=new_listing.course,
                                                                 headline=new_listing.headline,
@@ -126,9 +127,12 @@ def submit_listing(request):
 
         # form.save()
         return redirect('add_more_availability', pk=(new_listing.pk or check_if_tutor_in_database_query.pk))
-    field = form.fields['first_name']
-    field.widget = field.hidden_widget()
-    field = form.fields['last_name']
+
+    # field = form.fields['first_name']
+    # field.widget = field.hidden_widget()
+    # field = form.fields['last_name']
+    # field.widget = field.hidden_widget()
+    field = form.fields['rating']
     field.widget = field.hidden_widget()
     context = {
         'form': form
