@@ -372,10 +372,10 @@ def submitReview(request):
 
     if request.method == 'POST':
         select_tutor = request.POST["tutor"]
-        select_session = request.POST.get("session")
+        #select_session = request.POST.get("session")
         rating = request.POST["rating"]
         review = request.POST["review_text"]
-        new_review = Review(tutor_id = select_tutor, session_id = select_session, rating = rating, comment = review)
+        new_review = Review(tutor_id = select_tutor, rating = rating, comment = review)
         new_review.save()
         id = new_review.pk
         return redirect('viewReview', pk = new_review.pk)

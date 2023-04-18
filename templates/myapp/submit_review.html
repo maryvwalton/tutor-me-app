@@ -37,20 +37,8 @@
             <label for="language">Select a Tutor:</label> 
             <select id="tutorselect" name="tutor" class="dropdown">
                         {% for tutor in tutors_list %}
-                            <option value="{{ tutor.id}}">{{ tutor.first_name }}</option>
+                            <option value="{{ tutor.id}}">{{ tutor.first_name }} {{ tutor.last_name}} {{tutor.course}}</option>
                         {% endfor %}
-
-        
-            <select id="studentselect" name="student" class="dropdown">
-                {% for student in student_list %}
-                    <option value="{{ student.id}}">{{ student.first_name }}</option>
-                {% endfor %}
-
-            <label for="language">Select a Session:</label> 
-            <select id="sessionselect" name="session" class="player-dropdown">
-                {% for session in session_list %}
-                    <option value="{{ session.id}}">{{ session.date }} {{ session.start_time }} {{ session.end_time }} {{session.course}}</option>
-                {% endfor %}
 
 
             <input type="number"name="rating" id="rating" class="form-control" placeholder="Rating from 1 to 5">

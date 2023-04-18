@@ -22,7 +22,7 @@ class Course(models.Model):
 class Review(models.Model):
     tutor = models.ForeignKey('Tutor', on_delete=models.CASCADE, related_name="tutorreviews")
     #student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="studentreviews")
-    session = models.ForeignKey('SessionRequest', on_delete=models.CASCADE, related_name="sessionsforreview")
+    #session = models.ForeignKey('SessionRequest', on_delete=models.CASCADE, related_name="sessionsforreview")
     rating = models.FloatField(default=0)
     comment = models.CharField(max_length=300)
 

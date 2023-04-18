@@ -193,8 +193,7 @@
           <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $ {{ tutor.hourly_rate}}0</span></button>
           <h5 class="font-weight-normal mt-3"> Headline: {{ tutor.headline }}</h5>
           <h5>Qualifications: {{ tutor.qualifications }}</h5>
-          <h6>Rating: <button type="button" class="btn btn-warning color-black" style="color: black;"> <span class="badge badge-warning" style="color: black;">{{ tutor.rating}}</span></button>
- </h6>
+    
         </div>
       {% endfor %}
     </tbody>
@@ -367,13 +366,6 @@
             <button type="submit" class="btn btn-warning">Cancel</button>
           </form>
 
-          <div style="background-color: #30deee33;">
-            <p class=" font-weight-normal">Already had a tutoring session? Leave a review and inform other students around you.</h3>
-              <a href = "/submit_review">
-                <button type="button" class="btn btn-info">Submit Review</button>
-               </a>
-          </div>
-
         </div>
 
         {% elif sess_request.pending == 2 %}
@@ -441,7 +433,12 @@
 </body>
 
 
-
+<div style="background-color: #30deee33;">
+  <p class=" font-weight-normal">Already had a tutoring session? Leave a review and inform other students around you.</h3>
+    <a href = "/submit_review">
+      <button type="button" class="btn btn-info">Submit Review</button>
+     </a>
+</div>
 
 <footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3" style="background-color: rgba(26, 65, 79, 0.2);">

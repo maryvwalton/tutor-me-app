@@ -92,16 +92,17 @@
           <input class="form-control form-control-lg" type="search" placeholder="Search..." name="searched">
           <button class="btn btn-primary" type="Submit">Submit</button>
         </form>
+        <br>
+        <a class="btn btn-warning" href="/reviews" role="button">View all Reviews for Tutors </a>
+        
       </div>
     </main>
   </body>
 
-  <br>
-  <a class="btn btn-warning" href="/reviews" role="button">View all Reviews for Tutors </a>
-  <br>
 
   <!-- Display every listing -->
   <div class="container text-center mt-5">
+
     <h3>All Tutor Listings</h3>
   </div>
   {% for listing in listings %}
