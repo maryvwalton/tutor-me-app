@@ -64,7 +64,7 @@
 
 
     </style>
-
+  <title>Request an Appointment</title>
 </head>
 
 <body>
@@ -88,7 +88,7 @@
     <div class="text-center">
 
         <main role="main" class="inner cover">
-            <h3 class=" font-weight-normal">Request a Tutor</h3>
+            <h3 class=" font-weight-normal mt-3">Request an Appointment</h3>
             <p class="lead"><small>You are currently booking a service with</small> <b>{{tutor.first_name}}
                 {{tutor.last_name}}</b>
                 <br><small>to get help with</small> <b>{{tutor.course}}</b></p>
@@ -115,7 +115,7 @@
                     <!-- Add more list items for each attribute -->
                 </ul>
                 <div class="text-center">
-                    <a href="/remove_availability/{{appointment.pk}}/delete" class="btn btn-outline-success">Book</a>
+                    <a href="/remove_availability/{{appointment.pk}}/delete" class="btn btn-primary">Book</a>
                 </div>
 
             </div>

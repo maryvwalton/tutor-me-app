@@ -24,33 +24,54 @@
       padding-top: 15vh;
       padding-bottom: 50vh;
     }
+
+        /* Add a black background color to the top navigation */
+        .topnav {
+      background-color: #11caf0;
+      overflow: hidden;
+    }
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #c3c3c3;
+      color: rgb(0, 0, 0);
+    }
+
+    /* Right-aligned section inside the top navigation */
+    .topnav-right {
+      float: right;
+    }
+
   </style>
-<title>Submit a Listing</title>
+<title>Add Appointment to Listing</title>
 </head>
 <body>
 {% if user.is_authenticated %}
 <div class="cover-container  mx-auto flex-column">
-  <ul class="nav bg-info mx-auto">
-    <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/discussion">View Discussion</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/profile">Profile</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link-light" href="/logout">Log Out</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" >{{ user.username }}</a>
-    </li>
-  </ul>
+    <!-- nav bar -->
+    <div class="topnav">
+      <a class="active" href="/"><img
+          src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400"
+          alt="" width="35" height="35"></a>
+      <a href="/tutor_courses">Find a Tutor</a>
+      <a href="/submit_listing">Start Tutoring</a>
+      <a href="/discussion">View Discussion</a>
+      <div class="topnav-right">
+        <a href="/profile">{{ user.username }}</a>
+        <a href="/logout">Log Out</a>
+      </div>
+    </div>
+    <!-- end nav bar -->
 
 
   <br>
