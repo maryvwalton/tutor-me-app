@@ -27,14 +27,15 @@ class TutorForm(ModelForm):
         model = Tutor
 
         fields = [
-    'user', 
-    'first_name',
-    'last_name',
-    'course',
-    'headline',
-    'qualifications',
-    'hourly_rate', 
- 
+            'user',
+            # 'first_name',
+            # 'last_name',
+            'course',
+            'headline',
+            'qualifications',
+            'hourly_rate',
+            'rating'
+
         ]
 
     date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
