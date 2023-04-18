@@ -93,10 +93,11 @@
     <div class = "list-group">
         {% for review in all_reviews%}
         <div class="card">
-            <h5 class="card-header">{{review.tutor.first_name}} {{review.tutor.last_name}}</h5>
+            <h5 class="card-header">{{review.tutor.first_name}} {{review.tutor.last_name}} : {{review.tutor.course}}</h5>
             <div class="card-body">
                     <h5 class="card-title">{{review.session}}</h5>
-                    <p class="card-text">{{ review.rating }} : {{ review.comment }}</p>
+                    <button type="button" class="btn btn-warning"> <span class="badge badge-dark"> {{ review.rating}} / 5</span></button>
+                    <p class="card-text"> {{ review.comment }}</p>
                  
             </div>
         </div>
