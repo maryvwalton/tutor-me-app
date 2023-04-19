@@ -38,7 +38,7 @@
             <button class = "btn btn-primary" type = "Submit">Submit</button>
         </form>
 
-        {%if searched and titles.exists or questions.exists%}
+        {%if searched and titles.exists or questions.exists or replies.exists%}
 
           {% for title in titles%}
           <li class="list-group-item  flex-column"> 
@@ -68,9 +68,23 @@
           <br>
           {% endfor %}
 
+          {% for reply in replies%}
+          <li class="list-group-item  flex-column"> 
+              <div>  
+                  <strong> {{ reply.question.title_text }} </strong>  :   {{ reply.question.question_text }}
+              </div>
+              <small>Posted by {{reply.question.username}} </small>
+              <div>
+                  <button class="btn btn-warning btn-sm btn-round" type="submit"> {{reply.question.num_replies}} replies</button>
+                  <a class="btn btn-secondary btn-sm text-end" href="/discussion/{{reply.question.id}}" role="button">View</a>
+              </div>
+          </li>
+          <br>
+          {% endfor %}
+
         {%else%}
           <br>
-            <h3 class=" font-weight-normal text-center">No results for "{{searched}}"</h3>
+            <h3 class=" font-weight-normal text-center">No results for "{{searched}}. Please try another search."</h3>
           <br>
         {%endif%}
 
@@ -80,7 +94,7 @@
 
 </div>
 
-<footer class="bg-light text-center text-lg-start">
+<footer class="bg-light text-center text-lg-start fixed-bottom">
   <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
     © 2023 Copyright: Team A-30
   </div>

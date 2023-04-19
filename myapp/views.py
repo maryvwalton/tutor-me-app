@@ -90,10 +90,10 @@ def search_classes(request):
 def search_discussions(request):
     if request.method == "POST":
         searched = request.POST.get('searched', default="")
-        reply = discussionReplies.objects.filter(reply_text__contains=searched)
+        replies = discussionReplies.objects.filter(reply_text__contains=searched)
         titles = discussionThread.objects.filter(title_text__contains=searched)
         questions = discussionThread.objects.filter(question_text__contains=searched)
-    return render(request, 'myapp/search_discussions.html', {'searched': searched, 'reply': reply, 'titles': titles, 'questions': questions})
+    return render(request, 'myapp/search_discussions.html', {'searched': searched, 'replies': replies, 'titles': titles, 'questions': questions})
     
 # View that students use to make a request on a listing
 def update_listing(request, pk):
