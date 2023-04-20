@@ -133,7 +133,7 @@ class discussionReplies(models.Model):
     #reply_date = models.DateTimeField(timezone.now(), null = True)
 
     def __str__(self):
-         return self.objects.count()
+         return str(self.reply_text)
 
     def count_replies(self): 
         return self.objects.count()
