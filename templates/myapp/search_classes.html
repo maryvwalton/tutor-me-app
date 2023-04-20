@@ -79,7 +79,8 @@
       <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ course.course }}</span></button>
       <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $
           {{course.hourly_rate}}0</span></button>
-      <h4 class="mt-2">Tutor: {{ course.first_name }} {{course.last_name }} ( {{ course.headline }} )</h4>
+      <button type="button" class="btn btn-warning"> <span class="badge badge-dark" style="color: black;"> {{ course.avg_rating |floatformat:1 }} / 5</span></button>
+      <h4 class="mt-2">Tutor: {{ course.user.first_name }} {{course.user.last_name }} ( {{ course.headline }} )</h4>
       <h5> Qualifications: {{ course.qualifications }}</h5>
       <!-- Button trigger modal -->
       <a href="{% url 'update_listing' course.pk %}">
@@ -93,7 +94,8 @@
       <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ course.course }}</span></button>
       <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $
           {{course.hourly_rate}}0</span></button>
-      <h4 class="mt-2">Tutor: {{ course.first_name }} {{course.last_name }} ( {{ course.headline }} )</h4>
+      <button type="button" class="btn btn-warning"> <span class="badge badge-dark" style="color: black;"> {{ course.avg_rating |floatformat:1 }} / 5</span></button>
+      <h4 class="mt-2">Tutor: {{ course.user.first_name }} {{course.user.last_name }} ( {{ course.headline }} )</h4>
       <h5> Qualifications: {{ course.qualifications }}</h5>
       <!-- Button trigger modal -->
       <a href="{% url 'update_listing' course.pk %}">
@@ -107,7 +109,8 @@
       <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ course.course }}</span></button>
       <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $
           {{course.hourly_rate}}0</span></button>
-      <h4 class="mt-2">Tutor: {{ course.first_name }} {{course.last_name }} ( {{ course.headline }} )</h4>
+      <button type="button" class="btn btn-warning"> <span class="badge badge-dark" style="color: black;"> {{ course.avg_rating |floatformat:1 }} / 5</span></button>
+      <h4 class="mt-2">Tutor: {{ course.user.first_name }} {{course.user.last_name }} ( {{ course.headline }} )</h4>
       <h5> Qualifications: {{ course.qualifications }}</h5>
       <!-- Button trigger modal -->
       <a href="{% url 'update_listing' course.pk %}">
