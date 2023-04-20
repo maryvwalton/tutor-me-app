@@ -120,58 +120,6 @@
 
 <!-- This if is for if they are a tutor -->
   {% if is_tutor %}
-<!-- DIV FOR BOTH STUDENT AND TUTOR SIDE -->
-    <div class = 'container'>
-<!-- DIV FOR THE TUTOR SIDE -->
-  
-    <div class = 'left-div'>
-      <h1>Tutor Side</h1>
-      <h2>Your Active Listings:</h2>
-      <tbody>
-        {% for tutor in tutor %}
-            <tr>
-                <td>{{ tutor.first_name }}</td>
-                <td>{{ tutor.course }}</td>
-                <td>{{ tutor.headline }}</td>
-                <td>{{ tutor.qualifications }}</td>
-                <td>{{ tutor.hourly_rate }}</td>
-                <td>{{ tutor.rating }}</td>
-            </tr>
-            <br>
-        {% endfor %}
-        </tbody>
-      
-    <div class = 'containter'> 
-    <div class = 'left-div'>
-    {% if not has_sess_request %}
-    {% else %}
-    <h1>Confirm/Decline Requests:</h1>
-    <tbody>
-      {% for sess_request in sess_request %}
-          <tr>
-              <td>{{ sess_request.date }}</td>
-              <td>{{ sess_request.start_time }}</td>
-              <td>{{ sess_request.end_time }}</td>
-              <td>{{ sess_request.student }}</td>
-              <td>{{ sess_request.course }}</td>
-              <td>{{ sess_request.service }}</td>
-          </tr>
-          <br>
-          <div class="button-container">
-          <form action="{% url 'confirm_model' pk=sess_request.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-success">Confirm</button>
-        </form>
-          <form action="{% url 'decline_model' pk=sess_request.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-warning">Decline</button>
-        </form>
-      </div>
-        <br>
-      {% endfor %}
-        </tbody>
-      </div>
-      {% endif %}
 
 <!-- DIV FOR BOTH STUDENT AND TUTOR SIDE -->
   <div class ="row justify-content-end ">
@@ -277,10 +225,21 @@
         <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
         <p>Your session is approved! Contact {{sess_request.tutor.user.email}} to get started!</p>
 
-        <form action="{% url 'delete_model' pk=sess_request.pk %}" method="post">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-warning">Cancel</button>
-        </form>
+        <div class="button-container row mt-3">
+          <div class="col">
+            <form action="{% url 'delete_model' pk=sess_request.pk %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-warning">Cancel</button>
+            </form>
+          </div>
+          <div class="col">
+            <a href = "/submit_review">
+              <button type="button" class="btn btn-info">Submit Review</button>
+            </a>
+          </div>
+        </div>
+
+        
       </div>
 
     <!-- declined session -->
@@ -361,10 +320,19 @@
           <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
           <p>Your session is approved! Contact {{sess_request.tutor.user.email}} to get started!</p>
 
-          <form action="{% url 'delete_model' pk=sess_request.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-warning">Cancel</button>
-          </form>
+          <div class="button-container row mt-3">
+            <div class="col">
+              <form action="{% url 'delete_model' pk=sess_request.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">Cancel</button>
+              </form>
+            </div>
+            <div class="col">
+              <a href = "/submit_review">
+                <button type="button" class="btn btn-info">Submit Review</button>
+              </a>
+            </div>
+          </div>
 
         </div>
 
@@ -432,13 +400,6 @@
 {% endif %}
 </body>
 
-
-<div style="background-color: #30deee33;">
-  <p class=" font-weight-normal">Already had a tutoring session? Leave a review and inform other students around you.</h3>
-    <a href = "/submit_review">
-      <button type="button" class="btn btn-info">Submit Review</button>
-     </a>
-</div>
 
 <footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3" style="background-color: rgba(26, 65, 79, 0.2);">
