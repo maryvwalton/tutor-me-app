@@ -27,7 +27,7 @@ class Review(models.Model):
     comment = models.CharField(max_length=300)
 
     def __str__(self):
-         return self.comment
+         return str(self.comment)
 
 
 
@@ -42,7 +42,8 @@ class Tutor(models.Model):
     rating = models.FloatField(default=0)
 
     def __str__(self):
-        return self.user
+        return str(self.user.username)
+    
     
     def save(self, *args, **kwargs):
         # self.slug = slugify(self.first_name)
