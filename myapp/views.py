@@ -30,7 +30,7 @@ class Round(Func):
 #View that shows the listings on tutor_courses.html
 def listing_view(request):
     
-    listings = Tutor.objects.annotate(avg_rating = Round(Avg('tutorreviews__rating')))
+    listings = Tutor.objects.annotate(avg_rating = Avg('tutorreviews__rating'))
 
     # reviews = Tutor.objects.all().prefetch_related(
     #     Prefetch(

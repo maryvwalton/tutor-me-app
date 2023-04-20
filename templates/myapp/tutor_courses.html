@@ -109,7 +109,7 @@
     <div class="container p-3 my-3 border" style="background-color: beige">
       <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ listing.course }}</span></button>
       <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $ {{listing.hourly_rate}}0</span></button>
-      <button type="button" class="btn btn-warning"> <span class="badge badge-dark"> {{ listing.avg_rating}} / 5</span></button>
+      <button type="button" class="btn btn-warning"> <span class="badge badge-dark"> {{ listing.avg_rating |floatformat:1 }} / 5</span></button>
       <h4 class="mt-2">Tutor: {{ listing.first_name }} {{listing.last_name }} ( {{ listing.headline }} )</h4>
       <h5> Qualifications: {{ listing.qualifications }}</h5>
       <!-- Button trigger modal -->
