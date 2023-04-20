@@ -32,7 +32,7 @@
 
         <br>
         <h3 class=" font-weight-normal text-center">Thank you for your submission!</h3>
-        <p class="lead"> Review for {{ review.tutor }} </p>
+        <p class="lead"> Review for {{ review.tutor.user.first_name }} {{ review.tutor.user.last_name }} </p>
 
         <div class="card">
             <h5 class="card-header"> {{review.session}}</h5>

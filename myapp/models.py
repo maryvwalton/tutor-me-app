@@ -32,8 +32,8 @@ class Review(models.Model):
 
 
 class Tutor(models.Model):
-    first_name = models.CharField(max_length=200)  
-    last_name = models.CharField(max_length=200)  
+    # first_name = models.CharField(max_length=200)  
+    # last_name = models.CharField(max_length=200)  
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True )
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     headline = models.CharField(max_length=300)
@@ -42,7 +42,7 @@ class Tutor(models.Model):
     rating = models.FloatField(default=0)
 
     def __str__(self):
-        return self.first_name + self.last_name
+        return self.user
     
     def save(self, *args, **kwargs):
         # self.slug = slugify(self.first_name)

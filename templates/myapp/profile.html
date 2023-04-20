@@ -272,7 +272,7 @@
     <!-- approved session -->
       <div class="container p-3 my-3 border" style="background-color: rgb(166, 232, 166);">
         <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
-        <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+        <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
         <h6> Date: {{ sess_request.date }}</h6>
         <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
         <p>Your session is approved! Contact {{sess_request.tutor.user.email}} to get started!</p>
@@ -287,7 +287,7 @@
     {% elif sess_request.pending == 2 %}
       <div class="container p-3 my-3 border" style="background-color: rgb(227, 177, 177);">
         <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
-        <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+        <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
         <h6> Date: {{ sess_request.date }}</h6>
         <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
         <p>Your session was declined :( <a href="{% url 'listing_view' %}">Find another listing!<a></p>
@@ -302,7 +302,7 @@
     {% else %}
       <div class="container p-3 my-3 border" style="background-color: rgb(216, 216, 157);">
         <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
-        <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+        <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
         <h6> Date: {{ sess_request.date }}</h6>
         <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
 
@@ -356,7 +356,7 @@
         <!-- approved session -->
         <div class="container p-3 my-3 border" style="background-color: rgb(166, 232, 166);">
           <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
-          <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+          <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
           <h6> Date: {{ sess_request.date }}</h6>
           <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
           <p>Your session is approved! Contact {{sess_request.tutor.user.email}} to get started!</p>
@@ -372,7 +372,7 @@
         <!-- declined session -->
         <div class="container p-3 my-3 border" style="background-color: rgb(227, 177, 177);">
           <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
-          <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+          <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
           <h6> Date: {{ sess_request.date }}</h6>
           <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
           <p>Your session was declined :( <a href="{% url 'listing_view' %}">Find another listing!<a></p>
@@ -387,7 +387,7 @@
         <!-- requested with tutor -->
         <div class="container p-3 my-3 border" style="background-color: rgb(216, 216, 157);">
           <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
-          <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+          <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
           <h6> Date: {{ sess_request.date }}</h6>
           <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
 

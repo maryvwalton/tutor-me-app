@@ -28,8 +28,8 @@ class TutorForm(ModelForm):
 
         fields = [
     'user', 
-    'first_name',
-    'last_name',
+    # 'first_name',
+    # 'last_name',
     'course',
     'headline',
     'qualifications',
