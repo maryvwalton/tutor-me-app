@@ -175,6 +175,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SECURE_SSL_REDIRECT = True
+
 # SHERRIFF
 # Activate Django-Heroku.
 # Use this code to avoid the psycopg2 / django-heroku error!  
