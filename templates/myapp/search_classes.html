@@ -3,113 +3,151 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
   {% load bootstrap5 %}
   {% bootstrap_css %}
-  {% bootstrap_javascript %}  
+  {% bootstrap_javascript %}
+
+  <style>
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: #11caf0;
+      overflow: hidden;
+    }
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #c3c3c3;
+      color: rgb(0, 0, 0);
+    }
+
+    /* Right-aligned section inside the top navigation */
+    .topnav-right {
+      float: right;
+    }
+  </style>
+
 </head>
 
 <div class="cover-container  mx-auto flex-column">
 
-<body>
+  <body>
     {% if user.is_authenticated %}
-    <div class="cover-container  mx-auto flex-column">
-    <ul class="nav bg-info mx-auto">
-      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/discussion">View Discussion</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/profile">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/logout">Log Out</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" >{{ user.username }}</a>
-      </li>
-    </ul>
+    <!-- nav bar -->
+    <div class="topnav">
+      <a class="active" href="/"><img
+          src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400"
+          alt="" width="35" height="35"></a>
+      <a href="/tutor_courses">Find a Tutor</a>
+      <a href="/submit_listing">Start Tutoring</a>
+      <a href="/discussion">View Discussion</a>
+      <div class="topnav-right">
+        <a href="/profile">{{ user.username }}</a>
+        <a href="/logout">Log Out</a>
+      </div>
+    </div>
+    <!-- end nav bar -->
     {% endif %}
 
-    <br>
-      <h4 class="text-dark text-center"> You Searched For "{{searched}}"</h4>
-    <br>
+    <!--  heading ans search bar -->
+    <h2 class="text-dark text-center mt-3 mb-3"> You Searched For "{{searched}}"</h2>
 
-    <form class = "d-flex" method = POST action="{% url 'search-classes' %}">
+    <div class="container mb-5">
+      <form class="d-flex" method=POST action="{% url 'search-classes' %}">
         {%csrf_token%}
-        <input class = "form-control form-control-lg" type = "search" placeholder = "Search..." name ="searched">
-        <button class = "btn btn-primary" type = "Submit">Submit</button>
-    </form>
+        <input class="form-control form-control-lg" type="search" placeholder="Search..." name="searched">
+        <button class="btn btn-primary" type="Submit">Submit</button>
+      </form>
+    </div>
 
-    <br>
-    <br>
-
+    <!-- courses -->
     {%if searched %}
-       
-        <ul class="list-group">
-            {% for name in names %}
-                <li class="list-group-item">
-                  <h5 class = "list-group-text" >{{  name.first_name }} {{name.last_name }} : {{ name.headline }}  </h5>
-                  <p class = "list-group-item-text lead">{{ name.qualifications }} </p>
-                  <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ name.course }}</span></button>
-                  <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ name.hourly_rate}}</span></button>
 
-                  <br>
-                  <br>
+      {% for first_name in first_names %}
+      <div class="container p-3 my-3 border" style="background-color: beige;">
+        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ first_name.course }}</span></button>
+        <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $
+            {{first_name.hourly_rate}}0 / hr</span></button>
+        <h4 class="mt-2">Tutor: {{ first_name.first_name }} {{first_name.last_name }} ( {{ first_name.headline }} )</h4>
+        <h5> Qualifications: {{ first_name.qualifications }}</h5>
+        <!-- Button trigger modal -->
+        <a href="{% url 'update_listing' first_name.pk %}">
+          <button type="button" class="btn btn-primary">Book</button>
+        </a>
+      </div>
+      {% endfor %}
 
-                   <!-- Button trigger modal -->
-      
-                   <a href = "{% url 'update_listing' name.pk %}">
-                    <button type="button" class="btn btn-outline-success">Book</button>
-                   </a>
-                     
+      {% for last_name in last_names %}
+      <div class="container p-3 my-3 border" style="background-color: beige;">
+        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ last_name.course }}</span></button>
+        <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $
+            {{last_name.hourly_rate}}0 / hr</span></button>
+        <h4 class="mt-2">Tutor: {{ last_name.first_name }} {{last_name.last_name }} ( {{ last_name.headline }} )</h4>
+        <h5> Qualifications: {{ last_name.qualifications }}</h5>
+        <!-- Button trigger modal -->
+        <a href="{% url 'update_listing' last_name.pk %}">
+          <button type="button" class="btn btn-primary">Book</button>
+        </a>
+      </div>
+      {% endfor %}
 
-                  </li>
+      {% for name in names %}
+      <div class="container p-3 my-3 border" style="background-color: beige;">
+        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ name.course }}</span></button>
+        <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $
+            {{name.hourly_rate}}0 / hr</span></button>
+        <h4 class="mt-2">Tutor: {{ name.first_name }} {{name.last_name }} ( {{ name.headline }} )</h4>
+        <h5> Qualifications: {{ name.qualifications }}</h5>
+        <!-- Button trigger modal -->
+        <a href="{% url 'update_listing' name.pk %}">
+          <button type="button" class="btn btn-primary">Book</button>
+        </a>
+      </div>
+      {% endfor %}
 
-            {% endfor %}
-            {% for pnemonic in pnemonics %}
-            <li class="list-group-item">
-              <h5 class = "list-group-text" >{{  pnemonic.first_name }} {{pnemonic.last_name }} : {{ pnemonic.headline }}  </h5>
-              <p class = "list-group-item-text lead">{{ pnemonic.qualifications }} </p>
-              <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ pnemonic.course }}</span></button>
-              <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ pnemonic.hourly_rate}}</span></button>
+      {% for pnemonic in pnemonics %}
+      <div class="container p-3 my-3 border" style="background-color: beige;">
+        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ pnemonic.course }}</span></button>
+        <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $
+            {{pnemonic.hourly_rate}}0 / hr</span></button>
+        <h4 class="mt-2">Tutor: {{ pnemonic.first_name }} {{pnemonic.last_name }} ( {{ pnemonic.headline }} )</h4>
+        <h5> Qualifications: {{ pnemonic.qualifications }}</h5>
+        <!-- Button trigger modal -->
+        <a href="{% url 'update_listing' pnemonic.pk %}">
+          <button type="button" class="btn btn-primary">Book</button>
+        </a>
+      </div>
+      {% endfor %}
 
-              <br>
-              <br>
+      {% for coursenum in coursenums %}
+      <div class="container p-3 my-3 border" style="background-color: beige;">
+        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ coursenum.course }}</span></button>
+        <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $
+            {{coursenum.hourly_rate}}0 / hr</span></button>
+        <h4 class="mt-2">Tutor: {{ coursenum.first_name }} {{coursenum.last_name }} ( {{ coursenum.headline }} )</h4>
+        <h5> Qualifications: {{ coursenum.qualifications }}</h5>
+        <!-- Button trigger modal -->
+        <a href="{% url 'update_listing' coursenum.pk %}">
+          <button type="button" class="btn btn-primary">Book</button>
+        </a>
+      </div>
+      {% endfor %}
 
-               <!-- Button trigger modal -->
-               <a href = "{% url 'update_listing' pnemonic.pk %}">
-                <button type="button" class="btn btn-outline-success">Book</button>
-               </a>
-
-              </li>
-            {% endfor %}
-            {% for coursenum in coursenums %}
-            <li class="list-group-item">
-              <h5 class = "list-group-text" >{{  coursenum.first_name }} {{coursenum.last_name }} : {{ coursenum.headline }}  </h5>
-              <p class = "list-group-item-text lead">{{ coursenum.qualifications }} </p>
-              <button type="button" class="btn btn-info"> <span class="badge badge-dark"> {{ coursenum.course }}</span></button>
-              <button type="button" class="btn btn-secondary"> <span class="badge badge-dark"> $ {{ coursenum.hourly_rate}}</span></button>
-
-              <br>
-              <br>
-
-               <!-- Button trigger modal -->
-               <a href = "{% url 'update_listing' coursenum.pk %}">
-                <button type="button" class="btn btn-outline-success">Book</button>
-               </a>
-
-              </li>
-            {% endfor %}
-        </ul>
     {%else%}
-        <h1 class = "text-center">Hey! You forgot to search for a class...</h1>
+    <div class="container text-center">
+      <h1 class="mb-5">Hey! You forgot to search for a class...</h1>
+    </div>
     {%endif%}
 
 
@@ -118,6 +156,5 @@
         © 2023 Copyright: Team A-30
       </div>
     </footer>
-    
-  </div>
-    
+
+</div>

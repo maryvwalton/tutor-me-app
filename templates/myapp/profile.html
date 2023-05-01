@@ -1,8 +1,6 @@
 {% load i18n %}
 {% load socialaccount %}
 
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +11,7 @@
   <!-- Add icon library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
 
   <style>
     .logincontainer {
@@ -32,15 +31,15 @@
       padding-bottom: 50vh;
     }
     .profileheader {
-        padding: 30px;
+        padding: 20px;
+        text-align: center;
     }
     .container {
         overflow: auto; /* clear the float */
-
     }
     
     .left-div {
-      background-color: #ccc;
+      background-color: #ffffff;
       padding: 10px;
       display: inline-block;
       margin-right: 10px;
@@ -59,259 +58,323 @@
     tr:nth-child(even) {
       background-color: #D6EEEE;
     }
-    
+
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: #11caf0;
+      overflow: hidden;
+    }
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #c3c3c3;
+      color: rgb(0, 0, 0);
+    }
+
+    /* Right-aligned section inside the top navigation */
+    .topnav-right {
+      float: right;
+    }
+
   </style>
   <title>Profile</title>
 </head>
+
 <body>
 {% if user.is_authenticated %}
-<div class="cover-container  mx-auto flex-column">
+  <!-- nav bar -->
+  <div class="topnav">
+    <a class="active" href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
+    <a href="/tutor_courses">Find a Tutor</a>
+    <a href="/submit_listing">Start Tutoring</a>
+    <a href="/discussion">View Discussion</a>
+    <div class="topnav-right">
+      <a href="/profile">{{ user.username }}</a>
+      <a href="/logout">Log Out</a>
+    </div>
+  </div>
+  <!-- end nav bar -->
 
-    <ul class="nav bg-info mx-auto">
-      <a class="navbar-brand"href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/tutor_courses">Find a Tutor</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/submit_listing">Start Tutoring</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/discussion">View Discussion</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/profile">Profile</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link link-light" href="/logout">Log Out</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" >{{ user.username }}</a>
-      </li>
-    </ul>
-
-    <body class="text-center">
-   
-  
     <!-- <h1>Enter your Name</h1>
     <form method="get">
         {{ form.as_p }}
         <button type="submit">Filter</button>
     </form> -->
 
-    <!-- HEADER THAT SAYS THE NAME OF THE PROFILE -->
-    <div class="position-relative overflow-hidden bg-light">
-      <div class="profileheader">
-          <h1 class="display-4 font-weight-normal">{{ user.username }}'s Profile</h1>
-      </div>
-
+  <!-- HEADER THAT SAYS THE NAME OF THE PROFILE -->
+  <div class="position-relative overflow-hidden bg-light">
+    <div class="profileheader">
+      <h1 class="display-5 font-weight-normal">{{ user.first_name }} {{ user.last_name}}'s Profile</h1>
+    </div>
   </div>
 
 <!-- This if is for if they are a tutor -->
   {% if is_tutor %}
-<!-- DIV FOR BOTH STUDENT AND TUTOR SIDE -->
-    <div class = 'container'>
-<!-- DIV FOR THE TUTOR SIDE -->
-  
-    <div class = 'left-div'>
-      <h1>Tutor Side</h1>
-      <h2>Your Listings For Sale:</h2>
-      <tbody>
-        {% for tutor in tutor %}
-            <tr>
-                <td>{{ tutor.first_name }}</td>
-                <td>{{ tutor.course }}</td>
-                <td>{{ tutor.headline }}</td>
-                <td>{{ tutor.qualifications }}</td>
-                <td>{{ tutor.hourly_rate }}</td>
-                <td>{{ tutor.rating }}</td>
-            </tr>
-            <br>
-        {% endfor %}
-        </tbody>
-      
-    <div class = 'containter'> 
-    <div class = 'left-div'>
-    {% if not has_sess_request %}
-    {% else %}
-    <h1>Confirm/Decline Requests:</h1>
-    <tbody>
-      {% for sess_request in sess_request %}
-          <tr>
-              <td>{{ sess_request.date }}</td>
-              <td>{{ sess_request.start_time }}</td>
-              <td>{{ sess_request.end_time }}</td>
-              <td>{{ sess_request.student }}</td>
-              <td>{{ sess_request.course }}</td>
-              <td>{{ sess_request.service }}</td>
-          </tr>
-          <br>
-          <div class="button-container">
-          <form action="{% url 'confirm_model' pk=sess_request.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-success">Confirm</button>
-        </form>
-          <form action="{% url 'decline_model' pk=sess_request.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-warning">Decline</button>
-        </form>
-      </div>
-        <br>
-      {% endfor %}
-        </tbody>
-      </div>
-      {% endif %}
 
+<!-- DIV FOR BOTH STUDENT AND TUTOR SIDE -->
+  <div class ="row justify-content-end ">
+
+  <!-- DIV FOR THE TUTOR SIDE -->
+
+  <div class="col-6">
+  <div class="container mt-3" style="background-color: #ffd6ae;">
+
+    <h1 class="display-6 font-weight-normal mt-3">Tutor Side</h1>
+
+    <!-- Listings -->
+
+    <h2>Your Listings For Sale:</h2>
+    <tbody>
+      {% for tutor in tutor %}
+        <div class="container p-3 my-3 border" style="background-color: #ffffff;">
+          <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark">{{ tutor.course }}</span></button>
+          <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $ {{ tutor.hourly_rate}}0 / hr</span></button>
+          <h5 class="font-weight-normal mt-3"> Headline: {{ tutor.headline }}</h5>
+          <h5>Qualifications: {{ tutor.qualifications }}</h5>
+    
+        </div>
+      {% endfor %}
+    </tbody>
+    
+    <!-- Requests -->
+    {% if not has_sess_request %}
+
+    {% else %}
+    <h2 id="requests">Request Manager:</h2>
+    <tbody>
+      
+      {% for sess_request in sess_request %}
+      <div class="container p-3 my-3 border" style="background-color: #dcdcdc;">
+
+        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+        <h5 class="font-weight-normal mt-3"> From: {{ sess_request.student }}</h5>
+        <h6> Date: {{ sess_request.date }}</h6>
+        <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
+        
+        <div class="button-container row mt-3">
+          <div class="col">
+            <form action="{% url 'confirm_model' pk=sess_request.pk %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-success">Confirm</button>
+            </form>
+          </div>
+          <div class="col">
+            <form action="{% url 'decline_model' pk=sess_request.pk %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Decline</button>
+            </form>
+          </div>
+        </div>
+
+      </div>  
+      {% endfor %}
+      
+    </tbody>
+    {% endif %}
+
+    <!-- confirmed requests -->
     {% if not has_sess_request_confirmed %}
     {% else %}
-      <div class = "right-div">
-      <h1>Confirmed Session Requests:</h1>
+      <h2 id="confirmed">Confirmed Session Requests:</h2>
         <tbody>
           {% for sess_request in sess_request_confirmed %}
-            <tr class="table-primary">
-                  <td>{{ sess_request.date }}</td>
-                  <td>{{ sess_request.start_time }}</td>
-                  <td>{{ sess_request.end_time }}</td>
-                  <td>{{ sess_request.student }}</td>
-                  <td>{{ sess_request.course }}</td>
-                  <td>{{ sess_request.service }}</td>
-              </tr>
-              <br>
+            <div class="container p-3 my-3 border" style="background-color: rgb(166, 232, 166);">
+              <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+              <h5 class="font-weight-normal mt-3"> From: {{ sess_request.student }}</h5>
+              <h6> Date: {{ sess_request.date }}</h6>
+              <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
               <form action="{% url 'decline_model' pk=sess_request.pk %}" method="post">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-warning">Decline</button>
-            </form>
-            <br>
+                <button type="submit" class="btn btn-warning">Cancel</button>
+              </form> 
+            </div>
           {% endfor %}
-            </tbody>
-          </div>
-          {% endif %}
-    </div>
-    </div>
-
-
-<!-- DIV FOR THE STUDENT SIDE -->
-<div>
-  <h1>Student Side</h1>
-  <h2>Pending Requests You Made:</h2>
-  {% if not has_sess_request_student_side %}
-    <p>You currently have no requests pending for tutors. You can book a listing  <a href="{% url 'listing_view' %}">here!<a></p>
-    {% else %}
-  <tbody>
-      {% for sess_request in sess_request_student_side %}
-    {% if sess_request.pending == 1 %}
-      <div style="background-color: rgb(166, 232, 166);">
-        <tr>
-          <td>{{ sess_request.date }}</td>
-            <td>{{ sess_request.start_time }}</td>
-            <td>{{ sess_request.end_time }}</td>
-            <td>{{ sess_request.student }}</td>
-            <td>{{ sess_request.course }}</td>
-            <td>{{ sess_request.service }}</td>
-        </tr>
-        <br>
-        <p>Your session is approved! Contact {{sess_request.tutor.user.email}} to get started!</p>
-      </div>
-    {% elif sess_request.pending == 2 %}
-    <div style="background-color: rgb(227, 177, 177);">
-      <tr>
-        <td>{{ sess_request.date }}</td>
-            <td>{{ sess_request.start_time }}</td>
-            <td>{{ sess_request.end_time }}</td>
-            <td>{{ sess_request.student }}</td>
-            <td>{{ sess_request.course }}</td>
-            <td>{{ sess_request.service }}</td>
-        </tr>
-        <br>
-        <p>Your session was Declined :( You can apply for another listing <a href="{% url 'listing_view' %}">here!<a></p>
-    </div>
-    {% else %}
-      <tr style="background-color: rgb(216, 216, 157);">
-        <td>{{ sess_request.date }}</td>
-            <td>{{ sess_request.start_time }}</td>
-            <td>{{ sess_request.end_time }}</td>
-            <td>{{ sess_request.student }}</td>
-            <td>{{ sess_request.course }}</td>
-            <td>{{ sess_request.service }}</td>
-        </tr>
+        </tbody>
     {% endif %}
-            
-        <br>
+  </div>
+  </div>
+<!-- DIV FOR THE STUDENT SIDE -->
+  <div class="col-6">
+  <div class="container mt-3" style="background-color: #aee8ff;">
+  <h1 class="display-6 font-weight-normal mt-3">Student Side</h1>
+
+  <!-- requests -->
+  
+  {% if not has_sess_request_student_side %}
+    <p class="lead font-weight-normal">You currently have no requests pending for tutors. You can book a listing  <a href="{% url 'listing_view' %}">here!<a></p>
+  {% else %}
+  <tbody>
+    <h2>Sessions Requested with Tutors:</h2>
+    {% for sess_request in sess_request_student_side %}
+    {% if sess_request.pending == 1 %}
+    <!-- approved session -->
+      <div class="container p-3 my-3 border" style="background-color: rgb(166, 232, 166);">
+        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+        <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+        <h6> Date: {{ sess_request.date }}</h6>
+        <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
+        <p>Your session is approved! Contact {{sess_request.tutor.user.email}} to get started!</p>
+
+        <div class="button-container row mt-3">
+          <div class="col">
+            <form action="{% url 'delete_model' pk=sess_request.pk %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-warning">Cancel</button>
+            </form>
+          </div>
+          <div class="col">
+            <a href = "/submit_review">
+              <button type="button" class="btn btn-info">Submit Review</button>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    <!-- declined session -->
+    {% elif sess_request.pending == 2 %}
+      <div class="container p-3 my-3 border" style="background-color: rgb(227, 177, 177);">
+        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+        <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+        <h6> Date: {{ sess_request.date }}</h6>
+        <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
+        <p>Your session was declined :( <a href="{% url 'listing_view' %}">Find another listing!<a></p>
+
         <form action="{% url 'delete_model' pk=sess_request.pk %}" method="post">
           {% csrf_token %}
           <button type="submit" class="btn btn-danger">Delete</button>
-      </form>
-      <br>
-    {% endfor %}
-      </tbody>
-      {% endif %}
-  </body>
-  </div>
-    {% else %}
-
-    <!-- This is for if they are only a student -->
-    <div>
-      <h1>Pending Requests You Made:</h1>
-      {% if not has_sess_request_student_side %}
-        <p>You currently have no requests pending for tutors. You can book a listing  <a href="{% url 'listing_view' %}">here!<a></p>
-        {% else %}
-      <tbody>
-          {% for sess_request in sess_request_student_side %}
-        {% if sess_request.pending == 1 %}
-          <div style="background-color: rgb(166, 232, 166);">
-            <tr>
-              <td>{{ sess_request.date }}</td>
-                <td>{{ sess_request.start_time }}</td>
-                <td>{{ sess_request.end_time }}</td>
-                <td>{{ sess_request.student }}</td>
-                <td>{{ sess_request.course }}</td>
-                <td>{{ sess_request.service }}</td>
-            </tr>
-            <br>
-            <p>Your session is approved! Contact {{sess_request.tutor.user.email}} to get started!</p>
-          </div>
-        {% elif sess_request.pending == 2 %}
-        <div style="background-color: rgb(227, 177, 177);">
-          <tr>
-            <td>{{ sess_request.date }}</td>
-                <td>{{ sess_request.start_time }}</td>
-                <td>{{ sess_request.end_time }}</td>
-                <td>{{ sess_request.student }}</td>
-                <td>{{ sess_request.course }}</td>
-                <td>{{ sess_request.service }}</td>
-            </tr>
-            <br>
-            <p>Your session was Declined :( You can apply for another listing <a href="{% url 'listing_view' %}">here!<a></p>
-        </div>
-        {% else %}
-          <tr style="background-color:rgb(216, 216, 157);">
-            <td>{{ sess_request.date }}</td>
-                <td>{{ sess_request.start_time }}</td>
-                <td>{{ sess_request.end_time }}</td>
-                <td>{{ sess_request.student }}</td>
-                <td>{{ sess_request.course }}</td>
-                <td>{{ sess_request.service }}</td>
-            </tr>
-        {% endif %}
-                
-            <br>
-            <form action="{% url 'delete_model' pk=sess_request.pk %}" method="post">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-danger">Delete</button>
-          </form>
-          <br>
-        {% endfor %}
-          </tbody>
-          {% endif %}
-      </body>
+        </form>
       </div>
 
+    <!-- requested with tutor -->
+    {% else %}
+      <div class="container p-3 my-3 border" style="background-color: rgb(216, 216, 157);">
+        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+        <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+        <h6> Date: {{ sess_request.date }}</h6>
+        <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
+
+        <form action="{% url 'delete_model' pk=sess_request.pk %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
 
     {% endif %}
-
     
+    {% endfor %}
 
+  </tbody>
+  {% endif %}
+  </div>
+  </div>
+  </div>
+  {% else %}
+    <!-- This is for if they are only a student -->
+    <div class="container">        
+      {% if not has_sess_request_student_side %}
+      
+        <div class="row justify-content-end">
+          <div class="col-6">
+            <div class="container mt-3" style="background-color: #ffd6ae;">
+              <h1 class="font-weight-normal mt-3">Tutor Side</h1>
+              <p class="lead font-weight-normal">You currently have no listings for sale. You can create a listing <a href="{% url 'submit_listing' %}">here!</a></p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="container mt-3" style="background-color: #aee8ff;">
+              <h1 class="font-weight-normal mt-3">Student Side</h1>
+              <p class="lead font-weight-normal">You currently have no requests pending for tutors. You can book a listing  <a href="{% url 'listing_view' %}">here!<a></p>
+            </div>
+          </div>
+        </div>
+
+      {% else %}
+       
+      <tbody>
+         {% if tutor == 0 %}
+          <h1>this is somethingd</h1>
+          {%endif%}
+          <div class="container mt-3" style="background-color: #aee8ff;">
+            <h1 class="display-6 font-weight-normal mt-3">Student Side</h1>
+            <h2>Sessions Requested with Tutors:</h2>
+        {% for sess_request in sess_request_student_side %}
+
+        {% if sess_request.pending == 1 %}
+        <!-- approved session -->
+        <div class="container p-3 my-3 border" style="background-color: rgb(166, 232, 166);">
+          <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+          <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+          <h6> Date: {{ sess_request.date }}</h6>
+          <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
+          <p>Your session is approved! Contact {{sess_request.tutor.user.email}} to get started!</p>
+
+          <div class="button-container">
+            <form action="{% url 'delete_model' pk=sess_request.pk %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-warning">Cancel</button>
+            </form>
+
+            <a href = "/submit_review">
+              <button type="button" class="btn btn-info">Submit Review</button>
+            </a>
+          </div>
+        </div>
+
+        {% elif sess_request.pending == 2 %}
+        <!-- declined session -->
+        <div class="container p-3 my-3 border" style="background-color: rgb(227, 177, 177);">
+          <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+          <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+          <h6> Date: {{ sess_request.date }}</h6>
+          <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
+          <p>Your session was declined :( <a href="{% url 'listing_view' %}">Find another listing!<a></p>
+
+          <form action="{% url 'delete_model' pk=sess_request.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+
+        {% else %}
+        <!-- requested with tutor -->
+        <div class="container p-3 my-3 border" style="background-color: rgb(216, 216, 157);">
+          <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+          <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor }}</h5>
+          <h6> Date: {{ sess_request.date }}</h6>
+          <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
+
+          <form action="{% url 'delete_model' pk=sess_request.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+
+        </div>
+
+        {% endif %}
+        
+        {% endfor %}
+      </div>
+      </tbody>
+      {% endif %}
+      
+    </div>
+  {% endif %}
+</div>
+
+<!-- if user is not logged in -->
 {% else %}
-      <div class="logincontainer">
+    <div class="logincontainer">
       <div class="logintext">
         <h1 class="text-center display-4">Welcome to Tutor Me! </h1>
         <p class="text-center lead">An UVA Undergraduate resource for matching Students with Tutors</p>
@@ -329,12 +392,10 @@
       </div>
     </div>
 {% endif %}
-
-</div>
 </body>
 
-<footer class="bg-light text-center text-lg-start fixed-bottom">
-  <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
+<footer class="bg-light text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(26, 65, 79, 0.2);">
     © 2023 Copyright: Team A-30
   </div>
 </footer>

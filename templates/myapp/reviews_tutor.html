@@ -59,7 +59,6 @@
       float: right;
     }
   </style>
-  <title>Welcome to Tutor Me</title>
 </head>
 
 <body>
@@ -80,52 +79,59 @@
   </div>
   <!-- end nav bar -->
 
-  <div class="position-relative overflow-hidden text-center bg-light">
-    <div class="col-md-5 p-lg-5 mx-auto">
-      <img
-        src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400"
-        class="img-fluid" width="200" height="200">
-      <h1 class="display-4 font-weight-normal">Join TutorMe, UVA's first peer-to-peer tutoring network</h1>
-      <p class="lead font-weight-normal">Find a tutor for all UVA courses and get the help you need.
-        Or, become a tutor and guide people to their academic goals.
-      </p>
-      <a class="btn btn-lg btn-secondary" href="/profile">Get Started</a>
-    </div>
-    <div class="product-device box-shadow d-none d-md-block"></div>
-    <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
-  </div>
 
+<body>
 
+  <div class = container>
 
+    <br>
 
-  {% else %}
-  <div class="logincontainer">
-    <div class="logintext">
-      <h1 class="text-center display-4">Welcome to Tutor Me! </h1>
-      <p class="text-center lead">An UVA Undergraduate resource for matching Students with Tutors</p>
-      <div class="row justify-content-evenly">
-        <div class="col-4 text-start">
-          <p>Not a member? <a href="accounts/signup" class="btn btn-success btn-lg">Sign Up</a> </p>
+    <h3 class=" font-weight-normal text-center">Reviews for all tutors in our Community</h3>
+    <p class="lead  text-center"> Search and read about the tutor and class you are interested in</p>
+
+    <br>
+    <div class = "list-group">
+        {% for tutor_review in tutor_reviews%}
+        <div class="card">
+            <h5 class="card-header">{{tutor_review.tutor.first_name}} {{tutor_review.tutor.last_name}} : {{tutor_review.tutor.course}}</h5>
+            <div class="card-body">
+                    <h5 class="card-title">{{tutor_review.session}}</h5>
+                    <button type="button" class="btn btn-warning"> <span class="badge badge-dark" style="color: black;"> {{ tutor_review.rating}} / 5</span></button>
+                    <p class="card-text"> {{ tutor_review.comment }}</p>
+                 
+            </div>
         </div>
-        <div class="col-4 text-end">
-          <p>Have an Account? <a href="accounts/login" class="btn btn-primary btn-lg">Sign In</a></p>
-        </div>
+        <br>
+        {% endfor %}
+   </ul>
+
+
+</div>
+</body>
+
+{% else %}
+<div class="logincontainer">
+  <div class="logintext">
+    <h1 class="text-center display-4">Welcome to Tutor Me! </h1>
+    <p class="text-center lead">An UVA Undergraduate resource for matching Students with Tutors</p>
+    <div class="row justify-content-evenly">
+      <div class="col-4 text-start">
+        <p>Not a member? <a href="accounts/signup" class="btn btn-success btn-lg">Sign Up</a> </p>
+      </div>
+      <div class="col-4 text-end">
+        <p>Have an Account? <a href="accounts/login" class="btn btn-primary btn-lg">Sign In</a></p>
       </div>
     </div>
-    <div class="fixed-bottom">
-      <a class="btn btn-secondary" href="admin" role="button"><i class="bi-people-fill"></i></a>
-    </div>
   </div>
-  {% endif %}
+  <div class="fixed-bottom">
+    <a class="btn btn-secondary" href="admin" role="button"><i class="bi-people-fill"></i></a>
+  </div>
+</div>
+{% endif %}
 
-  </div>
-</body>
 
 <footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
     © 2023 Copyright: Team A-30
   </div>
 </footer>
-
-
-</html>

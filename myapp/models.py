@@ -17,6 +17,18 @@ class Course(models.Model):
     def __str__(self):
 
         return self.pnemonic + " " + str(self.coursenum) + " " + self.title
+    
+
+class Review(models.Model):
+    tutor = models.ForeignKey('Tutor', on_delete=models.CASCADE, related_name="tutorreviews")
+    #student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="studentreviews")
+    #session = models.ForeignKey('SessionRequest', on_delete=models.CASCADE, related_name="sessionsforreview")
+    rating = models.FloatField(default=0)
+    comment = models.CharField(max_length=300)
+
+    def __str__(self):
+         return self.comment
+
 
 
 class Tutor(models.Model):
@@ -30,7 +42,7 @@ class Tutor(models.Model):
     rating = models.FloatField(default=0)
 
     def __str__(self):
-        return self.first_name + self.last_name
+        return str(self.user)
     
     def save(self, *args, **kwargs):
         # self.slug = slugify(self.first_name)
@@ -49,6 +61,17 @@ class Student(models.Model):
         return self.first_name + self.last_name
 
 
+class Appointment(models.Model):
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)
+
 
 class SessionRequest(models.Model):
     date = models.DateField()
@@ -59,11 +82,11 @@ class SessionRequest(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     service_choices = (
-    ("1", "General subject review"),
-    ("2", "Homework/Practice problem help"),
-    ("3", "Exam Prep"),
-    ("4", "Other")
-)
+        ("1", "General subject review"),
+        ("2", "Homework/Practice problem help"),
+        ("3", "Exam Prep"),
+        ("4", "Other")
+    )
     service = models.CharField(max_length=150, choices = service_choices)
 
     pending_choices = (
@@ -73,7 +96,8 @@ class SessionRequest(models.Model):
     pending = models.IntegerField(choices= pending_choices, null= True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.date) + " " + str(self.course) 
+    
     
 
 # class Profile(models.Model):
@@ -84,15 +108,6 @@ class SessionRequest(models.Model):
 #     def __str__(self):
 #         return str(self.user)
 
-class Review(models.Model):
-    tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    session = models.OneToOneField(SessionRequest, on_delete=models.CASCADE)
-    rating = models.FloatField(default=0)
-    comment = models.CharField(max_length=300)
-
-    def __str__(self):
-         return self.comment
 
 class Profile(models.Model):
     user = models.OneToOneField(User, null = True, on_delete = models.CASCADE)
