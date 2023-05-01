@@ -137,7 +137,7 @@
     <tbody>
       {% for tutor in tutor %}
         <div class="container p-3 my-3 border" style="background-color: #ffffff;">
-          <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark">{{ tutor.course }}</span></button>
+          <h4 style="background-color: #11caf0;" class="text-center p-2">{{ tutor.course }}</h4>
           <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $ {{ tutor.hourly_rate}}0</span></button>
           <h5 class="font-weight-normal mt-3"> Headline: {{ tutor.headline }}</h5>
           <h5>Qualifications: {{ tutor.qualifications }}</h5>
@@ -156,7 +156,7 @@
       {% for sess_request in sess_request %}
       <div class="container p-3 my-3 border" style="background-color: #dcdcdc;">
 
-        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+        <h4 style="background-color: #11caf0;" class="text-center p-2">{{ sess_request.course }}</h4>
         <h5 class="font-weight-normal mt-3"> From: {{ sess_request.student }}</h5>
         <h6> Date: {{ sess_request.date }}</h6>
         <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
@@ -189,7 +189,7 @@
         <tbody>
           {% for sess_request in sess_request_confirmed %}
             <div class="container p-3 my-3 border" style="background-color: rgb(166, 232, 166);">
-              <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+              <h4 style="background-color: #11caf0;" class="text-center p-2">{{ sess_request.course }}</h4>
               <h5 class="font-weight-normal mt-3"> From: {{ sess_request.student }}</h5>
               <h6> Date: {{ sess_request.date }}</h6>
               <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
@@ -219,7 +219,7 @@
     {% if sess_request.pending == 1 %}
     <!-- approved session -->
       <div class="container p-3 my-3 border" style="background-color: rgb(166, 232, 166);">
-        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+        <h4 style="background-color: #11caf0;" class="text-center p-2">{{ sess_request.course }}</h4>
         <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
         <h6> Date: {{ sess_request.date }}</h6>
         <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
@@ -245,7 +245,7 @@
     <!-- declined session -->
     {% elif sess_request.pending == 2 %}
       <div class="container p-3 my-3 border" style="background-color: rgb(227, 177, 177);">
-        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+        <h4 style="background-color: #11caf0;" class="text-center p-2">{{ sess_request.course }}</h4>
         <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
         <h6> Date: {{ sess_request.date }}</h6>
         <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
@@ -260,7 +260,7 @@
     <!-- requested with tutor -->
     {% else %}
       <div class="container p-3 my-3 border" style="background-color: rgb(216, 216, 157);">
-        <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+        <h4 style="background-color: #11caf0;" class="text-center p-2">{{ sess_request.course }}</h4>
         <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
         <h6> Date: {{ sess_request.date }}</h6>
         <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
@@ -314,7 +314,7 @@
         {% if sess_request.pending == 1 %}
         <!-- approved session -->
         <div class="container p-3 my-3 border" style="background-color: rgb(166, 232, 166);">
-          <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+          <h4 style="background-color: #11caf0;" class="text-center p-2">{{ sess_request.course }}</h4>
           <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
           <h6> Date: {{ sess_request.date }}</h6>
           <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
@@ -339,7 +339,7 @@
         {% elif sess_request.pending == 2 %}
         <!-- declined session -->
         <div class="container p-3 my-3 border" style="background-color: rgb(227, 177, 177);">
-          <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+          <h4 style="background-color: #11caf0;" class="text-center p-2">{{ sess_request.course }}</h4>
           <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
           <h6> Date: {{ sess_request.date }}</h6>
           <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>
@@ -354,7 +354,7 @@
         {% else %}
         <!-- requested with tutor -->
         <div class="container p-3 my-3 border" style="background-color: rgb(216, 216, 157);">
-          <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ sess_request.course }}</span></button>
+          <h4 style="background-color: #11caf0;" class="text-center p-2">{{ sess_request.course }}</h4>
           <h5 class="font-weight-normal mt-3"> Tutor: {{ sess_request.tutor.user.first_name }} {{ sess_request.tutor.user.last_name }}</h5>
           <h6> Date: {{ sess_request.date }}</h6>
           <h6> Time: {{ sess_request.start_time }} - {{ sess_request.end_time }}</h6>

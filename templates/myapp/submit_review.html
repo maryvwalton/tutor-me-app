@@ -124,7 +124,7 @@
       <label for="language">Select a Tutor:</label>
       <select id="tutorselect" name="tutor" class="dropdown mt-3">
         {% for tutor in tutors_list %}
-        <option value="{{ tutor.id}}">{{ tutor.first_name }} {{ tutor.last_name}} {{tutor.course}}</option>
+        <option value="{{ tutor.id}}">{{ tutor.user.first_name }} {{ tutor.user.last_name}} - {{tutor.course.pnemonic}} {{tutor.course.coursenum}}</option>
         {% endfor %}
         <input type="number" name="rating" id="rating" class="form-control mt-3" placeholder="Rating from 1 to 5">
         <input type="text" name="review_text" id="review_text" class="form-control mt-3" placeholder="Review body">

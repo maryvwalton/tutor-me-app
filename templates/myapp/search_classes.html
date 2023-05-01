@@ -76,7 +76,7 @@
 
     {% for course in courses %}
     <div class="container p-3 my-3 border" style="background-color: beige;">
-      <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ course.course }}</span></button>
+      <h3 style="background-color: #11caf0;" class="text-center p-2">{{ course.course }}</h3>
       <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $
           {{course.hourly_rate}}0</span></button>
       <button type="button" class="btn btn-warning"> <span class="badge badge-dark" style="color: black;"> {{ course.avg_rating |floatformat:1 }} / 5</span></button>
@@ -91,7 +91,7 @@
 
     {% for course in course2 %}
     <div class="container p-3 my-3 border" style="background-color: beige;">
-      <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ course.course }}</span></button>
+      <h3 style="background-color: #11caf0;" class="text-center p-2">{{ course.course }}</h3>
       <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $
           {{course.hourly_rate}}0</span></button>
       <button type="button" class="btn btn-warning"> <span class="badge badge-dark" style="color: black;"> {{ course.avg_rating |floatformat:1 }} / 5</span></button>
@@ -106,7 +106,7 @@
 
     {% for course in course3 %}
     <div class="container p-3 my-3 border" style="background-color: beige;">
-      <button type="button" class="btn btn-info btn-lg"> <span class="badge badge-dark"> {{ course.course }}</span></button>
+      <h3 style="background-color: #11caf0;" class="text-center p-2">{{ course.course }}</h3>
       <button type="button" class="btn btn-success"> <span class="badge badge-dark"> $
           {{course.hourly_rate}}0</span></button>
       <button type="button" class="btn btn-warning"> <span class="badge badge-dark" style="color: black;"> {{ course.avg_rating |floatformat:1 }} / 5</span></button>
