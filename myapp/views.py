@@ -96,7 +96,7 @@ def submit_listing(request):
         form.initial['course'] = current_user_linked_to_tutors.course
         form.initial['headline'] = current_user_linked_to_tutors.headline
         form.initial['qualifications'] = current_user_linked_to_tutors.qualifications
-        form.initial['hourly_rate'] = current_user_linked_to_tutors.rating
+        form.initial['hourly_rate'] = current_user_linked_to_tutors.hourly_rate
 
     # making the form save the data and also create the slug value by calling save() on it
     if form.is_valid():
@@ -137,14 +137,25 @@ def submit_listing(request):
     return render(request, 'myapp/submit_listing.html', context)
 
 
+#filters tutor listings through class attributes
 def search_classes(request):
     if request.method == "POST":
         searched = request.POST.get('searched', default="")
-        courses = Tutor.objects.filter(course__title__contains=searched)
-        courses2 = Tutor.objects.filter(course__pnemonic__contains=searched)
-        courses3 = Tutor.objects.filter(course__coursenum__contains=searched)
-    return render(request, 'myapp/search_classes.html',
-                  {'searched': searched, 'courses': courses, 'courses2': courses2, 'courses3': courses3})
+        first_names = Tutor.objects.filter(first_name__contains=searched)
+        last_names = Tutor.objects.filter(last_name__contains=searched)
+        names = Tutor.objects.filter(course__title__contains=searched)
+        pnemonics = Tutor.objects.filter(course__pnemonic__contains=searched)
+        coursenums = Tutor.objects.filter(course__coursenum__contains=searched)
+    return render(request, 'myapp/search_classes.html', {'searched': searched, 'names': names, 'pnemonics': pnemonics, 'coursenums': coursenums, 'first_names': first_names, 'last_names': last_names})
+
+#filters discussion listings through discussion and reply attributes
+def search_discussions(request):
+    if request.method == "POST":
+        searched = request.POST.get('searched', default="")
+        replies = discussionReplies.objects.filter(reply_text__contains=searched)
+        titles = discussionThread.objects.filter(title_text__contains=searched)
+        questions = discussionThread.objects.filter(question_text__contains=searched)
+    return render(request, 'myapp/search_discussions.html', {'searched': searched, 'replies': replies, 'titles': titles, 'questions': questions})
 
 
 # View that students use to make a request on a listing
@@ -346,6 +357,9 @@ def threadList(request):
     all_threads = discussionThread.objects.annotate(num_replies=Count('replies'))
     return render(request, 'myapp/discussionthreadlist.html', {'all_threads': all_threads})
 
+def tutorReview(request, id):
+    tutor_reviews = Review.objects.select_related(id).all()
+    return render(request, 'myapp/reviews_tutor.html', {'tutor_reviews': tutor_reviews})
 
 # reply to thread
 def replyThread(request, discussionThread_id):

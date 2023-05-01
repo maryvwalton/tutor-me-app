@@ -28,6 +28,7 @@ urlpatterns = [
     path('delete/<int:pk>/', views.delete_model, name='delete_model'),
     path('confirm/<int:pk>/', views.confirm_model, name='confirm_model'),
     path('decline/<int:pk>/', views.decline_model, name='decline_model'),
+    path('search_discussions', views.search_discussions, name = 'search_discussions'),
 
     path('discussion/<int:pk>', views.discussionView.as_view(), name='discussionThread'),
     path('discussion/<int:discussionThread_id>/reply', views.replyThread, name='replyThread'),
@@ -35,5 +36,6 @@ urlpatterns = [
     path('submit_review/', views.submitReview, name = 'submitreview'),
     path('submit_review/<int:pk>', views.reviewView.as_view(), name = 'viewReview'),
     path('reviews', views.reviewList, name = 'allreviews'),
+    path('reviews/<int:id>', views.tutorReview, name = 'tutor_review'), 
 
 ]

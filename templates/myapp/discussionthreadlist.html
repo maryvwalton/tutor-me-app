@@ -7,6 +7,7 @@
 
   <title>Discussion</title>
 
+<div class = container>
   <style>
     /* Add a black background color to the top navigation */
     .topnav {
@@ -57,6 +58,12 @@
     <h3 class=" font-weight-normal text-center mt-3">Discuss with peers in your community</h3>
     <p class="lead  text-center"> Browse conversations about classes, assignments, professors and more</p>
 
+      <form class = "d-flex" method = POST action="{% url 'search_discussions' %}">
+        {%csrf_token%}
+        <input class = "form-control form-control-lg" type = "search" placeholder = "Search for discussion topics..." name ="searched">
+        <button class = "btn btn-primary" type = "Submit">Submit</button>
+      </form>
+      
     <a class="btn btn-success text-center" href="/submit_thread" role="button">Start a Discussion Thread</a>
 
     <div class="container" style="padding: 2%;">
