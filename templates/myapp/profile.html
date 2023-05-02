@@ -233,16 +233,12 @@
             </form>
           </div>
           <div class="col">
-            <a href = "/submit_review">
+            <a href = "{% url 'submitreview' pk=sess_request.pk %}">
               <button type="button" class="btn btn-info">Submit Review</button>
             </a>
           </div>
         </div>
-<<<<<<< HEAD
 
-        
-=======
->>>>>>> Filtering-Discussion-threads
       </div>
 
     <!-- declined session -->
@@ -331,7 +327,7 @@
               </form>
             </div>
             <div class="col">
-              <a href = "/submit_review">
+              <a href = "{% url 'submitreview' pk=sess_request.pk %}">
                 <button type="button" class="btn btn-info">Submit Review</button>
               </a>
             </div>

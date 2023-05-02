@@ -380,13 +380,14 @@ def replyThread(request, discussionThread_id):
 
 
 #submit review about tutor  
-def submitReview(request):
-    tutors_list = Tutor.objects.all()
+def submitReview(request, pk):
+    current_request_tutor = get_object_or_404(SessionRequest, pk=pk).tutor.id
+    current_tutor = get_object_or_404(Tutor, pk=current_request_tutor)
     student_list = User.objects.all()
     session_list = SessionRequest.objects.all()
 
     if request.method == 'POST':
-        select_tutor = request.POST["tutor"]
+        select_tutor = current_tutor.id
         #select_session = request.POST.get("session")
         rating = request.POST["rating"]
         review = request.POST["review_text"]
@@ -396,7 +397,7 @@ def submitReview(request):
         return redirect('viewReview', pk = new_review.pk)
     else:
         r = Review()
-        return render(request, 'myapp/submit_review.html', {'review': Review, 'tutors_list':tutors_list, 
+        return render(request, 'myapp/submit_review.html', {'review': Review, 'tutor':current_tutor, 
                                                             'student_list':student_list, 'session_list':session_list})
 
 
@@ -410,4 +411,6 @@ class reviewView(generic.DetailView):
 #display all reviews
 def reviewList(request):
     all_reviews = Review.objects.all()
-    return render(request, 'myapp/all_reviews.html', {'all_reviews': all_reviews})
+
+    return render(request, 'myapp/reviews_tutor.html', {'all_reviews': all_reviews})
+

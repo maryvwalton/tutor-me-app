@@ -119,12 +119,10 @@
       <h3 class=" font-weight-normal text-center mt-3">Submit Review about Your Tutoring Experience </h3>
       <p class="lead  text-center"> Select a tutor and session and leave your input below</p>
 
-      <label for="language">Select a Tutor:</label>
-      <select id="tutorselect" name="tutor" class="dropdown mt-3">
-        {% for tutor in tutors_list %}
-        <option value="{{ tutor.id}}">{{ tutor.user.first_name }} {{ tutor.user.last_name}} - {{tutor.course.pnemonic}} {{tutor.course.coursenum}}</option>
-        {% endfor %}
-        <input type="number" name="rating" id="rating" class="form-control mt-3" placeholder="Rating from 1 to 5">
+       <p class="lead"><small>You are currently writing a review for</small> <b>{{tutor.user.first_name}}
+        {{tutor.user.last_name}}</b>
+        <br><small>for the class</small> <b>{{tutor.course}}</b></p>
+       <input type="number" min = "1" max = 5 name="rating" id="rating" class="form-control mt-3" placeholder="Rating from 1 to 5">
         <input type="text" name="review_text" id="review_text" class="form-control mt-3" placeholder="Review body">
         <input type="submit" class="btn btn-primary mt-3" value="Submit">
   </div>
