@@ -235,10 +235,13 @@ def filter(request):
 
     sess_request_student_side = SessionRequest.objects.filter(student=request.user)
 
+    all_appointments = Appointment.objects.filter(tutor__user= request.user)
+
     return render(request, 'myapp/profile.html', {'tutor': tutor,
                                                   'sess_request': sess_request_pending,
                                                   'sess_request_student_side': sess_request_student_side,
                                                   'sess_request_confirmed': sess_request_confirmed,
+                                                  'all_appointments':all_appointments,
                                                   'is_tutor': tutor.exists(),
                                                   'has_sess_request': sess_request_pending.exists(),
                                                   'has_sess_request_student_side': sess_request_student_side.exists(),
@@ -411,6 +414,8 @@ class reviewView(generic.DetailView):
 #display all reviews
 def reviewList(request):
     all_reviews = Review.objects.all()
+    tutors = Tutor.objects.all()
 
-    return render(request, 'myapp/reviews_tutor.html', {'all_reviews': all_reviews})
+    return render(request, 'myapp/reviews_tutor.html', {'all_reviews': all_reviews,
+                                                        'tutors': tutors})
 
