@@ -103,18 +103,11 @@
       float: right;
     }
   </style>
-<<<<<<< HEAD
   <title>Review</title>
-=======
->>>>>>> Filtering-Discussion-threads
 </head>
 
 <body>
   {% if user.is_authenticated %}
-<<<<<<< HEAD
-=======
-
->>>>>>> Filtering-Discussion-threads
   <!-- nav bar -->
   <div class="topnav">
     <a class="active" href="/"><img
@@ -167,28 +160,6 @@
   </div>
   {% endif %}
 </body>
-
-
-{% else %}
-<div class="logincontainer">
-  <div class="logintext">
-    <h1 class="text-center display-4">Welcome to Tutor Me! </h1>
-    <p class="text-center lead">An UVA Undergraduate resource for matching Students with Tutors</p>
-    <div class="row justify-content-evenly">
-      <div class="col-4 text-start">
-        <p>Not a member? <a href="accounts/signup" class="btn btn-success btn-lg">Sign Up</a> </p>
-      </div>
-      <div class="col-4 text-end">
-        <p>Have an Account? <a href="accounts/login" class="btn btn-primary btn-lg">Sign In</a></p>
-      </div>
-    </div>
-  </div>
-  <div class="fixed-bottom">
-    <a class="btn btn-secondary" href="admin" role="button"><i class="bi-people-fill"></i></a>
-  </div>
-</div>
-{% endif %}
-
 
 <footer class="bg-light text-center text-lg-start">
   <div class="text-center p-3" style="background-color: rgba(173,216, 230, 0.2);">
