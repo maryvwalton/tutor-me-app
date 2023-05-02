@@ -149,14 +149,17 @@
 
     <h5>Appointments Open:</h5>
           {% for appointment in all_appointments %}
+          {% if appointment.tutor.id == tutor.id %}
     <ul >
       <li class="list-group-item">Date: {{ appointment.date }}</li>
       <li class="list-group-item">Start Time: {{ appointment.start_time }}</li>
       <li class="list-group-item">End Time: {{ appointment.end_time }}</li>
       <!-- Add more list items for each attribute -->
   </ul>
+  {% endif %}
   {% empty %}
         <li>No appointments found.</li>
+        
     {% endfor %}
     
       <a href="{% url 'add_more_availability' tutor.pk %}">

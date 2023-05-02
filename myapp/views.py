@@ -66,12 +66,14 @@ def add_more_availability(request, pk):
 
             appointment.tutor = tutor
             appointment.save()
+            return redirect("/myapp/profile/")
 
     context = {
         'form': form
     }
 
     return render(request, 'myapp/add_more_availability.html', context)
+    
 
 
 # view that tutors use to make a listing
