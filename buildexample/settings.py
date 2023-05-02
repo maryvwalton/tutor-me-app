@@ -138,7 +138,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 5
+SITE_ID = 4
 
 
 LOGIN_REDIRECT_URL = '/'
@@ -174,6 +174,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# SECURE_SSL_REDIRECT = True
 
 # SHERRIFF
 # Activate Django-Heroku.
