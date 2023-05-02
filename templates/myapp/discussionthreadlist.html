@@ -1,20 +1,70 @@
-{% load bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
+{% load i18n %}
+{% load socialaccount %}
 
+<!DOCTYPE html>
 <html>
 <head>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
 
-  <title>Discussion</title>
+  {% bootstrap_javascript %}
+  <!-- Add icon library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
 
-<div class = container>
   <style>
+    .logincontainer {
+      background-image: url("https://wallpapercave.com/wp/wp5794418.jpg");
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: auto;
+      width: auto;
+      height: 100vh;
+    }
+    .logintext {
+      position: absolute;
+      text-align: center;
+      padding-left: 60vh;
+      padding-right: 60vh;
+      padding-top: 15vh;
+      padding-bottom: 50vh;
+    }
+    .profileheader {
+        padding: 20px;
+        text-align: center;
+    }
+    .container {
+        overflow: auto; /* clear the float */
+    }
+    
+    .left-div {
+      background-color: #ffffff;
+      padding: 10px;
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .right-div {
+      background-color: #fff;
+      padding: 10px;
+      display: inline-block;
+    }
+
+    .button-container {
+      display: flex;
+      padding-left: 60px;
+      padding-right: 60px;
+    }   
+    tr:nth-child(even) {
+      background-color: #D6EEEE;
+    }
+
     /* Add a black background color to the top navigation */
     .topnav {
       background-color: #11caf0;
       overflow: hidden;
     }
-    
+
     /* Style the links inside the navigation bar */
     .topnav a {
       float: left;
@@ -35,15 +85,14 @@
     .topnav-right {
       float: right;
     }
+
   </style>
 </head>
 
 <body>
   <!-- nav bar -->
   <div class="topnav">
-    <a class="active" href="/"><img
-        src="https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400"
-        alt="" width="35" height="35"></a>
+    <a class="active" href="/"><img src= "https://lh5.googleusercontent.com/PMyEMcnh7OuoAC_dPcDNxLGSoFZm8T1K9sob-VHKqBk74YqWJjugOfbulpRZGtn_TSY=w2400" alt="" width="35"  height="35"></a>
     <a href="/tutor_courses">Find a Tutor</a>
     <a href="/submit_listing">Start Tutoring</a>
     <a href="/discussion">View Discussion</a>
