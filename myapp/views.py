@@ -418,6 +418,6 @@ def reviewList(request):
     all_reviews = Review.objects.all()
     tutors = Tutor.objects.all()
 
-    return render(request, 'myapp/reviews_tutor.html', {'all_reviews': all_reviews,
+    return render(request, 'myapp/all_reviews.html', {'all_reviews': all_reviews,
                                                         'tutors': tutors})
 
