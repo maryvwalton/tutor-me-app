@@ -66,12 +66,14 @@ def add_more_availability(request, pk):
 
             appointment.tutor = tutor
             appointment.save()
+            return redirect("/myapp/profile/")
 
     context = {
         'form': form
     }
 
     return render(request, 'myapp/add_more_availability.html', context)
+    
 
 
 # view that tutors use to make a listing
@@ -235,10 +237,13 @@ def filter(request):
 
     sess_request_student_side = SessionRequest.objects.filter(student=request.user)
 
+    all_appointments = Appointment.objects.filter(tutor__user= request.user)
+
     return render(request, 'myapp/profile.html', {'tutor': tutor,
                                                   'sess_request': sess_request_pending,
                                                   'sess_request_student_side': sess_request_student_side,
                                                   'sess_request_confirmed': sess_request_confirmed,
+                                                  'all_appointments':all_appointments,
                                                   'is_tutor': tutor.exists(),
                                                   'has_sess_request': sess_request_pending.exists(),
                                                   'has_sess_request_student_side': sess_request_student_side.exists(),
@@ -380,13 +385,14 @@ def replyThread(request, discussionThread_id):
 
 
 #submit review about tutor  
-def submitReview(request):
-    tutors_list = Tutor.objects.all()
+def submitReview(request, pk):
+    current_request_tutor = get_object_or_404(SessionRequest, pk=pk).tutor.id
+    current_tutor = get_object_or_404(Tutor, pk=current_request_tutor)
     student_list = User.objects.all()
     session_list = SessionRequest.objects.all()
 
     if request.method == 'POST':
-        select_tutor = request.POST["tutor"]
+        select_tutor = current_tutor.id
         #select_session = request.POST.get("session")
         rating = request.POST["rating"]
         review = request.POST["review_text"]
@@ -396,7 +402,7 @@ def submitReview(request):
         return redirect('viewReview', pk = new_review.pk)
     else:
         r = Review()
-        return render(request, 'myapp/submit_review.html', {'review': Review, 'tutors_list':tutors_list, 
+        return render(request, 'myapp/submit_review.html', {'review': Review, 'tutor':current_tutor, 
                                                             'student_list':student_list, 'session_list':session_list})
 
 
@@ -410,4 +416,8 @@ class reviewView(generic.DetailView):
 #display all reviews
 def reviewList(request):
     all_reviews = Review.objects.all()
-    return render(request, 'myapp/all_reviews.html', {'all_reviews': all_reviews})
+    tutors = Tutor.objects.all()
+
+    return render(request, 'myapp/all_reviews.html', {'all_reviews': all_reviews,
+                                                        'tutors': tutors})
+

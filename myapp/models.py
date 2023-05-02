@@ -32,8 +32,8 @@ class Review(models.Model):
 
 
 class Tutor(models.Model):
-    # first_name = models.CharField(max_length=200)  
-    # last_name = models.CharField(max_length=200)  
+    first_name = models.CharField(max_length=200, default= "Tutor")  
+    last_name = models.CharField(max_length=200, default= "Person")  
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True )
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     headline = models.CharField(max_length=300)

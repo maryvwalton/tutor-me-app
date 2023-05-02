@@ -117,18 +117,51 @@
     <h3 class=" font-weight-normal text-center mt-3">Reviews for all tutors in our Community</h3>
     <p class="lead  text-center"> Search and read about the tutor and class you are interested in</p>
 
-    <div class="list-group mt-3">
+    <!-- <div class="list-group mt-3">
       {% for review in all_reviews%}
       <div class="card mb-3">
-        <h5 class="card-header">{{review.tutor.user.first_name}} {{review.tutor.user.last_name}} -
+        <h5 class="card-header">{{review.tutor.user.username}} -
           {{review.tutor.course.pnemonic}} {{review.tutor.course.coursenum}}</h5>
+
         <div class="card-body">
           <button type="button" class="btn btn-warning"> <span class="badge badge-dark" style="color: black;"> {{review.rating}}</span></button>
           <p class="card-text mt-2">{{ review.comment }}</p>
         </div>
+
+
       </div>
       {% endfor %}
-    </div>
+    </div> -->
+
+<!-- chang it Start -->
+
+<div class="list-group mt-3">
+  {% for tutor in tutors%}
+  <div class="card mb-3">
+    <h5 class="card-header">{{tutor.user.username}} -
+      {{tutor.course.pnemonic}} {{tutor.course.coursenum}}</h5>
+    {% for review in all_reviews%}
+      {% if review.tutor.id == tutor.id%}
+      <div class="card-body">
+        <button type="button" class="btn btn-warning"> <span class="badge badge-dark" style="color: black;"> {{ review.rating }}</span></button>
+        <p class="card-text mt-2">{{ review.comment }}</p>
+      </div>
+      <hr>
+      {% endif %}
+      
+      {% empty %}
+      <li>No reviews found.</li>
+    
+    {% endfor %}
+
+  </div>
+  {% endfor %}
+</div>
+
+<!-- change it end -->
+
+
+
   </div>
 
   <!-- if user is not logged in -->
