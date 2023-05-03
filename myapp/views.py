@@ -148,7 +148,7 @@ def search_classes(request):
         names = Tutor.objects.filter(course__title__icontains=searched)
         pnemonics = Tutor.objects.filter(course__pnemonic__icontains=searched)
         coursenums = Tutor.objects.filter(course__coursenum__icontains=searched)
-    return render(request, 'myapp/search_classes.html', {'searched': searched, 'names': names, 'pnemonics': pnemonics, 'coursenums': coursenums, })
+    return render(request, 'myapp/search_classes.html', {'searched': searched, 'names': names, 'pnemonics': pnemonics, 'coursenums': coursenums, "first_names":first_names, "last_names": last_names})
 
 #filters discussion listings through discussion and reply attributes
 def search_discussions(request):
