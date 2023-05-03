@@ -143,12 +143,12 @@ def submit_listing(request):
 def search_classes(request):
     if request.method == "POST":
         searched = request.POST.get('searched', default="")
-        first_names = Tutor.objects.filter(first_name__icontains=searched)
-        last_names = Tutor.objects.filter(last_name__icontains=searched)
+        #first_names = Tutor.objects.filter(first_name__icontains=searched)
+        #last_names = Tutor.objects.filter(last_name__icontains=searched)
         names = Tutor.objects.filter(course__title__icontains=searched)
         pnemonics = Tutor.objects.filter(course__pnemonic__icontains=searched)
         coursenums = Tutor.objects.filter(course__coursenum__icontains=searched)
-    return render(request, 'myapp/search_classes.html', {'searched': searched, 'names': names, 'pnemonics': pnemonics, 'coursenums': coursenums, "first_names":first_names, "last_names": last_names})
+    return render(request, 'myapp/search_classes.html', {'searched': searched, 'names': names, 'pnemonics': pnemonics, 'coursenums': coursenums, })
 
 #filters discussion listings through discussion and reply attributes
 def search_discussions(request):
