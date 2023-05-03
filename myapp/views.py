@@ -143,20 +143,20 @@ def submit_listing(request):
 def search_classes(request):
     if request.method == "POST":
         searched = request.POST.get('searched', default="")
-#         first_names = Tutor.objects.filter(first_name__contains=searched)
-#         last_names = Tutor.objects.filter(last_name__contains=searched)
-        names = Tutor.objects.filter(course__title__contains=searched)
-        pnemonics = Tutor.objects.filter(course__pnemonic__contains=searched)
-        coursenums = Tutor.objects.filter(course__coursenum__contains=searched)
+        first_names = Tutor.objects.filter(first_name__icontains=searched)
+        last_names = Tutor.objects.filter(last_name__icontains=searched)
+        names = Tutor.objects.filter(course__title__icontains=searched)
+        pnemonics = Tutor.objects.filter(course__pnemonic__icontains=searched)
+        coursenums = Tutor.objects.filter(course__coursenum__icontains=searched)
     return render(request, 'myapp/search_classes.html', {'searched': searched, 'names': names, 'pnemonics': pnemonics, 'coursenums': coursenums, })
 
 #filters discussion listings through discussion and reply attributes
 def search_discussions(request):
     if request.method == "POST":
         searched = request.POST.get('searched', default="")
-        replies = discussionReplies.objects.filter(reply_text__contains=searched)
-        titles = discussionThread.objects.filter(title_text__contains=searched)
-        questions = discussionThread.objects.filter(question_text__contains=searched)
+        replies = discussionReplies.objects.filter(reply_text__icontains=searched)
+        titles = discussionThread.objects.filter(title_text__icontains=searched)
+        questions = discussionThread.objects.filter(question_text__icontains=searched)
     return render(request, 'myapp/search_discussions.html', {'searched': searched, 'replies': replies, 'titles': titles, 'questions': questions})
 
 
